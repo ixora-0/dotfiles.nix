@@ -1,0 +1,47 @@
+{ pkgs, ... }: {
+  xdg.configFile."lf/icons".source =  pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/gokcehan/lf/master/etc/icons.example";
+    sha256 = "0141nzyjr3mybkbn9p0wwv5l0d0scdc2r7pl8s1lgh11wi2l771x";
+  };
+  # # FIXME: image preview doesn't work on wezterm
+  # # waiting for https://github.com/NikitaIvanovV/ctpv/pull/90 to be pulled
+  # # xdg.configFile."ctpv/config".text = ''
+  # #   remove glow
+  # #   preview nixglow .md {{
+  # #     ${pkgs.glow}/bin/glow -s auto -w "''${w}" "''${f}"
+  # #   }}
+  # #   remove image
+  # #   preview nixchafa image/* {{
+  # #     ${pkgs.chafa}/bin/chafa -s "''${w}x''${h}" --polite on "''${f}" | sed 's/#/\n#/g'
+  # #   }}
+  # # '';
+  # xdg.configFile."ctpv/config".text = ''
+  #   remove glow
+  #   preview nixglow .md {{
+  #     ${pkgs.glow}/bin/glow -s auto -w "''${w}" "''${f}"
+  #   }}
+  #   remove image
+  #   preview nixchafa image/* {{
+  #     ${pkgs.chafa}/bin/chafa -s $wx$h --polite on $f | sed 's/#/\n#/g'
+  #   }}
+  # '';
+
+  programs.lf = {
+    enable = true;
+
+    settings = {
+      preview = true;
+      drawbox = true;
+      hidden = true;
+      icons = true;
+    };
+
+    # # FIXME: images doesn't clear in kitty
+    # # adding `&${pkgs.ctpv}/bin/ctpv -s $id` like in the docs break previews
+    # previewer.source = "${pkgs.ctpv}/bin/ctpv";
+    # extraConfig = ''
+    #   set cleaner ${pkgs.ctpv}/bin/ctpvclear
+    #   cmd on-quit %${pkgs.ctpv}/bin/ctpv -e $id
+    # '';
+  };
+}

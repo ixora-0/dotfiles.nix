@@ -1,0 +1,107 @@
+[buildPlans.IosevkaIris]
+family = "Iosevka Iris"
+spacing = "term"
+serifs = "sans"
+noCvSs = true
+exportGlyphNames = true
+
+  [buildPlans.IosevkaIris.variants]
+  inherits = "ss14"
+
+    [buildPlans.IosevkaIris.variants.design]
+    capital-a = "curly-serifless"
+    capital-k = "curly-serifless"
+    capital-q = "crossing"
+    capital-r = "curly-serifless"
+    capital-v = "curly-serifless"
+    capital-w = "curly-serifless"
+    capital-x = "curly-serifless"
+    capital-y = "curly-serifless"
+    capital-z = "curly-serifless"
+    i = "serifed-flat-tailed"
+    j = "flat-hook-serifed"
+    k = "curly-top-left-serifed"
+    s = "serifless"
+    v = "curly-serifless"
+    w = "curly-serifless"
+    x = "curly-serifless"
+    y = "curly-serifless"
+    z = "curly-serifless"
+    zero = "oval-tall-slashed"
+    paren = "flat-arc"
+    brace = "curly"
+    dollar = "open-cap"
+    cent = "open"
+
+    [buildPlans.IosevkaIris.variants.italic]
+    capital-a = "curly-serifless"
+    capital-k = "curly-serifless"
+    capital-q = "crossing"
+    capital-r = "curly-serifless"
+    capital-v = "curly-serifless"
+    capital-w = "curly-serifless"
+    capital-x = "curly-serifless"
+    capital-y = "curly-serifless"
+    capital-z = "cursive-with-horizontal-crossbar"
+    a = "single-storey-earless-rounded-tailed"
+    b = "toothless-rounded-serifed"
+    d = "toothless-rounded-serifless"
+    f = "flat-hook-diagonal-tailed"
+    g = "single-storey-earless-rounded"
+    i = "serifed-diagonal-tailed"
+    j = "diagonal-tailed-serifed"
+    k = "diagonal-tailed-cursive-top-left-serifed"
+    l = "serifed-diagonal-tailed"
+    m = "tailed-top-left-serifed"
+    n = "tailed-motion-serifed"
+    p = "earless-rounded-serifless"
+    q = "earless-rounded-diagonal-tailed-serifless"
+    r = "corner-hooked-top-serifed"
+    s = "unilateral-inward-serifed"
+    t = "diagonal-tailed"
+    u = "tailed-motion-serifed"
+    v = "cursive-serifed"
+    w = "cursive-serifed"
+    x = "cursive"
+    y = "cursive-motion-serifed"
+    z = "cursive-with-horizontal-crossbar"
+    asterisk = "penta-low"
+    dollar = "open"
+
+  [buildPlans.IosevkaIris.ligations]
+  inherits = "dlig"
+
+[buildPlans.IosevkaIris.widths.Condensed]
+shape = 500
+menu = 3
+css = "condensed"
+
+[buildPlans.IosevkaIris.widths.Normal]
+shape = 600
+menu = 5
+css = "normal"
+
+[buildPlans.IosevkaIris.widths.UltraCondensed]
+shape = 416
+menu = 1
+css = "ultra-condensed"
+
+[buildPlans.IosevkaIris.widths.ExtraCondensed]
+shape = 456
+menu = 2
+css = "extra-condensed"
+
+[buildPlans.IosevkaIris.widths.SemiCondensed]
+shape = 548
+menu = 4
+css = "semi-condensed"
+
+[buildPlans.IosevkaIris.widths.SemiExtended]
+shape = 658
+menu = 6
+css = "semi-expanded"
+
+[buildPlans.IosevkaIris.widths.Extended]
+shape = 720
+menu = 7
+css = "expanded"
