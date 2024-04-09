@@ -19,8 +19,7 @@
     };
 
     misc = {
-      disable_hyprland_logo = true;
-      # disable_splash_rendering = true;  # disables displaying default wallpaper on startup
+      disable_hyprland_logo = true;  # disables displaying default wallpapers on startup
     };
 
     decoration = {

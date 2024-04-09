@@ -2,6 +2,7 @@
   cfg = config.modules.helix.languages;
 in
 {
+  # TODO: replace all the lsp options with config.programs.helix.extraPackages
   options.modules.helix.languages.lsp = {
     enableAll = lib.mkEnableOption ''
       If true, enable all available LSPs.

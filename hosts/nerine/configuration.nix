@@ -118,17 +118,10 @@
     asusd.enableUserService = true;
 
     gvfs.enable = true;
-    # devmon.enable = true;
     udisks2.enable = true;  # info about storage devices
     upower.enable = true;  # power management
     power-profiles-daemon.enable = true;
     accounts-daemon.enable = true;  # info about users
-    # gnome = {
-    #   evolution-data-server.enable = true;
-    #   glib-networking.enable = true;
-    #   gnome-keyring.enable = true;
-    #   gnome-online-accounts.enable = true;
-    # };
   };
 
 
@@ -206,12 +199,9 @@
   #   };
   # };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
     libsForQt5.qt5.qtgraphicaleffects  # for sddm theme
-  #  wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -242,5 +232,4 @@
   system.stateVersion = "23.11"; # Did you read the comment?
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
-
 }

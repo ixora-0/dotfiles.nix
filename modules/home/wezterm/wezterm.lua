@@ -2,11 +2,11 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 local config = {}
 
--- using font.conf alias doesn't respect Iosevka Raven's default width being 600
+-- using font.conf alias doesn't respect Iosevka Iris's default width being 600
 -- have to set explicitly
 -- config.font = wezterm.font('monospace')
 config.font = wezterm.font_with_fallback {
-  'Iosevka Raven',
+  'Iosevka Iris',
   'Symbols Nerd Font Mono',
   'Noto Sans Mono',
   'Noto Color Emoji'

@@ -2,7 +2,6 @@
   aylurAgs = pkgs.fetchgit {
     url = "https://github.com/Aylur/dotfiles";
     sparseCheckout = ["ags"];
-    # hash = "sha256-wFdocHuTzWsCwbAmZPnfD7MEkvNa5vWC5xL6juiPTPg=";
     rev = "99b6e3156d03d7bbdbc487ca0b3b260da5c20079";
     hash = "sha256-VVoD11+mzNBTVA2FKNP6nnvuSfrtcPduZRz64PzpcNw=";
   } + /ags;
@@ -44,8 +43,5 @@ in
   programs.ags = {
     enable = true;
     configDir = aylurAgs;
-    # extraPackages = with pkgs; [
-    #   accountsservice
-    # ];
   };
 }

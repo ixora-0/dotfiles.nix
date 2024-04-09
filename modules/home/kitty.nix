@@ -50,13 +50,5 @@
       visual_bell_duration = "0.15";
       visual_bell_color = "#202020";
     };
-
-    # can't use monospace because bold and italic won't work for some reason
-    # extraConfig = ''
-    #   font_family Iosevka Raven
-    #   bold_font   Iosevka Raven Bold
-    #   italic_font Iosevka Raven Italic
-    # '';
-      
   };
 }

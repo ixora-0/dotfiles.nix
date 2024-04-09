@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   home.packages = [
+    # NOTE: not being used rn
     # https://github.com/NikitaIvanovV/ctpv/blob/4efa0f976eaf8cb814e0aba4f4f1a1d12ee9262e/previews.h#L67
     # TODO: confirm jupyter, jq, eza, exiftool bin path
     # TODO: adjust dimension (for glow, chafa)

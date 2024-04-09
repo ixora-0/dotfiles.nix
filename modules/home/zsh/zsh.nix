@@ -1,16 +1,14 @@
 { lib, config, pkgs, ... }: let
-  # mkIfElse = import ../../helpers/mkIfElse.nix {inherit lib;};
   cfg = config.modules.zsh;
 in
 {
-
   options.modules.zsh.plugins = {
     fastSyntaxHighlighting.enable = lib.mkEnableOption ''
       Whether to enable fast-syntax-highlighting.
     '';
 
-  # TODO: sometimes have % sign at top of terminal on launch
-  # solution:  https://github.com/lxqt/qterminal/issues/778#issuecomment-857735806
+  # BUG: sometimes have % sign at top of terminal on launch
+  # solution: https://github.com/lxqt/qterminal/issues/778#issuecomment-857735806
     powerlevel10k.enable = lib.mkEnableOption "Whether to enable powerlevel10k.";
   };
 
@@ -59,8 +57,4 @@ in
       plugins = cfg.ohMyZsh.plugins;
     };
   };
-
-  # link powerlevel10k config to home
-  # config.home.file.".p10k.zsh".source = lib.mkIf cfg.plugins.powerlevel10k.enable ./.p10k.zsh;
-
 }
