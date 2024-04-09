@@ -141,6 +141,11 @@ in
     # jack.enable = true;
   };
 
+  # enable bluetooth
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.settings.General.Experimental = true;  # for gnome-bluetooth percentage
+  # services.blueman.enable = true;
+
   # brightness control
   hardware.brillo.enable = true;
 
