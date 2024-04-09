@@ -1,11 +1,11 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"os"
-	"regexp"
-	"strings"
+    "bufio"
+    "fmt"
+    "os"
+    "regexp"
+    "strings"
 )
 
 func removeComments(inputFilePath, outputFilePath string) error {
@@ -24,13 +24,10 @@ func removeComments(inputFilePath, outputFilePath string) error {
     scanner := bufio.NewScanner(inputFile)
     for scanner.Scan() {
         line := scanner.Text()
-        if strings.TrimSpace(line) == "#" {
-            continue
-        }
-        // Remove everything after '# '
-        re := regexp.MustCompile(`( *)# .*`)
+
+        re := regexp.MustCompile(`^\s*#.*$`)
         line = re.ReplaceAllString(line, "")
-        re = regexp.MustCompile(`#{2,}`)
+        re = regexp.MustCompile(`( *)# .*`)
         line = re.ReplaceAllString(line, "")
         if strings.TrimSpace(line) != "" {
             fmt.Fprintln(outputFile, line)
@@ -53,5 +50,6 @@ func main() {
         return
     }
 
-    fmt.Println("Comments removed successfully!")
+    fmt.Println("Comments removed from " + inputFilePath + "successfully!")
+    fmt.Println("Wrote file to " + outputFilePath)
 }
