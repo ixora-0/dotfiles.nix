@@ -36,7 +36,6 @@ in
     "spotify"
     "ags"
     "git"
-    "gpg"
     "theme"
     "firefox"
   ];
