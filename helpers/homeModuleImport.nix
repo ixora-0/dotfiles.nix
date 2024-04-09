@@ -2,7 +2,7 @@ moduleName: with builtins; let
   # module should be a string which is the name of the module
   # or a list [name arg1 arg2 ...]
 
-  modulesPath = ../homeModules;
+  modulesPath = ../modules/home;
   prependModulesPath = m: modulesPath + m;
   potentials = map prependModulesPath [
     "/${moduleName}.nix"

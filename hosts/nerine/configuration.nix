@@ -107,7 +107,7 @@
   services.xserver.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
-    theme = "${import ../../nixosModules/sddm-theme.nix { inherit pkgs; }}";
+    theme = "${import ../../modules/nixos/sddm-theme.nix { inherit pkgs; }}";
   };
 
   programs.hyprland.enable = true;
@@ -185,7 +185,7 @@
 
       (iosevka.override {
         set = "Iris";
-        privateBuildPlan = builtins.readFile ../../nixosModules/fonts/private-build-plans.toml;
+        privateBuildPlan = builtins.readFile ../../modules/nixos/fonts/private-build-plans.toml;
       })
       (nerdfonts.override { 
         fonts = ["NerdFontsSymbolsOnly"]; 
