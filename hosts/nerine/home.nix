@@ -69,6 +69,7 @@ in
     gimp
     wayshot
     zathura
+    go
 
     # nwg-look
   ] ++ [
