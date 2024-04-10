@@ -11,8 +11,8 @@ in
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
   home.stateVersion = "23.11"; # Please read the comment before changing.
-  
-  nixpkgs.config.allowUnfreePredicate = makeUnfreePredicate 
+
+  nixpkgs.config.allowUnfreePredicate = makeUnfreePredicate
     lib
     (with pkgs; [
       discord
@@ -20,6 +20,7 @@ in
       obsidian
       # gitkraken
       # "betterttv"
+      unrar
     ]);
 
   # TODO: organize to bundles
@@ -51,7 +52,7 @@ in
     kitty
     bat
     # firefox-devedition
-    
+
     cinnamon.nemo  # BUG: open in terminal doesn't work
     # gnome.nautilus nautilus-open-any-terminal
     anki
@@ -70,6 +71,7 @@ in
     wayshot
     zathura
     go
+    unrar
 
     # nwg-look
   ] ++ [
