@@ -2,14 +2,17 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-
+{ config, pkgs, ... }: let
+  nixosModuleImport = import ../../helpers/nixosModuleImport.nix;
+in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
   # TODO: organize configuration.nix into modules
+
+  imports =[
+    ./hardware-configuration.nix
+  ] ++ (map nixosModuleImport [
+    "fonts"
+  ]);
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -158,33 +161,6 @@
                                # but nixos-rebuild complains if we don't have this
 
   programs.gnupg.agent.enable = true;  # can't set this in home-manager
-
-
-  # HACK: have to set default fonts system-wide via configuration.nix
-  # waiting for https://github.com/nix-community/home-manager/pull/2732
-  fonts = {
-    fontconfig.enable = true;
-    fontconfig.defaultFonts = {
-      serif = ["Noto Serif"];
-      sansSerif = ["Noto Sans"];
-      emoji = ["Noto Color Emoji"];
-      monospace = ["Iosevka Iris" "NerdFontsSymbolsOnly"];
-    };
-
-    packages = with pkgs; [
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-
-      (iosevka.override {
-        set = "Iris";
-        privateBuildPlan = builtins.readFile ../../modules/nixos/fonts/private-build-plans.toml;
-      })
-      (nerdfonts.override { 
-        fonts = ["NerdFontsSymbolsOnly"]; 
-      })
-    ];
-  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
