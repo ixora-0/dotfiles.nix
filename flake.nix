@@ -21,6 +21,9 @@
     # nur.url = "github:nix-community/NUR";
 
     # other flakes
+    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
     spicetify-nix.url = "github:the-argus/spicetify-nix";
     ags.url = "github:Aylur/ags";
     astal.url = "github:Aylur/astal";

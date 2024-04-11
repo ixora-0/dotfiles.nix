@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }: let
+{ config, pkgs, inputs, ... }: let
   nixosModuleImport = import ../../helpers/nixosModuleImport.nix;
 in
 {
@@ -113,7 +113,16 @@ in
     theme = "${import ../../modules/nixos/sddm-theme.nix { inherit pkgs; }}";
   };
 
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+  };
+
+  # xdg.portal = {
+  #   enable = true;
+  #   extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  #   config.common.default = [ "*" ];
+  # };
 
   # services for ags stuffs
   services = {
