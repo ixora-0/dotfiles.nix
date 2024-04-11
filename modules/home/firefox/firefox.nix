@@ -41,7 +41,6 @@ in {
     search.engines."Startpage" = {
       urls = [{ template = "https://www.startpage.com/search?query={searchTerms}"; }];
       iconsUpdateURL = "https://www.startpage.com/favicon.ico";
-      # updateInterval = 24 * 60 * 60 * 1000; # every day
     };
     search.engines."Nix Packages" = {
       urls = [{
@@ -57,12 +56,19 @@ in {
     search.engines."NixOS Wiki" = {
       urls = [{ template = "https://nixos.wiki/index.php?search={searchTerms}"; }];
       iconUpdateURL = "https://nixos.wiki/favicon.png";
-      # updateInterval = 24 * 60 * 60 * 1000; # every day
       definedAliases = [ "@nw" ];
     };
+    search.engines."Home Manager - Option Search" = {
+      urls = [{
+        template = "https://home-manager-options.extranix.com/?query={searchTerms}";
+      }];
+      icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+      definedAliases = [ "@hmo" ];
+    };
     search.engines = {
-        # "Bing".metaData.hidden = true;
+        "Bing".metaData.hidden = true;
         "Google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias 
+        "Wikipedia".metaData.alias = "@w";
     };
   };
 }
