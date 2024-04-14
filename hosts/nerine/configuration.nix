@@ -69,6 +69,9 @@ in
   # doesn't work tho, starting fcitx5 in hyprland instead
   # services.xserver.desktopManager.runXdgAutostartIfNone = true;
 
+  hardware.opentabletdriver.enable = true;  # needed for using tablet
+                                            # and also for playing osu
+
   # enable OpenGL
   hardware.opengl = {
     enable = true;

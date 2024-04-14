@@ -21,6 +21,7 @@ in
       # gitkraken
       # "betterttv"
       unrar
+      osu-lazer-bin
     ]);
 
   # TODO: organize to bundles
@@ -72,6 +73,7 @@ in
     zathura
     go
     unrar
+    osu-lazer-bin
 
     # nwg-look
   ] ++ [
