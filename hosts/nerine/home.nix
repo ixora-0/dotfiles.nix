@@ -40,6 +40,7 @@ in
     "git"
     "theme"
     "firefox"
+    "zoxide"
   ];
   modules.zsh.plugins.fastSyntaxHighlighting.enable = true;
   modules.zsh.plugins.powerlevel10k.enable = true;
