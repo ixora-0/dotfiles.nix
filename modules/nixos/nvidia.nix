@@ -1,0 +1,26 @@
+{config, ... }: {
+  hardware.nvidia = {
+    modesetting.enable = true;  # required
+
+    # can cause sleep/suspend to fail
+    # enable if graphical corruption issues or application after waking
+    powerManagement.enable = false;
+
+    # (experimental) turn off gpu when not in use
+    powerManagement.finegrained = false;
+
+    # only from driver 515.43.04+
+    # currently alpha-quality/buggy, false is currently the recommened setting
+    open = false;
+
+    # enable the nvidia settings menu,
+    # accessible via `nvidia-settings`
+    nvidiaSettings = true;
+
+    package = config.boot.kernelPackages.nvidiaPackages.stable;  # 550
+  };
+
+  # load nvidia driver for xorg and wayland
+  services.xserver.videoDrivers = ["nvidia"]; 
+
+}

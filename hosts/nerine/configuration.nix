@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }: let
+{ pkgs, inputs, ... }: let
   nixosModuleImport = import ../../helpers/nixosModuleImport.nix;
 in
 {
@@ -14,6 +14,7 @@ in
     "boot"
     "locale"
     "input"
+    "nvidia"
     "fonts"
   ]);
 
@@ -37,30 +38,8 @@ in
     driSupport32Bit = true;
   };
 
-  hardware.nvidia = {
-    modesetting.enable = true;  # required
-
-    # can cause sleep/suspend to fail
-    # enable if graphical corruption issues or application after waking
-    powerManagement.enable = false;
-
-    # (experimental) turn off gpu when not in use
-    powerManagement.finegrained = false;
-
-    # only from driver 515.43.04+
-    # currently alpha-quality/buggy, false is currently the recommened setting
-    open = false;
-
-    # enable the nvidia settings menu,
-    # accessible via `nvidia-settings`
-    nvidiaSettings = true;
-
-    package = config.boot.kernelPackages.nvidiaPackages.stable;  # 550
-  };
-
   services.xserver.enable = true;
   services.xserver.excludePackages = [pkgs.xterm];
-  services.xserver.videoDrivers = ["nvidia"];  # load nvidia driver for xorg and wayland
   services.xserver.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
