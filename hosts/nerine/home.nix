@@ -41,6 +41,7 @@ in
     "theme"
     "firefox"
     "zoxide"
+    "direnv"
   ];
   modules.zsh.plugins.fastSyntaxHighlighting.enable = true;
   modules.zsh.plugins.powerlevel10k.enable = true;
