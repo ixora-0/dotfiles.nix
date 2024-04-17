@@ -42,6 +42,12 @@
       "ctrl+0" = "change_font_size all 0";
 
       "ctrl+shift+n" = "launch --cwd=current --type=os-window";
+      "ctrl+t" = "launch --cwd=current --type=tab";
+      "ctrl+w" = "close_tab";
+      "ctrl+d" = "detach_tab";
+      "ctrl+shift+w" = "close_window";
+      "ctrl+shift+d" = "detach_window";
+      "ctrl+alt+d" = "detach_window new-tab";
     };
 
     settings = {
