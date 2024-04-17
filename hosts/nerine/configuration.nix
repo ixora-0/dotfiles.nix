@@ -87,6 +87,7 @@ in
       "wheel" 
       "video"  # for brightness control
       "uinput"  # needed for something in ags
+      "docker"
     ];
     # packages = with pkgs; [ungoogled-chromium alsa-utils];
     shell = pkgs.zsh;
@@ -108,6 +109,8 @@ in
   #     inherit pkgs;
   #   };
   # };
+
+  virtualisation.docker.enable = true;
 
   environment.systemPackages = with pkgs; [
     vim
