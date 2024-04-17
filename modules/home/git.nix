@@ -19,5 +19,10 @@
       core.autocrlf = "input";
       init.defaultBranch = "main";
     };
+
+    ignores = [
+      "*.backup"
+      "TEST*"
+    ];
   };
 }
