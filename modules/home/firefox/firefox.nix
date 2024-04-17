@@ -68,7 +68,7 @@ in {
     search.engines = {
         "Bing".metaData.hidden = true;
         "Google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias 
-        "Wikipedia".metaData.alias = "@w";
+        "Wikipedia (en)".metaData.alias = "@w";
     };
   };
 }
