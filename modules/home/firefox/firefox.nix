@@ -37,7 +37,7 @@ in {
     search.force = true;
     search.default = "Startpage";
     search.privateDefault = "Startpage";
-    # search.order = ["Startpage" "Google"];
+    search.order = ["Startpage" "Google"];
     search.engines."Startpage" = {
       urls = [{ template = "https://www.startpage.com/search?query={searchTerms}"; }];
       iconsUpdateURL = "https://www.startpage.com/favicon.ico";
