@@ -3,9 +3,19 @@ name: Flake Check
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches:
+      - main
+    paths:
+      - "**.nix"
+      - "**.lock"
+      - ".github/workflows/flake-check.yml"
   pull_request:
-    branches: [main]
+    branches:
+      - main
+    paths:
+      - "**.nix"
+      - "**.lock"
+      - ".github/workflows/flake-check.yml"
 
 jobs:
   flake-check:
