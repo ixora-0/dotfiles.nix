@@ -40,11 +40,12 @@ in
       (lib.mkIf cfg.plugins.fastSyntaxHighlighting.enable {
         name = "fast-syntax-highlighting";
         src = pkgs.zsh-fast-syntax-highlighting;
+        file = "share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh";  # has to be a string not path
       })
       (lib.mkIf cfg.plugins.powerlevel10k.enable {
         name = "powerlevel10k";
         src = pkgs.zsh-powerlevel10k;
-        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";  # has to be a string not path
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
       })
     ];
 
