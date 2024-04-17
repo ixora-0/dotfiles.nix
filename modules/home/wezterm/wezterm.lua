@@ -31,11 +31,7 @@ config.adjust_window_size_when_changing_font_size = false
 
 config.disable_default_key_bindings = true
 config.keys = {
-  {
-    key = "a",
-    mods = "CTRL|SHIFT",
-    action = wezterm.action.SpawnCommandInNewWindow {}
-  },
+  { key = "N",         mods = "CTRL|SHIFT", action = wezterm.action.SpawnCommandInNewWindow {} },
 
   { key = '=',         mods = 'CTRL',       action = wezterm.action.IncreaseFontSize },
   { key = '-',         mods = 'CTRL',       action = wezterm.action.DecreaseFontSize },

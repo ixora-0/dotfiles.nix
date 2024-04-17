@@ -40,6 +40,8 @@
       "ctrl+kp_subtract" = "change_font_size all -2.0";
 
       "ctrl+0" = "change_font_size all 0";
+
+      "ctrl+shift+n" = "launch --cwd=current --type=os-window";
     };
 
     settings = {
