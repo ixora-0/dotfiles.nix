@@ -1,0 +1,30 @@
+name: Flake Check
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  flake-check:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install Nix
+      uses: cachix/install-nix-action@master
+      with: 
+        nix_path: nixpkgs=channel:nixos-unstable
+
+    - name: Nix Flake Check
+      run: nix flake check --print-build-logs
+
+    # - name: Flake Checker
+    #   uses: DeterminateSystems/flake-checker-action@v5
