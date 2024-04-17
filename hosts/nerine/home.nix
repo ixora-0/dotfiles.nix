@@ -77,6 +77,7 @@ in
     unrar
     osu-lazer-bin
     glow
+    lazygit
 
     # nwg-look
   ] ++ [
