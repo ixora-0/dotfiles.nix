@@ -48,9 +48,17 @@ in
       })
     ];
 
-    initExtra = lib.mkIf cfg.plugins.powerlevel10k.enable ''
-      source ${./p10k.zsh}
-    '';
+    initExtra = lib.mkMerge [
+      ''
+        if [ -n "''${commands[fzf-share]}" ]; then
+          source "$(fzf-share)/key-bindings.zsh"
+          source "$(fzf-share)/completion.zsh"
+        fi    
+      ''
+      (lib.mkIf cfg.plugins.powerlevel10k.enable ''
+        source ${./p10k.zsh}
+      '')
+    ];
 
     oh-my-zsh = {
       enable = lib.mkIf cfg.ohMyZsh.enable true;
