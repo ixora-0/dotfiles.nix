@@ -78,6 +78,7 @@ in
     osu-lazer-bin
     glow
     lazygit
+    act
 
     # nwg-look
   ] ++ [
