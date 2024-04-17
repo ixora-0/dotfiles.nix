@@ -76,6 +76,7 @@ in
     go
     unrar
     osu-lazer-bin
+    glow
 
     # nwg-look
   ] ++ [
