@@ -1,0 +1,33 @@
+name: Minify p10k
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  minify-p10k:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: 'stable'
+
+    - name: Run minify_p10k script
+      run: |
+        go run modules/home/zsh/minify_p10k.go -i modules/home/zsh/p10k.zsh -o modules/home/zsh/p10k.zsh
+
+    - name: Commit
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: 'style: minify p10k.zsh'
