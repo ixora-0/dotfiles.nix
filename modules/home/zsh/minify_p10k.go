@@ -15,11 +15,7 @@ func removeComments(inputFilePath, outputFilePath string) error {
     }
     defer inputFile.Close()
 
-    outputFile, err := os.Create(outputFilePath)
-    if err != nil {
-        return err
-    }
-    defer outputFile.Close()
+    var lines []string
 
     scanner := bufio.NewScanner(inputFile)
     for scanner.Scan() {
@@ -30,12 +26,22 @@ func removeComments(inputFilePath, outputFilePath string) error {
         re = regexp.MustCompile(`( *)# .*`)
         line = re.ReplaceAllString(line, "")
         if strings.TrimSpace(line) != "" {
-            fmt.Fprintln(outputFile, line)
+            lines = append(lines, line)
         }
     }
 
     if err := scanner.Err(); err != nil {
         return err
+    }
+
+    outputFile, err := os.Create(outputFilePath)
+    if err != nil {
+        return err
+    }
+    defer outputFile.Close()
+
+    for _, line := range lines {
+        fmt.Fprintln(outputFile, line)
     }
 
     return nil
