@@ -2,6 +2,7 @@ package main
 
 import (
     "bufio"
+    "flag"
     "fmt"
     "os"
     "regexp"
@@ -48,14 +49,22 @@ func removeComments(inputFilePath, outputFilePath string) error {
 }
 
 func main() {
-    inputFilePath := "p10k.zsh"
-    outputFilePath := "p10k.minified.zsh"
+    var inputFilePath, outputFilePath string
+
+    flag.StringVar(&inputFilePath, "input", "p10k.zsh", "Input file path")
+    flag.StringVar(&inputFilePath, "i", "p10k.zsh", "Input file path (shorthand)")
+
+    flag.StringVar(&outputFilePath, "output", "p10k.minified.zsh", "Output file path")
+    flag.StringVar(&outputFilePath, "o", "p10k.minified.zsh", "Output file path (shorthand)")
+
+    flag.Parse()
 
     if err := removeComments(inputFilePath, outputFilePath); err != nil {
         fmt.Println("Error:", err)
+        os.Exit(1)
         return
     }
 
-    fmt.Println("Comments removed from " + inputFilePath + "successfully!")
+    fmt.Println("Comments removed from " + inputFilePath + " successfully!")
     fmt.Println("Wrote file to " + outputFilePath)
 }
