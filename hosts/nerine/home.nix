@@ -40,6 +40,7 @@ in
     "git"
     "theme"
     "firefox"
+    "wlsunset"
     "zoxide"
     "direnv"
   ];
