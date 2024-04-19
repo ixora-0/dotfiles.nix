@@ -15,7 +15,6 @@ in
   nixpkgs.config.allowUnfreePredicate = makeUnfreePredicate
     lib
     (with pkgs; [
-      discord
       spotify
       obsidian
       # gitkraken
@@ -50,6 +49,8 @@ in
   modules.helix.languages.lsp.nil.enable = true;
   modules.helix.languages.lsp.typescript.enable = true;
   modules.helix.languages.lsp.vscodeLangservers.enable = true;
+
+  modules.discord.vesktop.enable = true;
 
   home.packages = with pkgs; [
     tlrc
