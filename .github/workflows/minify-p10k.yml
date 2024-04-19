@@ -3,9 +3,17 @@ name: Minify p10k
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches:
+      - main
+    paths:
+      - "modules/home/zsh/p10k.zsh"
+      - ".github/workflows/minify-p10k.yml"
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
+    paths:
+      - "modules/home/zsh/p10k.zsh"
+      - ".github/workflows/minify-p10k.yml"
 
 jobs:
   minify-p10k:
