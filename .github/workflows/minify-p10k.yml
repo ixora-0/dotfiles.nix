@@ -38,4 +38,4 @@ jobs:
     - name: Commit
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        commit_message: 'style: minify p10k.zsh'
+        commit_message: 'style: Minify p10k.zsh.'
