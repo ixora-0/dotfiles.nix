@@ -16,7 +16,14 @@ in
     Good if want to share screen properly in wayland.
   '';
 
-  config.xdg.configFile."Vencord/themes".source = catppuccinThemesSrc;
+  config.xdg.configFile = (mkIfElse cfg.vesktop.enable 
+    # NOTE: might have to delete the themes folder if one already exist in order to symlink it
+    # alternatively, specify a specific theme instead of the whole folder like
+    # { "vesktop/themes/mocha.theme.css".source = catppuccinThemesSrc + "/mocha.theme.css"; }
+
+    { "vesktop/themes".source = catppuccinThemesSrc; }
+    { "Vencord/themes".source = catppuccinThemesSrc; }
+  );
   config.home.packages = with pkgs; [
     (mkIfElse cfg.vesktop.enable
       (vesktop.override {
