@@ -6,7 +6,7 @@
   } + /themes;
 in
 {
-  # TODO: declarative ~/.config/Vencord/setting/settinngs.json
+  # TODO: declarative ~/.config/Vencord/setting/settings.json
   # maybe see https://github.com/FlafyDev/nixos-config/commit/5cd0781bae16fed8007513c24434890909c1a680
   xdg.configFile."Vencord/themes".source = catppuccinThemesSrc;
   home.packages = [
