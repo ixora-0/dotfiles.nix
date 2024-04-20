@@ -13,9 +13,9 @@
     home-manager-unstable.url = "github:nix-community/home-manager";
     home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    systems.url = "github:nix-systems/x86_64-linux";
-    flake-utils.url = "github:numtide/flake-utils";
-    flake-utils.inputs.systems.follows = "systems";
+    # systems.url = "github:nix-systems/x86_64-linux";
+    # flake-utils.url = "github:numtide/flake-utils";
+    # flake-utils.inputs.systems.follows = "systems";
 
     # nur
     nur.url = "github:nix-community/NUR";
@@ -28,10 +28,6 @@
     ags.url = "github:Aylur/ags";
     astal.url = "github:Aylur/astal";
     matugen.url = "github:InioX/matugen";
-
-    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-    firefox-addons.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    firefox-addons.inputs.flake-utils.follows = "flake-utils";
 
     # flake-utils.url = "github:numtide/flake-utils";
     # helix.url = "github:helix-editor/helix";

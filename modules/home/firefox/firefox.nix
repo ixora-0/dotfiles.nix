@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: let
+{ pkgs, ... }: let
   userChromeCSS = builtins.readFile (if pkgs.stdenv.hostPlatform.isDarwin then 
     ./userChrome-MacOS.css
   else
@@ -19,7 +19,7 @@ in {
 
     # NOTE: have to enable extensions manually at first launch
     # NOTE: have to configure toolbar manually
-    extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
+    extensions = with pkgs.nur.repos.rycee.firefox-addons; [
       ublock-origin             # ad blocker
       bitwarden                 # password manager
       sidebery                  # tree style tab
