@@ -27,8 +27,7 @@ in {
       simple-translate          # quick translate
       undoclosetabbutton        # actually undo close tab
 
-      # TODO: make nur work
-      # betterttv               # twitch/yt emotes
+      betterttv                 # twitch/yt emotes
       return-youtube-dislikes   # third party yt dislikes
       videospeed                # yt speed controller
     ];

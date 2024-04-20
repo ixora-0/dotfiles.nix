@@ -19,9 +19,9 @@ in
       spotify
       obsidian
       # gitkraken
-      # "betterttv"
       unrar
       osu-lazer-bin
+      "betterttv"
     ]);
 
   # TODO: organize to bundles
