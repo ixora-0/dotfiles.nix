@@ -19,6 +19,8 @@ in {
 
     # NOTE: have to enable extensions manually at first launch
     # NOTE: have to configure toolbar manually
+    # NOTE: extensions that are not available for installation from here:
+    # https://addons.mozilla.org/en-US/firefox/addon/catppuccin-gh-file-explorer/
     extensions = with pkgs.nur.repos.rycee.firefox-addons; [
       ublock-origin             # ad blocker
       bitwarden                 # password manager
@@ -30,6 +32,9 @@ in {
       betterttv                 # twitch/yt emotes
       return-youtube-dislikes   # third party yt dislikes
       videospeed                # yt speed controller
+      stylus                    # custom site styles
+                                # NOTE: have to import https://github.com/catppuccin/userstyles/releases/download/all-userstyles-export/import.json manually
+      # refined-github
     ];
 
     # search engines
