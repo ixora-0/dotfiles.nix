@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: let
+{ lib, pkgs, inputs, ... }: let
   homeModuleImport = import ../../helpers/homeModuleImport.nix;
   makeUnfreePredicate = import ../../helpers/makeUnfreePredicate.nix;
 in
@@ -12,6 +12,7 @@ in
   # release notes.
   home.stateVersion = "23.11"; # Please read the comment before changing.
 
+  nixpkgs.overlays = [inputs.nur.overlay];
   nixpkgs.config.allowUnfreePredicate = makeUnfreePredicate
     lib
     (with pkgs; [

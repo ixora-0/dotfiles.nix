@@ -17,8 +17,8 @@
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "systems";
 
-    # # nur
-    # nur.url = "github:nix-community/NUR";
+    # nur
+    nur.url = "github:nix-community/NUR";
 
     # other flakes
     hyprland.url = "github:hyprwm/Hyprland";

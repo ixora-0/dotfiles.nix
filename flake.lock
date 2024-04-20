@@ -359,6 +359,21 @@
         "type": "github"
       }
     },
+    "nur": {
+      "locked": {
+        "lastModified": 1713607712,
+        "narHash": "sha256-B4+hiDGLPoL2TOuP7Wr+VqG+9kGu1RUzBR1JU24cfmw=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "800327409d11460386c0f3c757abc7e2beb2900e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "NUR",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "ags": "ags",
@@ -371,6 +386,7 @@
         "matugen": "matugen",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "nur": "nur",
         "spicetify-nix": "spicetify-nix",
         "systems": "systems_3"
       }
