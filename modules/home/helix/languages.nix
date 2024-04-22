@@ -30,12 +30,12 @@ in
   };
   options.modules.helix.languages.prettier.enable = lib.mkEnableOption ''Whether to enable prettier'';
   config.programs.helix.extraPackages = let
-    includeLSP = opt: lsp: lib.mkIf (cfg.lsp.enableAll || opt) [lsp];
+    includeLSP = opt: lsps: lib.mkIf (cfg.lsp.enableAll || opt) lsps;
   in lib.mkMerge (with pkgs; [
-    (includeLSP cfg.lsp.taplo.enable             taplo)
-    (includeLSP cfg.lsp.lua.enable               lua-language-server)
-    (includeLSP cfg.lsp.vscodeLangservers.enable vscode-langservers-extracted)
-    (includeLSP cfg.lsp.typescript.enable        nodePackages_latest.typescript-language-server)
+    (includeLSP cfg.lsp.taplo.enable             [taplo])
+    (includeLSP cfg.lsp.lua.enable               [lua-language-server])
+    (includeLSP cfg.lsp.vscodeLangservers.enable [vscode-langservers-extracted])
+    (includeLSP cfg.lsp.typescript.enable        [nodePackages_latest.typescript-language-server])
   ]);
 
   config.programs.helix.languages.language-server = lib.mkMerge [
