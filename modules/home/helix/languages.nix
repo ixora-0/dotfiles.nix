@@ -37,6 +37,7 @@ in
     (includeLSP cfg.lsp.vscodeLangservers.enable [vscode-langservers-extracted])
     (includeLSP cfg.lsp.lua.enable               [lua-language-server])
     (includeLSP cfg.lsp.typescript.enable        [nodePackages_latest.typescript-language-server])
+    (includeLSP cfg.lsp.svelte.enable            [nodePackages_latest.svelte-language-server])
   ]);
 
   config.programs.helix.languages.language-server = lib.mkMerge [
@@ -58,10 +59,6 @@ in
         problems.shortenToSingleLine = false;
         nodePath = "";  # use the workspace folder or file location to start eslint server
       };
-    })
-    # svelte
-    (lib.mkIf (cfg.lsp.enableAll || cfg.lsp.svelte.enable) {
-      svelteserver.command = "${pkgs.nodePackages.svelte-language-server}/bin/svelteserver";
     })
     # tailwindcss
     (lib.mkIf (cfg.lsp.enableAll || cfg.lsp.svelte.enable) {
