@@ -38,6 +38,7 @@ in
     (includeLSP cfg.lsp.lua.enable               [lua-language-server])
     (includeLSP cfg.lsp.typescript.enable        [nodePackages_latest.typescript-language-server])
     (includeLSP cfg.lsp.svelte.enable            [nodePackages_latest.svelte-language-server])
+    (includeLSP cfg.lsp.tailwind.enable          [tailwindcss-language-server])
   ]);
 
   config.programs.helix.languages.language-server = lib.mkMerge [
@@ -59,10 +60,6 @@ in
         problems.shortenToSingleLine = false;
         nodePath = "";  # use the workspace folder or file location to start eslint server
       };
-    })
-    # tailwindcss
-    (lib.mkIf (cfg.lsp.enableAll || cfg.lsp.svelte.enable) {
-      tailwindcss-ls.command = "${pkgs.tailwindcss-language-server}/bin/tailwindcss-language-server";
     })
 
     # ruff
