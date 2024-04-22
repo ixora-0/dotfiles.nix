@@ -29,14 +29,14 @@ in
     marksman.enable = lib.mkEnableOption "Whether to enable the marksman LSP";
   };
   options.modules.helix.languages.prettier.enable = lib.mkEnableOption ''Whether to enable prettier'';
-  config.programs.helix.extraPackages = let 
-    includeLSP = opt: lsp: lib.lists.optional (cfg.lsp.enableAll || opt) lsp;
-  in with pkgs; (
-    includeLSP cfg.lsp.taplo.enable             taplo ++
-    includeLSP cfg.lsp.lua.enable               lua-language-server ++
-    includeLSP cfg.lsp.vscodeLangservers.enable vscode-langservers-extracted ++
-    includeLSP cfg.lsp.typescript.enable        nodePackages_latest.typescript-language-server
-  );
+  config.programs.helix.extraPackages = let
+    includeLSP = opt: lsp: lib.mkIf (cfg.lsp.enableAll || opt) [lsp];
+  in lib.mkMerge (with pkgs; [
+    (includeLSP cfg.lsp.taplo.enable             taplo)
+    (includeLSP cfg.lsp.lua.enable               lua-language-server)
+    (includeLSP cfg.lsp.vscodeLangservers.enable vscode-langservers-extracted)
+    (includeLSP cfg.lsp.typescript.enable        nodePackages_latest.typescript-language-server)
+  ]);
 
   config.programs.helix.languages.language-server = lib.mkMerge [
     # rust
