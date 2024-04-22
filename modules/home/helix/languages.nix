@@ -48,7 +48,7 @@ in
     (lib.mkIf (cfg.lsp.enableAll || cfg.lsp.vscodeLangservers.enable) {
       vscode-json-language-server.config.json.keepLines.enable = true;
       # eslint
-      eslint.command = "${pkgs.vscode-langservers-extracted}/bin/vscode-eslint-language-server";
+      eslint.command = "vscode-eslint-language-server";
       eslint.args = ["--stdio"];
       eslint.config = {
         validate = "on";
