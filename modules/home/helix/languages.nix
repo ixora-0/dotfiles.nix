@@ -42,6 +42,7 @@ in
     (includeLSP cfg.lsp.ruff.enable              [ruff-lsp])
     (includeLSP cfg.lsp.pyright.enable           [nodePackages.pyright])
     (includeLSP cfg.lsp.nil.enable               [nil])
+    (includeLSP cfg.lsp.marksman.enable          [marksman])
   ]);
 
   config.programs.helix.languages.language-server = lib.mkMerge [
@@ -69,11 +70,6 @@ in
     (lib.mkIf (cfg.lsp.enableAll || cfg.lsp.ruff.enable) {
       ruff.command = "ruff-lsp";
       # ruff.config.line-length = 88;
-    })
-
-    # marksman
-    (lib.mkIf (cfg.lsp.enableAll || cfg.lsp.marksman.enable) {
-      marksman.command = "${pkgs.marksman}/bin/marksman";
     })
   ];
 
