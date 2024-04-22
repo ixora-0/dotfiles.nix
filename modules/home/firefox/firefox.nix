@@ -69,6 +69,14 @@ in {
       icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
       definedAliases = [ "@hmo" ];
     };
+    search.engines."WordReference English definition" = {
+      urls = [{ template = "https://www.wordreference.com/definition/{searchTerms}"; }];
+      definedAliases = [ "@mean" ];
+    };
+    search.engines."WordReference English synonyms" = {
+      urls = [{ template = "https://www.wordreference.com/synonyms/{searchTerms}"; }];
+      definedAliases = [ "@same" ];
+    };
     search.engines = {
         "Bing".metaData.hidden = true;
         "Google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias 
