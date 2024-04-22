@@ -94,10 +94,6 @@ in
     {
       name = "toml";
       auto-format = true;
-      formatter = lib.mkIf (cfg.lsp.enableAll || cfg.lsp.taplo.enable) {
-        command = "${pkgs.taplo}/bin/taplo"; 
-        args = ["fmt" "-"];
-      };
     }
 
     # rust
