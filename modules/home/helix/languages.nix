@@ -41,6 +41,7 @@ in
     (includeLSP cfg.lsp.tailwind.enable          [tailwindcss-language-server])
     (includeLSP cfg.lsp.ruff.enable              [ruff-lsp])
     (includeLSP cfg.lsp.pyright.enable           [nodePackages.pyright])
+    (includeLSP cfg.lsp.nil.enable               [nil])
   ]);
 
   config.programs.helix.languages.language-server = lib.mkMerge [
@@ -68,11 +69,6 @@ in
     (lib.mkIf (cfg.lsp.enableAll || cfg.lsp.ruff.enable) {
       ruff.command = "ruff-lsp";
       # ruff.config.line-length = 88;
-    })
-
-    # nil
-    (lib.mkIf (cfg.lsp.enableAll || cfg.lsp.nil.enable) {
-      nil.command = "${pkgs.nil}/bin/nil";
     })
 
     # marksman
