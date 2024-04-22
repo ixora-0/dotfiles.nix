@@ -33,6 +33,7 @@ in
     includeLSP = opt: lsps: lib.mkIf (cfg.lsp.enableAll || opt) lsps;
   in lib.mkMerge (with pkgs; [
     (includeLSP cfg.lsp.taplo.enable             [taplo])
+    (includeLSP cfg.lsp.rustAnalyzer.enable      [rust-analyzer cargo rustPackages.clippy])
     (includeLSP cfg.lsp.lua.enable               [lua-language-server])
     (includeLSP cfg.lsp.vscodeLangservers.enable [vscode-langservers-extracted])
     (includeLSP cfg.lsp.typescript.enable        [nodePackages_latest.typescript-language-server])
@@ -41,8 +42,7 @@ in
   config.programs.helix.languages.language-server = lib.mkMerge [
     # rust
     (lib.mkIf (cfg.lsp.enableAll || cfg.lsp.rustAnalyzer.enable) {
-      rust-analyzer.command = "${pkgs.rust-analyzer}/bin/rust-analyzer";
-      rust-analyzer.config.check.command = "${pkgs.clippy}/bin/cargo-clippy";
+      rust-analyzer.config.check.command = "clippy";
     })
 
     (lib.mkIf (cfg.lsp.enableAll || cfg.lsp.vscodeLangservers.enable) {
