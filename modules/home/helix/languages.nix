@@ -34,8 +34,8 @@ in
   in lib.mkMerge (with pkgs; [
     (includeLSP cfg.lsp.taplo.enable             [taplo])
     (includeLSP cfg.lsp.rustAnalyzer.enable      [rust-analyzer cargo rustPackages.clippy])
-    (includeLSP cfg.lsp.lua.enable               [lua-language-server])
     (includeLSP cfg.lsp.vscodeLangservers.enable [vscode-langservers-extracted])
+    (includeLSP cfg.lsp.lua.enable               [lua-language-server])
     (includeLSP cfg.lsp.typescript.enable        [nodePackages_latest.typescript-language-server])
   ]);
 
