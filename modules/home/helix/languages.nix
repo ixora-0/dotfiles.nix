@@ -12,7 +12,7 @@ in
     rustAnalyzer.enable = lib.mkEnableOption "Whether to enable the rust-analyzer LSP";
     vscodeLangservers.enable = lib.mkEnableOption ''
       Whether to enable vscode-langeservers-extracted LSP.
-      This includes support for css, html, json ,and also eslint.
+      This includes support for css, html, json, and also eslint.
     '';
     typescript.enable = lib.mkEnableOption ''
       Whether to enable the typescript LSP. Also supports javascript.
