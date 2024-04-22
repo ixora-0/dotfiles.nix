@@ -39,6 +39,8 @@ in
     (includeLSP cfg.lsp.typescript.enable        [nodePackages_latest.typescript-language-server])
     (includeLSP cfg.lsp.svelte.enable            [nodePackages_latest.svelte-language-server])
     (includeLSP cfg.lsp.tailwind.enable          [tailwindcss-language-server])
+    (includeLSP cfg.lsp.ruff.enable              [ruff-lsp])
+    (includeLSP cfg.lsp.pyright.enable           [nodePackages.pyright])
   ]);
 
   config.programs.helix.languages.language-server = lib.mkMerge [
@@ -64,12 +66,8 @@ in
 
     # ruff
     (lib.mkIf (cfg.lsp.enableAll || cfg.lsp.ruff.enable) {
-      ruff.command = "${pkgs.ruff-lsp}/bin/ruff-lsp";
+      ruff.command = "ruff-lsp";
       # ruff.config.line-length = 88;
-    })
-    # pyright
-    (lib.mkIf (cfg.lsp.enableAll || cfg.lsp.pyright.enable) {
-      pyright.command = "${pkgs.nodePackages.pyright}/bin/pyright-langserver";
     })
 
     # nil
