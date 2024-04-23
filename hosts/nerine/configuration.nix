@@ -17,6 +17,7 @@ in
     "nvidia"
     "sound"
     "fonts"
+    "sddm"
   ]);
 
   networking.hostName = "nerine"; # Define your hostname.
@@ -41,11 +42,6 @@ in
 
   services.xserver.enable = true;
   services.xserver.excludePackages = [pkgs.xterm];
-  services.xserver.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
-    theme = "${import ../../modules/nixos/sddm-theme.nix { inherit pkgs; }}";
-  };
 
   programs.hyprland = {
     enable = true;
