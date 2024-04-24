@@ -77,6 +77,11 @@ in {
       urls = [{ template = "https://www.wordreference.com/synonyms/{searchTerms}"; }];
       definedAliases = [ "@same" ];
     };
+    search.engines."Youtube" = {
+      urls = [{ template = "https://www.youtube.com/results?search_query={searchTerms}"; }];
+      definedAliases = [ "@yt" ];
+      icon = "https://www.svgrepo.com/show/13671/youtube.svg";
+    };
     search.engines = {
         "Bing".metaData.hidden = true;
         "Google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias 
