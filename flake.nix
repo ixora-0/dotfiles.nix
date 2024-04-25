@@ -36,16 +36,16 @@
   };
 
   outputs = { self, ... }@inputs: let
-    selectFlake = stability: stableFlake: unstableFlake: 
+    matchStability = stability: stableOption: unstableOption: 
       if stability == "stable" then
-        stableFlake
+        stableOption
       else if stability == "unstable" then
-        unstableFlake
+        unstableOption
       else
         builtins.abort "Invalid stability: ${stability}"
       ;
-    selectNixpkgs = stability: selectFlake stability inputs.nixpkgs-stable inputs.nixpkgs-unstable; 
-    selectHomeManager = stability: selectFlake stability inputs.hone-manager-stable inputs.home-manager-unstable;
+    selectNixpkgs = stability: matchStability stability inputs.nixpkgs-stable inputs.nixpkgs-unstable; 
+    selectHomeManager = stability: matchStability stability inputs.hone-manager-stable inputs.home-manager-unstable;
 
     makeHomeConfig = stability: osArchitecture: username: homeModule: let
       nixpkgs = selectNixpkgs stability;
