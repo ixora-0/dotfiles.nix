@@ -4,14 +4,9 @@
 in
 {
   # TODO: make zsh and awesome work
-  nixpkgs.config.allowUnfreePredicate = makeUnfreePredicate 
-    lib
-    (with pkgs; [
-        discord
-        spotify
-        obsidian
-        gitkraken
-    ]);
+  nixpkgs.config.allowUnfreePredicate = makeUnfreePredicate lib
+    (import ./unfrees.nix pkgs)
+  ;
 
   # name          description                          main language
   # packages that has configurations
