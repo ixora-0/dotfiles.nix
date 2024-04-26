@@ -46,13 +46,14 @@
     selectNixpkgs = stability: matchStability stability inputs.nixpkgs-stable inputs.nixpkgs-unstable; 
     selectHomeManager = stability: matchStability stability inputs.hone-manager-stable inputs.home-manager-unstable;
 
+    overlays = [inputs.nur.overlay];  # common overlays
+
     pkgs-stable = (let
       nixpkgs = selectNixpkgs "stable";
     in
       inputs.flake-utils.lib.eachDefaultSystem (system: { 
         p = import nixpkgs {
-          overlays = [inputs.nur.overlay];
-          inherit system;
+          inherit overlays system;
         }; 
       })
     ).p;
@@ -61,8 +62,7 @@
     in
       inputs.flake-utils.lib.eachDefaultSystem (system: { 
         p = import nixpkgs {
-          overlays = [inputs.nur.overlay];
-          inherit system;
+          inherit overlays system;
         }; 
       })
     ).p;
@@ -78,7 +78,7 @@
       # release notes.
       home.stateVersion = "23.11"; # Please read the comment before changing.
 
-      nixpkgs.overlays = [inputs.nur.overlay];
+      nixpkgs = { inherit overlays; };
 
       home.username = username;
       home.homeDirectory =
