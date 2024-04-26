@@ -48,25 +48,22 @@
 
     overlays = [inputs.nur.overlay];  # common overlays
 
-    pkgs-stable = (let
-      nixpkgs = selectNixpkgs "stable";
+    makePkgs = stability: osArchitecture: hostname: username: let
+      nixpkgs = selectNixpkgs stability;
+      config = {
+        allowUnfreePredicate = (import ./helpers/makeUnfreePredicate.nix)
+          nixpkgs.lib
+          (import ./users/${username}/at/${hostname}/unfrees.nix)
+        ;
+      };
     in
-      inputs.flake-utils.lib.eachDefaultSystem (system: { 
-        p = import nixpkgs {
-          inherit overlays system;
-        }; 
-      })
-    ).p;
-    pkgs-unstable = (let
-      nixpkgs = selectNixpkgs "unstable";
-    in
-      inputs.flake-utils.lib.eachDefaultSystem (system: { 
-        p = import nixpkgs {
-          inherit overlays system;
-        }; 
-      })
-    ).p;
-    selectPkgs = stability: matchStability stability pkgs-stable pkgs-unstable;
+    (
+      import nixpkgs {
+        system = osArchitecture;
+        inherit overlays config;
+      }
+    )
+    ;
 
     makeCommonHomeModule = username: { pkgs, inputs, ... }: {
       # This value determines the Home Manager release that your configuration is
@@ -77,8 +74,6 @@
       # want to update the value, then make sure to first check the Home Manager
       # release notes.
       home.stateVersion = "23.11"; # Please read the comment before changing.
-
-      nixpkgs = { inherit overlays; };
 
       home.username = username;
       home.homeDirectory =
@@ -93,7 +88,7 @@
     };
 
     makeHomeConfig = stability: osArchitecture: hostname: username: let
-      pkgs = (selectPkgs stability).${osArchitecture};
+      pkgs = makePkgs stability osArchitecture hostname username;
       home-manager = selectHomeManager stability;
     in 
       home-manager.lib.homeManagerConfiguration {
@@ -107,6 +102,7 @@
 
     makeNixOSConfig = stability: osArchitecture: hostname: username: let
       nixpkgs = selectNixpkgs stability;
+      pkgs = makePkgs stability osArchitecture hostname username;
       home-manager = selectHomeManager stability;
     in
       nixpkgs.lib.nixosSystem {
@@ -114,6 +110,7 @@
         modules = [
           home-manager.nixosModules.home-manager 
           {
+            nixpkgs = { inherit pkgs; };
             users.users."${username}".packages = [home-manager];
             home-manager.users."${username}".imports = [
               (makeCommonHomeModule username)
@@ -124,7 +121,7 @@
             # By default, Home Manager uses a private pkgs instance that is configured 
             # via the home-manager.users..nixpkgs options. 
             # To instead use the global pkgs that is configured via the system level nixpkgs options, set
-            # home-manager.useGlobalPkgs = true; 
+            home-manager.useGlobalPkgs = true;
           }
           ./hosts/${hostname}/configuration.nix
         ];

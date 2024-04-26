@@ -1,11 +1,8 @@
-{ pkgs, lib, ... }:  let 
+{ pkgs, ... }:  let
   homeModuleImport = import ../../../../helpers/homeModuleImport.nix;
-  makeUnfreePredicate = import ../../../../helpers/makeUnfreePredicate.nix;
 in
 {
   # TODO: make zsh and awesome work
-  nixpkgs.config.allowUnfreePredicate = makeUnfreePredicate lib (import ./unfrees.nix);
-
   # name          description                          main language
   # packages that has configurations
   imports = map homeModuleImport [

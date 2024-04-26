@@ -10,4 +10,6 @@
   # cudaPackages.cuda_cudart
   # cudaPackages.cudatoolkit
   # linuxKernel.packages.linux_zen.nvidia_x11
+  "nvidia-x11"
+  "nvidia-settings"
 ]

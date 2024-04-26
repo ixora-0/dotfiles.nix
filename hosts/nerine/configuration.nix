@@ -93,9 +93,6 @@ in
 
   programs.gnupg.agent.enable = true;  # can't set this in home-manager
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # # add nur overlay
   # nixpkgs.config.packageOverrides = pkgs: {
   #   nur = import (builtins.fetchTarball {

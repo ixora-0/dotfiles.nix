@@ -1,10 +1,7 @@
-{ lib, pkgs, ... }: let
+{ pkgs, ... }: let
   homeModuleImport = import ../../../../helpers/homeModuleImport.nix;
-  makeUnfreePredicate = import ../../../../helpers/makeUnfreePredicate.nix;
 in
 {
-  nixpkgs.config.allowUnfreePredicate = makeUnfreePredicate lib (import ./unfrees.nix);
-
   # TODO: organize to bundles
 
   # packages that has configurations
