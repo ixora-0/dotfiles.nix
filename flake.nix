@@ -105,7 +105,7 @@
         extraSpecialArgs = { inherit inputs; };
       };
 
-    makeNixOSConfig = stability: osArchitecture: username: configModule: homeModule: let
+    makeNixOSConfig = stability: osArchitecture: hostname: username: let
       nixpkgs = selectNixpkgs stability;
       home-manager = selectHomeManager stability;
     in
@@ -117,7 +117,7 @@
             users.users."${username}".packages = [home-manager];
             home-manager.users."${username}".imports = [
               (makeCommonHomeModule username)
-              homeModule
+              ./users/${username}/at/${hostname}
             ];
             home-manager.extraSpecialArgs = { inherit inputs; };
 
@@ -126,7 +126,7 @@
             # To instead use the global pkgs that is configured via the system level nixpkgs options, set
             # home-manager.useGlobalPkgs = true; 
           }
-          configModule
+          ./hosts/${hostname}/configuration.nix
         ];
         specialArgs = { inherit inputs; };
       };
@@ -134,9 +134,8 @@
     nixosConfigurations = {
       nerine = makeNixOSConfig "unstable" 
                                "x86_64-linux"
-                               "ixora" 
-                               ./hosts/nerine/configuration.nix 
-                               ./users/ixora/at/nerine;
+                               "nerine"
+                               "ixora";
     };
 
     homeConfigurations = {
