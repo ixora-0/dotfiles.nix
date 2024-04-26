@@ -1,6 +1,6 @@
 { pkgs, lib, ... }:  let 
-  homeModuleImport = import ../../helpers/homeModuleImport.nix;
-  makeUnfreePredicate = import ../../helpers/makeUnfreePredicate.nix;
+  homeModuleImport = import ../../../../helpers/homeModuleImport.nix;
+  makeUnfreePredicate = import ../../../../helpers/makeUnfreePredicate.nix;
 in
 {
   # TODO: make zsh and awesome work

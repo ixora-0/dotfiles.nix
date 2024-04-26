@@ -1,6 +1,6 @@
-{ lib, pkgs, inputs, ... }: let
-  homeModuleImport = import ../../helpers/homeModuleImport.nix;
-  makeUnfreePredicate = import ../../helpers/makeUnfreePredicate.nix;
+{ lib, pkgs, ... }: let
+  homeModuleImport = import ../../../../helpers/homeModuleImport.nix;
+  makeUnfreePredicate = import ../../../../helpers/makeUnfreePredicate.nix;
 in
 {
   nixpkgs.config.allowUnfreePredicate = makeUnfreePredicate
@@ -12,6 +12,11 @@ in
       unrar
       osu-lazer-bin
       "betterttv"
+      # reaper
+      # vital
+      # cudaPackages.cuda_cudart
+      # cudaPackages.cudatoolkit
+      # linuxKernel.packages.linux_zen.nvidia_x11
     ]);
 
   # TODO: organize to bundles
@@ -72,6 +77,11 @@ in
     glow
     lazygit
     act
+    # reaper
+    # vital
+    # (ollama.override {
+    #   acceleration = "cuda";
+    # })
 
     # nwg-look
   ] ++ [

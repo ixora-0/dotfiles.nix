@@ -136,18 +136,18 @@
                                "x86_64-linux"
                                "ixora" 
                                ./hosts/nerine/configuration.nix 
-                               ./hosts/nerine/home.nix;
+                               ./users/ixora/at/nerine;
     };
 
     homeConfigurations = {
       "ixora@azalea" = makeHomeConfig "unstable"
                                       "x86_64-linux"
                                       "ixora"
-                                      ./hosts/azalea/home.nix;
+                                      ./users/ixora/at/azalea;
       "ixora@nerine" = makeHomeConfig "unstable"
                                       "x86_64-linux"
                                       "ixora"
-                                      ./hosts/nerine/home.nix;
+                                      ./users/ixora/at/nerine;
     };
   };
 }
