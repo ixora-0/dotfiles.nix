@@ -34,7 +34,7 @@
     # helix.inputs.flake-utils.follows = "flake-utils";
   };
 
-  outputs = { self, ... }@inputs: let
+  outputs = inputs: let
     matchStability = stability: stableOption: unstableOption: 
       if stability == "stable" then
         stableOption
