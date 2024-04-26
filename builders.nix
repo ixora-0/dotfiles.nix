@@ -13,13 +13,17 @@ inputs: rec {
 
   overlays = [inputs.nur.overlay];  # common overlays
 
-  makePkgs = stability: osArchitecture: hostname: username: let
+  makePkgs = stability: osArchitecture: hostname: usernames: let
     nixpkgs = selectNixpkgs stability;
+    makeUnfreePredicate = import ./helpers/makeUnfreePredicate.nix;
+    mergedUnfrees = builtins.foldl' 
+      (acc: username: acc ++ (import ./users/${username}/at/${hostname}/unfrees.nix))
+      []
+      usernames
+    ;
+
     config = {
-      allowUnfreePredicate = (import ./helpers/makeUnfreePredicate.nix)
-        nixpkgs.lib
-        (import ./users/${username}/at/${hostname}/unfrees.nix)
-      ;
+      allowUnfreePredicate = makeUnfreePredicate nixpkgs.lib mergedUnfrees;
     };
   in (
     import nixpkgs {
@@ -51,7 +55,7 @@ inputs: rec {
   };
 
   makeHomeConfig = stability: osArchitecture: hostname: username: let
-    pkgs = makePkgs stability osArchitecture hostname username;
+    pkgs = makePkgs stability osArchitecture hostname [username];
     home-manager = selectHomeManager stability;
   in
     home-manager.lib.homeManagerConfiguration {
@@ -63,22 +67,25 @@ inputs: rec {
       extraSpecialArgs = { inherit inputs; };
     };
 
-  makeNixOSConfig = stability: osArchitecture: hostname: username: let
+  makeNixOSConfig = stability: osArchitecture: hostname: usernames: let
     nixpkgs = selectNixpkgs stability;
-    pkgs = makePkgs stability osArchitecture hostname username;
+    pkgs = makePkgs stability osArchitecture hostname usernames;
     home-manager = selectHomeManager stability;
+    makeUserModule = username: {
+      users.users."${username}".packages = [home-manager];
+      home-manager.users."${username}".imports = [
+        (makeCommonHomeModule username)
+        ./users/${username}/at/${hostname}
+      ];
+    };
   in
     nixpkgs.lib.nixosSystem {
       system = osArchitecture;
       modules = [
+        ./hosts/${hostname}/configuration.nix
         home-manager.nixosModules.home-manager
         {
           nixpkgs = { inherit pkgs; };
-          users.users."${username}".packages = [home-manager];
-          home-manager.users."${username}".imports = [
-            (makeCommonHomeModule username)
-            ./users/${username}/at/${hostname}
-          ];
           home-manager.extraSpecialArgs = { inherit inputs; };
 
           # By default, Home Manager uses a private pkgs instance that is configured
@@ -86,8 +93,7 @@ inputs: rec {
           # To instead use the global pkgs that is configured via the system level nixpkgs options, set
           home-manager.useGlobalPkgs = true;
         }
-        ./hosts/${hostname}/configuration.nix
-      ];
+      ] ++ (map makeUserModule usernames);
       specialArgs = { inherit inputs; };
     };
 }

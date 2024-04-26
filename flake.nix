@@ -41,7 +41,7 @@
       nerine = makeNixOSConfig "unstable" 
                                "x86_64-linux"
                                "nerine"
-                               "ixora";
+                               ["ixora"];
     };
 
     homeConfigurations = {
