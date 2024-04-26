@@ -68,6 +68,31 @@
       })
     ).p;
     selectPkgs = stability: matchStability stability pkgs-stable pkgs-unstable;
+
+    makeCommonHomeModule = username: { pkgs, inputs, ... }: {
+      # This value determines the Home Manager release that your configuration is
+      # compatible with. This helps avoid breakage when a new Home Manager release
+      # introduces backwards incompatible changes.
+      #
+      # You should not change this value, even if you update Home Manager. If you do
+      # want to update the value, then make sure to first check the Home Manager
+      # release notes.
+      home.stateVersion = "23.11"; # Please read the comment before changing.
+
+      nixpkgs.overlays = [inputs.nur.overlay];
+
+      home.username = username;
+      home.homeDirectory =
+        if pkgs.stdenv.hostPlatform.isDarwin then
+          if (username == "root") then "/var/root" else "/Users/${username}"
+        else
+          if (username == "root") then "/root" else "/home/${username}"
+        ;
+
+      # Let Home Manager install and manage itself.
+      programs.home-manager.enable = true;
+    };
+
     makeHomeConfig = stability: osArchitecture: username: homeModule: let
       pkgs = (selectPkgs stability).${osArchitecture};
       home-manager = selectHomeManager stability;
@@ -75,16 +100,7 @@
       home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          # inputs.nur.hmModules.nur
-          {
-            home.username = username;
-            home.homeDirectory =
-              if pkgs.stdenv.hostPlatform.isDarwin then
-                if (username == "root") then "/var/root" else "/Users/${username}"
-              else
-                if (username == "root") then "/root" else "/home/${username}"
-              ;
-          }
+          (makeCommonHomeModule username)
           homeModule
         ];
         extraSpecialArgs = { inherit inputs; };
@@ -102,7 +118,10 @@
           {
             # nixpkgs.overlays = [inputs.nur.overlay];
             users.users."${username}".packages = [home-manager];
-            home-manager.users."${username}" = import homeModule;
+            home-manager.users."${username}".imports = [
+              (makeCommonHomeModule username)
+              homeModule
+            ];
             home-manager.extraSpecialArgs = { inherit inputs; };
             # By default, Home Manager uses a private pkgs instance that is configured 
             # via the home-manager.users..nixpkgs options. 
