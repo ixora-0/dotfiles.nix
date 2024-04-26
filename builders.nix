@@ -75,7 +75,7 @@ inputs: rec {
     pkgs-unstable = makePkgs "unstable" osArchitecture hostname usernames;
     pkgs = matchStability stability pkgs-stable pkgs-unstable;
     home-manager = selectHomeManager stability;
-    makeUserModule = username: {
+    makeUserNixOSModule = username: {
       users.users."${username}".packages = [home-manager];
       home-manager.users."${username}".imports = [
         (makeCommonHomeModule username)
@@ -98,7 +98,7 @@ inputs: rec {
           # To instead use the global pkgs that is configured via the system level nixpkgs options, set
           home-manager.useGlobalPkgs = true;
         }
-      ] ++ (map makeUserModule usernames);
+      ] ++ (map makeUserNixOSModule usernames);
       specialArgs = { inherit inputs pkgs-stable pkgs-unstable; };
     };
 }
