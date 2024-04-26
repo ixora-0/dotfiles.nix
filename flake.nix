@@ -14,7 +14,7 @@
     home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     # systems.url = "github:nix-systems/x86_64-linux";
-    # flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.url = "github:numtide/flake-utils";
     # flake-utils.inputs.systems.follows = "systems";
 
     # nur
@@ -47,13 +47,29 @@
     selectNixpkgs = stability: matchStability stability inputs.nixpkgs-stable inputs.nixpkgs-unstable; 
     selectHomeManager = stability: matchStability stability inputs.hone-manager-stable inputs.home-manager-unstable;
 
+    pkgs-stable = (let
+      nixpkgs = selectNixpkgs "stable";
+    in
+      inputs.flake-utils.lib.eachDefaultSystem (system: { 
+        p = import nixpkgs {
+          overlays = [inputs.nur.overlay];
+          inherit system;
+        }; 
+      })
+    ).p;
+    pkgs-unstable = (let
+      nixpkgs = selectNixpkgs "unstable";
+    in
+      inputs.flake-utils.lib.eachDefaultSystem (system: { 
+        p = import nixpkgs {
+          overlays = [inputs.nur.overlay];
+          inherit system;
+        }; 
+      })
+    ).p;
+    selectPkgs = stability: matchStability stability pkgs-stable pkgs-unstable;
     makeHomeConfig = stability: osArchitecture: username: homeModule: let
-      nixpkgs = selectNixpkgs stability;
-      pkgs = nixpkgs.legacyPackages.${osArchitecture};
-      # pkgs = import nixpkgs {
-      #   overlays = [inputs.nur.overlay];
-      #   system = osArchitecture;
-      # };
+      pkgs = (selectPkgs stability).${osArchitecture};
       home-manager = selectHomeManager stability;
     in 
       home-manager.lib.homeManagerConfiguration {
