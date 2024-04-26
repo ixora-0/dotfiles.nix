@@ -91,6 +91,7 @@ inputs: rec {
         {
           nixpkgs = { inherit pkgs; };
           home-manager.extraSpecialArgs = { inherit inputs pkgs-stable pkgs-unstable; };
+          networking.hostName = hostname;
 
           # By default, Home Manager uses a private pkgs instance that is configured
           # via the home-manager.users..nixpkgs options.
