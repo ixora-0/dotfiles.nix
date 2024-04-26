@@ -3,9 +3,7 @@
   makeUnfreePredicate = import ../../../../helpers/makeUnfreePredicate.nix;
 in
 {
-  nixpkgs.config.allowUnfreePredicate = makeUnfreePredicate lib
-    (import ./unfrees.nix pkgs)
-  ;
+  nixpkgs.config.allowUnfreePredicate = makeUnfreePredicate lib (import ./unfrees.nix);
 
   # TODO: organize to bundles
 

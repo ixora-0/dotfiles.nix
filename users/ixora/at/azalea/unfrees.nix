@@ -1,6 +1,6 @@
-pkgs: with pkgs; [
-  discord
-  spotify
-  obsidian
-  gitkraken
+[
+  "discord"
+  "spotify"
+  "obsidian"
+  "gitkraken"
 ]

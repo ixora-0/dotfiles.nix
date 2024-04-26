@@ -3,4 +3,4 @@
 lib: packages: pkg: 
   builtins.elem
     (lib.getName pkg)
-    (map lib.getName packages)
+    packages

@@ -1,9 +1,9 @@
-pkgs: with pkgs; [
-  spotify
-  obsidian
+[
+  "spotify"
+  "obsidian"
   # gitkraken
-  unrar
-  osu-lazer-bin
+  "unrar"
+  "osu-lazer-bin-2024.312.1"
   "betterttv"
   # reaper
   # vital

@@ -4,9 +4,7 @@
 in
 {
   # TODO: make zsh and awesome work
-  nixpkgs.config.allowUnfreePredicate = makeUnfreePredicate lib
-    (import ./unfrees.nix pkgs)
-  ;
+  nixpkgs.config.allowUnfreePredicate = makeUnfreePredicate lib (import ./unfrees.nix);
 
   # name          description                          main language
   # packages that has configurations
