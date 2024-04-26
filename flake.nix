@@ -92,7 +92,7 @@
       programs.home-manager.enable = true;
     };
 
-    makeHomeConfig = stability: osArchitecture: username: homeModule: let
+    makeHomeConfig = stability: osArchitecture: hostname: username: let
       pkgs = (selectPkgs stability).${osArchitecture};
       home-manager = selectHomeManager stability;
     in 
@@ -100,7 +100,7 @@
         inherit pkgs;
         modules = [
           (makeCommonHomeModule username)
-          homeModule
+          ./users/${username}/at/${hostname}
         ];
         extraSpecialArgs = { inherit inputs; };
       };
@@ -141,12 +141,12 @@
     homeConfigurations = {
       "ixora@azalea" = makeHomeConfig "unstable"
                                       "x86_64-linux"
-                                      "ixora"
-                                      ./users/ixora/at/azalea;
+                                      "azalea"
+                                      "ixora";
       "ixora@nerine" = makeHomeConfig "unstable"
                                       "x86_64-linux"
-                                      "ixora"
-                                      ./users/ixora/at/nerine;
+                                      "nerine"
+                                      "ixora";
     };
   };
 }
