@@ -21,8 +21,7 @@ inputs: rec {
         (import ./users/${username}/at/${hostname}/unfrees.nix)
       ;
     };
-  in
-  (
+  in (
     import nixpkgs {
       system = osArchitecture;
       inherit overlays config;
