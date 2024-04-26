@@ -29,7 +29,6 @@
     astal.url = "github:Aylur/astal";
     matugen.url = "github:InioX/matugen";
 
-    # flake-utils.url = "github:numtide/flake-utils";
     # helix.url = "github:helix-editor/helix";
     # helix.inputs.nixpkgs.follows = "nixpkgs-unstable";
     # helix.inputs.flake-utils.follows = "flake-utils";
@@ -113,16 +112,15 @@
       nixpkgs.lib.nixosSystem {
         system = osArchitecture;
         modules = [
-          # inputs.nur.nixosModules.nur
           home-manager.nixosModules.home-manager 
           {
-            # nixpkgs.overlays = [inputs.nur.overlay];
             users.users."${username}".packages = [home-manager];
             home-manager.users."${username}".imports = [
               (makeCommonHomeModule username)
               homeModule
             ];
             home-manager.extraSpecialArgs = { inherit inputs; };
+
             # By default, Home Manager uses a private pkgs instance that is configured 
             # via the home-manager.users..nixpkgs options. 
             # To instead use the global pkgs that is configured via the system level nixpkgs options, set
@@ -139,18 +137,6 @@
                                "ixora" 
                                ./hosts/nerine/configuration.nix 
                                ./hosts/nerine/home.nix;
-
-      # nerine = inputs.nixpkgs-unstable.lib.nixosSystem {
-      #   specialArgs = { inherit inputs; };
-      #   modules = [
-      #     ./hosts/nerine/configuration.nix
-      #     inputs.home-manager-unstable.nixosModules.home-manager 
-      #     {
-      #       home-manager.useGlobalPkgs = true;
-      #       home-manager.users.ixora = import ./hosts/nerine/home.nix;
-      #     }
-      #   ];
-      # };
     };
 
     homeConfigurations = {
