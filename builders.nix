@@ -55,7 +55,9 @@ inputs: rec {
   };
 
   makeHomeConfig = stability: osArchitecture: hostname: username: let
-    pkgs = makePkgs stability osArchitecture hostname [username];
+    pkgs-stable = makePkgs "stable" osArchitecture hostname [username];
+    pkgs-unstable = makePkgs "unstable" osArchitecture hostname [username];
+    pkgs = matchStability stability pkgs-stable pkgs-unstable;
     home-manager = selectHomeManager stability;
   in
     home-manager.lib.homeManagerConfiguration {
@@ -64,12 +66,14 @@ inputs: rec {
         (makeCommonHomeModule username)
         ./users/${username}/at/${hostname}
       ];
-      extraSpecialArgs = { inherit inputs; };
+      extraSpecialArgs = { inherit inputs pkgs-stable pkgs-unstable; };
     };
 
   makeNixOSConfig = stability: osArchitecture: hostname: usernames: let
     nixpkgs = selectNixpkgs stability;
-    pkgs = makePkgs stability osArchitecture hostname usernames;
+    pkgs-stable = makePkgs "stable" osArchitecture hostname usernames;
+    pkgs-unstable = makePkgs "unstable" osArchitecture hostname usernames;
+    pkgs = matchStability stability pkgs-stable pkgs-unstable;
     home-manager = selectHomeManager stability;
     makeUserModule = username: {
       users.users."${username}".packages = [home-manager];
@@ -86,7 +90,7 @@ inputs: rec {
         home-manager.nixosModules.home-manager
         {
           nixpkgs = { inherit pkgs; };
-          home-manager.extraSpecialArgs = { inherit inputs; };
+          home-manager.extraSpecialArgs = { inherit inputs pkgs-stable pkgs-unstable; };
 
           # By default, Home Manager uses a private pkgs instance that is configured
           # via the home-manager.users..nixpkgs options.
@@ -94,6 +98,6 @@ inputs: rec {
           home-manager.useGlobalPkgs = true;
         }
       ] ++ (map makeUserModule usernames);
-      specialArgs = { inherit inputs; };
+      specialArgs = { inherit inputs pkgs-stable pkgs-unstable; };
     };
 }
