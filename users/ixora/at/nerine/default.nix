@@ -21,6 +21,7 @@ in
     "wlsunset"
     "zoxide"
     "direnv"
+    "fonts"
   ];
   modules.zsh.plugins.fastSyntaxHighlighting.enable = true;
   modules.zsh.plugins.powerlevel10k.enable = true;
