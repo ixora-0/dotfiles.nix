@@ -16,7 +16,7 @@ in
     "input"
     "nvidia"
     "sound"
-    "fonts"
+    "default-fonts"
     "sddm"
   ]);
 
