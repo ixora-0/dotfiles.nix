@@ -12,6 +12,6 @@
     (nerdfonts.override {
       fonts = ["NerdFontsSymbolsOnly"];
     })
-    # corefonts vistafonts
+    corefonts vistafonts
   ];
 }
