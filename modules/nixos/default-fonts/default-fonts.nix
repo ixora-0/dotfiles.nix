@@ -5,10 +5,10 @@
   fonts = {
     fontconfig.enable = true;
     fontconfig.defaultFonts = {
-      serif =     ["Noto Serif"];
-      sansSerif = ["Noto Sans"];
+      serif =     ["Noto Serif" "Symbols Nerd Font"];
+      sansSerif = ["Noto Sans" "Symbols Nerd Font"];
       emoji =     ["Noto Color Emoji"];
-      monospace = ["Iosevka Iris" "NerdFontsSymbolsOnly"];
+      monospace = ["Iosevka Iris" "Symbols Nerd Font Mono"];
     };
   };
 }
