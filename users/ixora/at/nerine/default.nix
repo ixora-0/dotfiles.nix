@@ -62,6 +62,7 @@ in
     lazygit
     act
     gh
+    yazi
     # reaper
     # vital
     # (ollama.override {
