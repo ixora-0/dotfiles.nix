@@ -108,5 +108,6 @@ in
     # EDITOR = "hx";
 
     # GTK_THEME = "Sweet-dark";
+    WLR_NO_HARDWARE_CURSORS=1;
   };
 }
