@@ -103,6 +103,14 @@ in
       ];
     }
     {
+      name = "css";
+      auto-format = true;
+      formatter = lib.mkIf cfg.prettier.enable {
+        command = "${pkgs.nodePackages.prettier}/bin/prettier";
+        args = ["--parser" "css"];
+      };
+    }
+    {
       name = "javascript";
       auto-format = true;
       formatter = lib.mkIf cfg.prettier.enable {
