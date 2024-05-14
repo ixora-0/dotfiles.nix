@@ -61,6 +61,7 @@ in
     glow
     lazygit
     act
+    gh
     # reaper
     # vital
     # (ollama.override {
