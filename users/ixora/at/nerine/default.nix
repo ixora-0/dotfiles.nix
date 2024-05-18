@@ -22,6 +22,7 @@ in
     "zoxide"
     "direnv"
     "fonts"
+    "yazi"
   ];
   modules.zsh.plugins.fastSyntaxHighlighting.enable = true;
   modules.zsh.plugins.powerlevel10k.enable = true;
@@ -61,7 +62,6 @@ in
     lazygit
     act
     gh
-    yazi
     # reaper
     # vital
     # (ollama.override {
