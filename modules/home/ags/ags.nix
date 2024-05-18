@@ -7,7 +7,6 @@
   } + /ags;
 in
 {
-  # TODO: declarative settings
   # BUG: media preview for firefox youtube doesn't work
   imports = [
     inputs.ags.homeManagerModules.default
@@ -43,5 +42,10 @@ in
   programs.ags = {
     enable = true;
     configDir = aylurAgs;
+  };
+
+  home.file.".cache/ags/options.json" = {
+    source = ./options.json;
+    force = true;  # interacting with bar changes option.json, have to overwrite
   };
 }
