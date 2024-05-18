@@ -5,7 +5,7 @@
   catppuccinThemesSrc = pkgs.fetchgit {
     url = "https://github.com/catppuccin/discord";
     sparseCheckout = ["themes"];
-    hash = "sha256-juS6ZG+yonkUPgJOhcQtkdT+ftMHYhejAQNX9vQ0Qvg=";
+    hash = "sha256-xQNgWMQcNlrNs7mSn9b/Zee9UzAW7cU80G1Ag3vukkc=";
   } + /themes;
 in
 {
