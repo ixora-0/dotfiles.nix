@@ -49,7 +49,6 @@ in
     bottom
     ungoogled-chromium  # backup browser
     ani-cli
-    eclipses.eclipse-java scenebuilder
     libreoffice-still
     obsidian
     gimp
