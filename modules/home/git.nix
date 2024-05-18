@@ -6,7 +6,7 @@
     userEmail = "39961970+ixora-0@users.noreply.github.com";
 
     signing.signByDefault = true;
-    signing.key = "EB180FA4072AE3A9";
+    signing.key = "0959B5BC39B44064";
 
     # use delta pager
     delta.enable = true;
