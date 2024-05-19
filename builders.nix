@@ -9,7 +9,7 @@ inputs: rec {
     ;
 
   selectNixpkgs = stability: matchStability stability inputs.nixpkgs-stable inputs.nixpkgs-unstable;
-  selectHomeManager = stability: matchStability stability inputs.hone-manager-stable inputs.home-manager-unstable;
+  selectHomeManager = stability: matchStability stability inputs.home-manager-stable inputs.home-manager-unstable;
 
   overlays = [inputs.nur.overlay];  # common overlays
 
