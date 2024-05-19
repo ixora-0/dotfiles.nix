@@ -18,6 +18,7 @@ in
     "sound"
     "default-fonts"
     "sddm"
+    "ollama"
   ]);
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.

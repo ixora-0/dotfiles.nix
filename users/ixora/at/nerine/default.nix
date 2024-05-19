@@ -64,9 +64,6 @@ in
     gh
     # reaper
     # vital
-    # (ollama.override {
-    #   acceleration = "cuda";
-    # })
 
     # nwg-look
   ] ++ [
