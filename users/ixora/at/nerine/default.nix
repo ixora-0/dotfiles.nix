@@ -48,6 +48,7 @@ in
     unzip
     networkmanagerapplet
     bottom
+    (btop.override { cudaSupport = true; })
     ungoogled-chromium  # backup browser
     ani-cli
     libreoffice-still
