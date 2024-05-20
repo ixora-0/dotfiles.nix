@@ -64,6 +64,7 @@ in
     gh
     # reaper
     # vital
+    steam
 
     # nwg-look
   ] ++ [
