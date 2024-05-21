@@ -155,15 +155,16 @@ in
       name = "python";
       rulers = [88];
       auto-format = true;
-      language-servers = [
-        # {
-        #   name = "ruff";
-        #   only-features = ["format", "diagnostics"];
-        # }
-        "ruff"
+      language-servers = let
+        bothEnabled = cfg.lsp.enableAll || (cfg.lsp.ruff.enable && cfg.lsp.pyright.enable);
+      in [
+        {
+          name = "ruff";
+          only-features = lib.mkIf bothEnabled ["format" "diagnostics"];
+        }
         {
           name = "pyright";
-          except-features = ["format"];
+          except-features = lib.mkIf bothEnabled ["format" "diagnostics"];
         }
       ];
     }

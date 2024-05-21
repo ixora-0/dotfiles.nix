@@ -30,6 +30,8 @@ in
   modules.helix.languages.lsp.nil.enable = true;
   modules.helix.languages.lsp.typescript.enable = true;
   modules.helix.languages.lsp.vscodeLangservers.enable = true;
+  modules.helix.languages.lsp.ruff.enable = true;
+  modules.helix.languages.lsp.pyright.enable = true;
 
   modules.discord.vesktop.enable = true;
 
