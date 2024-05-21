@@ -13,4 +13,5 @@
   "cudatoolkit" "cuda_cudart"
   "corefonts" "vista-fonts"
   "steam" "steam-original"
+  "vscode"
 ]

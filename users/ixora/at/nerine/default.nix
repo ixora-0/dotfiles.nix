@@ -68,6 +68,7 @@ in
     # reaper
     # vital
     steam
+    vscode
 
     # nwg-look
   ] ++ [
