@@ -27,11 +27,7 @@ in
   modules.zsh.plugins.fastSyntaxHighlighting.enable = true;
   modules.zsh.plugins.powerlevel10k.enable = true;
 
-  modules.helix.languages.lsp.nil.enable = true;
-  modules.helix.languages.lsp.typescript.enable = true;
-  modules.helix.languages.lsp.vscodeLangservers.enable = true;
-  modules.helix.languages.lsp.ruff.enable = true;
-  modules.helix.languages.lsp.pyright.enable = true;
+  modules.helix.languages.lsp.enableAll = true;
 
   modules.discord.vesktop.enable = true;
 
