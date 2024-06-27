@@ -6,7 +6,7 @@
   };
 
   volumes = [
-    "/home/ixora/open-webui/data:/app/backend/data"
+    "/home/ixora/intaa/open-webui/data:/app/backend/data"
   ];
 
   ports = ["3000:8080"];
