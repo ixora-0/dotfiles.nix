@@ -26,6 +26,8 @@ in
 
     nil.enable = lib.mkEnableOption "Whether to enable the nil LSP";
     marksman.enable = lib.mkEnableOption "Whether to enable the marksman LSP";
+
+    r.enable = lib.mkEnableOption "Whether to enabe the R LSP";
   };
   options.modules.helix.languages.prettier.enable = lib.mkEnableOption ''Whether to enable prettier'';
   config.programs.helix.extraPackages = let
@@ -42,6 +44,7 @@ in
     (includeLSP cfg.lsp.pyright.enable           [nodePackages.pyright])
     (includeLSP cfg.lsp.nil.enable               [nil])
     (includeLSP cfg.lsp.marksman.enable          [marksman])
+    (includeLSP cfg.lsp.r.enable                 [(rWrapper.override { packages = [rPackages.languageserver]; })])
   ]);
 
   config.programs.helix.languages.language-server = lib.mkMerge [
