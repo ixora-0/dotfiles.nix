@@ -14,27 +14,27 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/7edd051c-a8b1-49c4-9fc2-eb5087d52b0b";
-      fsType = "ext4";
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/7C52-2EDD";
-      fsType = "vfat";
-    };
-
-  fileSystems."/mnt/azalea" =
-    { device = "/dev/disk/by-uuid/945e1253-ff6e-4b36-bf00-f69d76b09b77";
+    { device = "/dev/disk/by-uuid/7c4a8442-93d4-40a4-b30c-d13e4a852c6c";
       fsType = "ext4";
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/5e76143d-ae6a-4446-a73a-11ee6d8dea10";
+    { device = "/dev/disk/by-uuid/4f3ee365-d6ac-4419-9dc5-ee7240f89d58";
+      fsType = "ext4";
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/1912-CD03";
+      fsType = "vfat";
+    };
+
+  fileSystems."/home/ixora/intaa" =
+    { device = "/dev/disk/by-uuid/aa18c496-a561-46a8-8ea2-8b8bae0155d7";
       fsType = "ext4";
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/70a21216-db27-4c14-9531-2888aad8ecd1"; }
+    [ { device = "/dev/disk/by-uuid/5e3c3ae2-4d84-4149-8086-bbc327751416"; }
     ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -42,6 +42,7 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.docker0.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp2s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp3s0.useDHCP = lib.mkDefault true;
 
