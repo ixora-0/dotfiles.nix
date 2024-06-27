@@ -63,6 +63,7 @@
       "SUPER, K, cyclenext, prev"
       "ALT, TAB, focuscurrentorlast"
       "SUPER, TAB, exec, ags -b hypr -t overview"
+      "SUPER, PRINT, exec, ${pkgs.grimblast}/bin/grimblast copy area"
     ] ++ (
       # Switch workspaces with SUPER + [1-9]
       let bind_workspace_num = i:
