@@ -1,4 +1,4 @@
-{ pkgs, ... }: let
+{ pkgs, pkgs-unstable, ... }: let
   homeModuleImport = import ../../../../helpers/homeModuleImport.nix;
 in
 {
@@ -56,7 +56,6 @@ in
     zathura
     go
     unrar
-    osu-lazer-bin
     glow
     lazygit
     act
@@ -67,6 +66,8 @@ in
     vscode
 
     # nwg-look
+  ] ++ [
+    pkgs-unstable.osu-lazer-bin
   ] ++ [
     (import (homeModuleImport "rgf") pkgs)
   ];
