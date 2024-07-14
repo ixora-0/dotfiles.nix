@@ -4,8 +4,8 @@
   inputs = {
     # NOTE: adding unused flakes still take up extra space
     # stable flakes
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
-    home-manager-stable.url = "github:nix-community/home-manager/release-23.11";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
+    home-manager-stable.url = "github:nix-community/home-manager/release-24.05";
     home-manager-stable.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     # unstable flakes
@@ -21,8 +21,8 @@
     nur.url = "github:nix-community/NUR";
 
     # other flakes
-    hyprland.url = "github:hyprwm/Hyprland";
-    hyprland.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # hyprland.url = "github:hyprwm/Hyprland";
+    # hyprland.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     spicetify-nix.url = "github:the-argus/spicetify-nix";
     ags.url = "github:Aylur/ags";
@@ -38,7 +38,7 @@
     inherit (import ./builders.nix inputs) makeNixOSConfig makeHomeConfig;
   in {
     nixosConfigurations = {
-      nerine = makeNixOSConfig "unstable" 
+      nerine = makeNixOSConfig "stable" 
                                "x86_64-linux"
                                "nerine"
                                ["ixora"];
@@ -49,7 +49,7 @@
                                       "x86_64-linux"
                                       "azalea"
                                       "ixora";
-      "ixora@nerine" = makeHomeConfig "unstable"
+      "ixora@nerine" = makeHomeConfig "stable"
                                       "x86_64-linux"
                                       "nerine"
                                       "ixora";
