@@ -8,7 +8,7 @@ in
 {
   # TODO: organize configuration.nix into modules
 
-  imports =[
+  imports = [
     ./hardware-configuration.nix
   ] ++ (map nixosModuleImport [
     "boot"
