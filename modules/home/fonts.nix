@@ -9,9 +9,8 @@
       set = "Iris";
       privateBuildPlan = builtins.readFile ../nixos/default-fonts/private-build-plans.toml;
     })
-    (nerdfonts.override {
-      fonts = ["NerdFontsSymbolsOnly"];
-    })
+    (iosevka-bin.override { variant = "Aile"; })
+    (nerdfonts.override { fonts = ["NerdFontsSymbolsOnly"]; })
     corefonts vistafonts
   ];
 }
