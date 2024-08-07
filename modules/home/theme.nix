@@ -1,4 +1,24 @@
 { pkgs, pkgs-unstable, ... }: let
+  gradiencePreset = builtins.fetchurl {
+    url = "https://raw.githubusercontent.com/GradienceTeam/Community/next/official/catppuccin-macchiato.json";
+    sha256 = "sha256:0pmkq8fgdlikwwwfvc86mdmhcjggkb6mb54gs9y7z3ngmyc2y10n";
+  };
+  gradienceBuild = pkgs.stdenv.mkDerivation {
+    name = "gradience-build";
+    phases = [ "buildPhase" "installPhase" ];
+    nativeBuildInputs = [ pkgs.gradience ];
+    buildPhase = ''
+      shopt -s nullglob
+      export HOME=$TMPDIR
+      mkdir -p $HOME/.config/presets
+      gradience-cli apply -p ${gradiencePreset} --gtk both
+    '';
+    installPhase = ''
+      mkdir -p $out
+      cp -r .config/gtk-4.0 $out/
+      cp -r .config/gtk-3.0 $out/
+    '';
+  };
   # nerdfonts = (pkgs.nerdfonts.override { fonts = [
   #   "Ubuntu"
   #   "UbuntuMono"
@@ -9,19 +29,11 @@
   # ]; });
 
   theme = {
-    # name = "adw-gtk3-dark";
-    # package = pkgs.adw-gtk3;
+    name = "adw-gtk3-dark";
+    package = pkgs.adw-gtk3;
 
     # name = "Sweet-Dark";
     # package = pkgs.sweet-nova;
-
-    name = "Catppuccin-Mocha-Standard-Pink-Dark";
-    package = pkgs.catppuccin-gtk.override {
-      accents = [ "pink" ];
-      # size = "compact";
-      # tweaks = [ "rimless" "black" ];
-      variant = "mocha";
-    };
   };
   # font = {
   #   name = "Ubuntu Nerd Font";
@@ -43,7 +55,6 @@ in
   home.packages = with pkgs; [
     # cantarell-fonts
     # font-awesome
-    theme.package
     # font.package
     # iconTheme.package
 
@@ -66,14 +77,19 @@ in
     enable = true;
     # inherit font;
     inherit iconTheme;
-    # theme.name = theme.name;
     inherit theme;
-    gtk3.extraCss = ''
-      headerbar, .titlebar,
-      .csd:not(.popup):not(tooltip):not(messagedialog) decoration{
-        border-radius: 0;
-      }
-    '';
+    gtk3 = {
+      extraCss = builtins.readFile "${gradienceBuild}/gtk-3.0/gtk.css";
+      extraConfig = {
+        gtk-application-prefer-dark-theme = 1;
+      };
+    };
+    gtk4 = {
+      extraCss = builtins.readFile "${gradienceBuild}/gtk-4.0/gtk.css";
+      extraConfig = {
+        gtk-application-prefer-dark-theme = 1;
+      };
+    };
   };
 
   home.file = {
@@ -93,11 +109,11 @@ in
   #   "gtk-4.0/gtk-dark.css".source = "${theme.package}/share/themes/${theme.name}/gtk-4.0/gtk-dark.css";
   # };  
 
-  xdg.configFile = {
-    "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-    "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-    "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
-  };
+  # xdg.configFile = {
+  #   "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
+  #   "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
+  #   "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+  # };
 
   # fonts.fontconfig.enable = true;
 
