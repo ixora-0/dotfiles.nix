@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: let
+{ pkgs, pkgs-unstable, ... }: let
   # nerdfonts = (pkgs.nerdfonts.override { fonts = [
   #   "Ubuntu"
   #   "UbuntuMono"
@@ -28,9 +28,9 @@
   #   package = nerdfonts;
   # };
   cursorTheme = {
-    name = "phinger-cursors";
+    name = "phinger-cursors-dark";
     size = 24;
-    package = pkgs.phinger-cursors;
+    package = pkgs-unstable.phinger-cursors;
   };
   iconTheme = {
   # name = "MoreWaita";  # ags monochrome icons are taken from here
@@ -45,7 +45,6 @@ in
     # font-awesome
     theme.package
     # font.package
-    cursorTheme.package
     # iconTheme.package
 
     # some ags icons are taken from here
@@ -66,7 +65,6 @@ in
   gtk = {
     enable = true;
     # inherit font;
-    inherit cursorTheme;
     inherit iconTheme;
     # theme.name = theme.name;
     inherit theme;
