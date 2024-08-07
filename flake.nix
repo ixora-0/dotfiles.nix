@@ -24,7 +24,7 @@
     # hyprland.url = "github:hyprwm/Hyprland";
     # hyprland.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    spicetify-nix.url = "github:the-argus/spicetify-nix";
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     ags.url = "github:Aylur/ags";
     astal.url = "github:Aylur/astal";
     matugen.url = "github:InioX/matugen";
