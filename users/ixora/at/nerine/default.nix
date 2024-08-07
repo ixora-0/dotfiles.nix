@@ -39,7 +39,6 @@ in
 
     cinnamon.nemo  # BUG: open in terminal doesn't work
     # gnome.nautilus nautilus-open-any-terminal
-    anki
     fzf
     ripgrep
     repgrep
@@ -64,10 +63,10 @@ in
     # vital
     steam
     vscode
-
     # nwg-look
   ] ++ [
     pkgs-unstable.osu-lazer-bin
+    pkgs-unstable.anki-bin
   ] ++ [
     (import (homeModuleImport "rgf") pkgs)
   ];
