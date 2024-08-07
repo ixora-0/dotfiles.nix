@@ -8,11 +8,11 @@
     # ];
 
     enabled = "fcitx5";
+    fcitx5.waylandFrontend = true;
     fcitx5.addons = with pkgs; [ 
       fcitx5-anthy
-      fcitx5-unikey 
+      fcitx5-unikey
     ];
-    # NOTE: experiencing fcitx5 warning that GTK_IM_MODULE should be unset
   };
   # supposedly needed to autostart i18n.inputMethod
   # https://nixos.wiki/wiki/Fcitx5

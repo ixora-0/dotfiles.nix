@@ -3,7 +3,6 @@
   wayland.windowManager.hyprland.settings = {
     exec-once = [
       "ags -b hypr"
-      "unset GTK_IM_MODULE"  # HACK: disable the fcitx5 warning
       "fcitx5 -d"
       # "${pkgs.swww}/bin/swww init"
       # "${pkgs.swww}/bin/swww-daemon"
