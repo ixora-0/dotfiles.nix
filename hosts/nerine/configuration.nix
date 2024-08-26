@@ -11,6 +11,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ./nvidia.nix
+    ./amd-pstate.nix
   ] ++ (map nixosModuleImport [
     "boot"
     "locale"
