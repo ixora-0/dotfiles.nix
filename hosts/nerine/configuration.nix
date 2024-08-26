@@ -18,8 +18,7 @@ in
     "sound"
     "default-fonts"
     "sddm"
-    "ollama"
-    "open-webui"
+    "ollama" "open-webui" "openedai-speech"
   ]);
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
