@@ -11,6 +11,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ./nvidia.nix
+    ./battery.nix
     ./amd-pstate.nix
   ] ++ (map nixosModuleImport [
     "boot"
@@ -23,6 +24,7 @@ in
   ]);
 
   services.fstrim.enable = true;
+  hardware.asus.battery.chargeUpTo = 60;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
