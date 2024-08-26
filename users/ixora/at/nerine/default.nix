@@ -64,6 +64,7 @@ in
     steam
     vscode
     # nwg-look
+    mpv
   ] ++ [
     pkgs-unstable.osu-lazer-bin
     pkgs-unstable.anki-bin
