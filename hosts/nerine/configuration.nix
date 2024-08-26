@@ -22,6 +22,7 @@ in
     "ollama" "open-webui" "openedai-speech"
   ]);
 
+  services.fstrim.enable = true;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
