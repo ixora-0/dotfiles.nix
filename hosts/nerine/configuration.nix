@@ -10,11 +10,11 @@ in
 
   imports = [
     ./hardware-configuration.nix
+    ./nvidia.nix
   ] ++ (map nixosModuleImport [
     "boot"
     "locale"
     "input"
-    "nvidia"
     "sound"
     "default-fonts"
     "sddm"
