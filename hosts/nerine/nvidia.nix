@@ -9,6 +9,15 @@
     # (experimental) turn off gpu when not in use
     powerManagement.finegrained = false;
 
+    prime = {
+      nvidiaBusId = "PCI:6:0:0";
+      amdgpuBusId = "PCI:1:0:0";
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+    };
+
     # only from driver 515.43.04+
     # currently alpha-quality/buggy, false is currently the recommened setting
     open = false;
