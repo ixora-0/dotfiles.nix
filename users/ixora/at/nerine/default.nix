@@ -56,7 +56,7 @@ in
     go
     unrar
     glow
-    lazygit
+    lazygit lazydocker
     act
     gh
     # reaper
