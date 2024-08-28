@@ -60,11 +60,16 @@ in
       eslint.args = ["--stdio"];
       eslint.config = {
         validate = "on";
-        experimental.userFlatConfig = false;
+        quiet = false;
+        experimental.userFlatConfig = true;
         rulesCustomizations = [];
         run = "onType";
         problems.shortenToSingleLine = false;
-        nodePath = "";  # use the workspace folder or file location to start eslint server
+        nodePath = "location";  # use the workspace folder or file location to start eslint server
+        codeAction = {
+          disableRuleComment = { enable = true; location = "separateLine"; };
+          showDocumentation = { enable = true; };
+        };
       };
     })
 
