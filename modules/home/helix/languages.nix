@@ -109,6 +109,7 @@ in
         }
         "eslint"
       ];
+      roots = ["tsconfig.json" "package.json"];
     }
     {
       name = "css";
@@ -132,6 +133,7 @@ in
         }
         "eslint"
       ];
+      roots = ["package.json"];
     }
     {
       name = "svelte";
@@ -148,6 +150,7 @@ in
         "eslint"
         "tailwindcss-ls"
       ];
+      roots = ["package.json"];
     }
 
     # lua
