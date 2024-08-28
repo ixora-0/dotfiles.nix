@@ -112,19 +112,11 @@ in
       roots = ["tsconfig.json" "package.json"];
     }
     {
-      name = "css";
-      auto-format = true;
-      formatter = lib.mkIf cfg.prettier.enable {
-        command = "${pkgs.nodePackages.prettier}/bin/prettier";
-        args = ["--parser" "css"];
-      };
-    }
-    {
       name = "javascript";
       auto-format = true;
       formatter = lib.mkIf cfg.prettier.enable {
         command = "${pkgs.nodePackages.prettier}/bin/prettier"; 
-        args = ["--parser" "javascript"];
+        args = ["--parser" "espree"];
       };
       language-servers = [
         { 
@@ -151,6 +143,34 @@ in
         "tailwindcss-ls"
       ];
       roots = ["package.json"];
+    }
+    {
+      name = "css";
+      auto-format = true;
+      language-servers = [
+        {
+          name = "vscode-css-language-server";
+          except-features = lib.mkIf cfg.prettier.enable ["format"];
+        }
+      ];
+      formatter = lib.mkIf cfg.prettier.enable {
+        command = "${pkgs.nodePackages.prettier}/bin/prettier";
+        args = ["--parser" "css"];
+      };
+    }
+    {
+      name = "html";
+      auto-format = true;
+      language-servers = [
+        {
+          name = "vscode-html-language-server";
+          except-features = lib.mkIf cfg.prettier.enable ["format"];
+        }
+      ];
+      formatter = lib.mkIf cfg.prettier.enable {
+        command = "${pkgs.nodePackages.prettier}/bin/prettier";
+        args = ["--parser" "html"];
+      };
     }
 
     # lua

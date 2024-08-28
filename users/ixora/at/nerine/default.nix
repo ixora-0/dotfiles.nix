@@ -28,6 +28,7 @@ in
   modules.zsh.plugins.powerlevel10k.enable = true;
 
   modules.helix.languages.lsp.enableAll = true;
+  modules.helix.languages.prettier.enable = true;
 
   modules.discord.vesktop.enable = true;
 
