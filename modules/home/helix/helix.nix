@@ -24,6 +24,7 @@
         cursor-shape.insert = "bar";
         soft-wrap.enable = true;
         whitespace.render.tab = "all";
+        file-picker.hidden = false;
       };
 
       keys.normal = {
