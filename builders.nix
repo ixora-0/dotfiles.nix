@@ -16,7 +16,17 @@ inputs: rec {
   makePkgs = stability: osArchitecture: hostname: usernames: let
     nixpkgs = selectNixpkgs stability;
     mergedUnfrees = builtins.foldl' 
-      (acc: username: acc ++ (import ./users/${username}/at/${hostname}/unfrees.nix))
+      (
+        acc: username: let
+          unfrees = ./users/${username}/at/${hostname}/unfrees.nix;
+        in (
+          acc ++ (if builtins.pathExists unfrees then
+            import unfrees
+          else
+            []
+          )
+        )
+      )
       []
       usernames
     ;
