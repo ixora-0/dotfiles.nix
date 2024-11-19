@@ -3,9 +3,9 @@
 
   imports = (map helpers.importBundle [
     "core-terminal"
+    "extra-terminal"
   ]) ++ (map helpers.importHomeModule [
     # packages that has configurations
-    "neofetch"
     "kitty"
     "hyprland"
     "discord"
@@ -23,7 +23,6 @@
   modules.discord.vesktop.enable = true;
 
   home.packages = with pkgs; [
-    tlrc
     kitty
     # firefox-devedition
 
@@ -39,11 +38,7 @@
     wayshot
     zathura
     go
-    unrar
-    glow
-    lazydocker
     act
-    gh
     # reaper
     # vital
     steam
