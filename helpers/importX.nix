@@ -18,4 +18,5 @@ let
 in {
   importHomeModule = importX ../modules/home;
   importNixosModule = importX ../modules/nixos;
+  importBundle = importX ../bundles;
 }

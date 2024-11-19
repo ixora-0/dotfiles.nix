@@ -4,4 +4,5 @@
   makeUnfreePredicate = import ./makeUnfreePredicate.nix { inherit lib; };
   importHomeModule = importX.importHomeModule;
   importNixosModule = importX.importNixosModule;
+  importBundle = importX.importBundle;
 }
