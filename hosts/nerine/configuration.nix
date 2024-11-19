@@ -2,10 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, inputs, ... }: let
-  nixosModuleImport = import ../../helpers/nixosModuleImport.nix;
-in
-{
+{ pkgs, inputs, helpers, ... }: {
   # TODO: organize configuration.nix into modules
 
   imports = [
@@ -13,7 +10,7 @@ in
     ./nvidia.nix
     ./battery.nix
     ./amd-pstate.nix
-  ] ++ (map nixosModuleImport [
+  ] ++ (map helpers.importNixosModule [
     "boot"
     "locale"
     "input"

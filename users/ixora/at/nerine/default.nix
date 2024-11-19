@@ -1,11 +1,8 @@
-{ pkgs, pkgs-unstable, ... }: let
-  homeModuleImport = import ../../../../helpers/homeModuleImport.nix;
-in
-{
+{ pkgs, pkgs-unstable, helpers, ... }: {
   # TODO: organize to bundles
 
   # packages that has configurations
-  imports = map homeModuleImport [
+  imports = map helpers.importHomeModule [
     "zsh"
     "neofetch"
     "helix"
@@ -70,7 +67,7 @@ in
     pkgs-unstable.osu-lazer-bin
     pkgs-unstable.anki-bin
   ] ++ [
-    (import (homeModuleImport "rgf") pkgs)
+    (import (helpers.importHomeModule "rgf") pkgs)
   ];
 
   xdg.mimeApps.enable = true;

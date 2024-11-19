@@ -1,7 +1,5 @@
-{ pkgs, lib, config, ... }: let
+{ pkgs, lib, config, helpers, ... }: let
   cfg = config.modules.discord;
-  mkIfElse = import ../../helpers/mkIfElse.nix { inherit lib; };
-
   catppuccinThemesSrc = pkgs.fetchgit {
     url = "https://github.com/catppuccin/discord";
     sparseCheckout = ["themes"];
@@ -16,7 +14,7 @@ in
     Good if want to share screen properly in wayland.
   '';
 
-  config.xdg.configFile = (mkIfElse cfg.vesktop.enable 
+  config.xdg.configFile = (helpers.mkIfElse cfg.vesktop.enable
     # NOTE: might have to delete the themes folder if one already exist in order to symlink it
     # alternatively, specify a specific theme instead of the whole folder like
     # { "vesktop/themes/mocha.theme.css".source = catppuccinThemesSrc + "/mocha.theme.css"; }
@@ -25,7 +23,7 @@ in
     { "Vencord/themes".source = catppuccinThemesSrc; }
   );
   config.home.packages = with pkgs; [
-    (mkIfElse cfg.vesktop.enable
+    (helpers.mkIfElse cfg.vesktop.enable
       (vesktop.override {
         withSystemVencord = false;  # letting vesktop manage it's own version
                                     # which fixes the no vencord section in settings issue

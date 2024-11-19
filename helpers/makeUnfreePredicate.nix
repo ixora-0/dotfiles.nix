@@ -1,6 +1,6 @@
 # explicitly declare unfree packages
 # takes lib, packages and returns a predicate
-lib: packages: pkg: 
+{ lib }: packages: pkg:
   builtins.elem
     (lib.getName pkg)
     packages

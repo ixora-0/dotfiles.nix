@@ -15,15 +15,16 @@ inputs: rec {
 
   makePkgs = stability: osArchitecture: hostname: usernames: let
     nixpkgs = selectNixpkgs stability;
-    makeUnfreePredicate = import ./helpers/makeUnfreePredicate.nix;
     mergedUnfrees = builtins.foldl' 
       (acc: username: acc ++ (import ./users/${username}/at/${hostname}/unfrees.nix))
       []
       usernames
     ;
 
-    config = {
-      allowUnfreePredicate = makeUnfreePredicate nixpkgs.lib mergedUnfrees;
+    config = let
+      helpers = import ./helpers { lib = nixpkgs.lib; };
+    in {
+      allowUnfreePredicate = helpers.makeUnfreePredicate mergedUnfrees;
     };
   in (
     import nixpkgs {
@@ -58,6 +59,7 @@ inputs: rec {
     pkgs-stable = makePkgs "stable" osArchitecture hostname [username];
     pkgs-unstable = makePkgs "unstable" osArchitecture hostname [username];
     pkgs = matchStability stability pkgs-stable pkgs-unstable;
+    helpers = import ./helpers { lib = pkgs.lib; };
     home-manager = selectHomeManager stability;
   in
     home-manager.lib.homeManagerConfiguration {
@@ -66,7 +68,7 @@ inputs: rec {
         (makeCommonHomeModule username)
         ./users/${username}/at/${hostname}
       ];
-      extraSpecialArgs = { inherit inputs pkgs-stable pkgs-unstable; };
+      extraSpecialArgs = { inherit inputs pkgs-stable pkgs-unstable helpers; };
     };
 
   makeNixOSConfig = stability: osArchitecture: hostname: usernames: let
@@ -74,6 +76,7 @@ inputs: rec {
     pkgs-stable = makePkgs "stable" osArchitecture hostname usernames;
     pkgs-unstable = makePkgs "unstable" osArchitecture hostname usernames;
     pkgs = matchStability stability pkgs-stable pkgs-unstable;
+    helpers = import ./helpers { lib = pkgs.lib; };
     home-manager = selectHomeManager stability;
     makeUserNixOSModule = username: {
       users.users."${username}".packages = [home-manager];
@@ -90,7 +93,7 @@ inputs: rec {
         home-manager.nixosModules.home-manager
         {
           nixpkgs = { inherit pkgs; };
-          home-manager.extraSpecialArgs = { inherit inputs pkgs-stable pkgs-unstable; };
+          home-manager.extraSpecialArgs = { inherit inputs pkgs-stable pkgs-unstable helpers; };
           networking.hostName = hostname;
 
           # By default, Home Manager uses a private pkgs instance that is configured
@@ -99,6 +102,6 @@ inputs: rec {
           home-manager.useGlobalPkgs = true;
         }
       ] ++ (map makeUserNixOSModule usernames);
-      specialArgs = { inherit inputs pkgs-stable pkgs-unstable; };
+      specialArgs = { inherit inputs pkgs-stable pkgs-unstable helpers; };
     };
 }
