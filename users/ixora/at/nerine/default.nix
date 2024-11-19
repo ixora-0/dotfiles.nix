@@ -1,29 +1,22 @@
 { pkgs, pkgs-unstable, helpers, ... }: {
   # TODO: organize to bundles
 
-  # packages that has configurations
-  imports = map helpers.importHomeModule [
-    "zsh"
+  imports = (map helpers.importBundle [
+    "core-terminal"
+  ]) ++ (map helpers.importHomeModule [
+    # packages that has configurations
     "neofetch"
-    "helix"
     "kitty"
-    "eza"
     "hyprland"
     "discord"
     "spotify"
     "ags"
-    "git"
     "theme"
     "firefox"
     "wlsunset"
-    "zoxide"
     "direnv"
     "fonts"
-    "yazi"
-  ];
-  modules.zsh.plugins.fastSyntaxHighlighting.enable = true;
-  modules.zsh.plugins.powerlevel10k.enable = true;
-
+  ]);
   modules.helix.languages.lsp.enableAll = true;
   modules.helix.languages.prettier.enable = true;
 
@@ -32,17 +25,11 @@
   home.packages = with pkgs; [
     tlrc
     kitty
-    bat
     # firefox-devedition
 
     cinnamon.nemo  # BUG: open in terminal doesn't work
     # gnome.nautilus nautilus-open-any-terminal
-    fzf
-    ripgrep
-    repgrep
-    unzip
     networkmanagerapplet
-    bottom
     (btop.override { cudaSupport = true; })
     ungoogled-chromium  # backup browser
     ani-cli
@@ -54,7 +41,7 @@
     go
     unrar
     glow
-    lazygit lazydocker
+    lazydocker
     act
     gh
     # reaper
@@ -66,8 +53,6 @@
   ] ++ [
     pkgs-unstable.osu-lazer-bin
     pkgs-unstable.anki-bin
-  ] ++ [
-    (import (helpers.importHomeModule "rgf") pkgs)
   ];
 
   xdg.mimeApps.enable = true;
