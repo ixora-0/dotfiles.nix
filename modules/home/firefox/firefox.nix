@@ -93,4 +93,22 @@ in {
         "Wikipedia (en)".metaData.alias = "@w";
     };
   };
+  programs.firefox.profiles."torproxy" = {
+    id = 1;
+    extraConfig = userJS;
+    settings = {
+      "browser.ctrlTab.sortByRecentlyUsed" = true;
+      "browser.toolbars.bookmarks.visibility" = "never";
+      "browser.tabs.inTitlebar" = 0;  # disables title bar
+      "browser.startup.page" = 3;     # reopen last closed tabs
+
+      "network.proxy.socks" = "127.0.0.1";
+      "network.proxy.socks_port" = 8118;
+      "network.proxy.type" = 1;
+    };
+
+    extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+      ublock-origin             # ad blocker
+    ];
+  };
 }
