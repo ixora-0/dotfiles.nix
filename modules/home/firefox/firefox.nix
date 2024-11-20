@@ -81,6 +81,7 @@ in {
       urls = [{ template = "https://www.youtube.com/results?search_query={searchTerms}"; }];
       definedAliases = [ "@yt" ];
       icon = "https://www.svgrepo.com/show/13671/youtube.svg";
+    };
     search.engines."Wiktionary" = {
       urls = [{ template = "https://en.wiktionary.org/wiki/{searchTerms}"; }];
       definedAliases = [ "@wt" ];
