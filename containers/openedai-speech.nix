@@ -11,7 +11,7 @@
     "/home/ixora/intaa/openedai-speech/config:/app/config"
   ];
 
-  ports = ["8087:8000"];
+  ports = ["3003:8000"];
 
   extraOptions = [
     "--name=openedai-speech"

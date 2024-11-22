@@ -2,6 +2,7 @@
   image = "ghcr.io/open-webui/open-webui:main";
 
   environment = {
+    "PORT" = "3001";
     "OLLAMA_BASE_URL" = "http://127.0.0.1:11434";
   };
 
@@ -9,7 +10,7 @@
     "/home/ixora/intaa/open-webui/data:/app/backend/data"
   ];
 
-  ports = ["3000:8080"];
+  ports = ["3001:3001"];
 
   extraOptions = [
     "--name=open-webui"
