@@ -1,10 +1,9 @@
 { pkgs, pkgs-unstable, helpers, ... }: {
-  # TODO: organize to bundles
-
   imports = (map helpers.importBundle [
     "core-terminal"
     "extra-terminal"
     "core-apps"
+    "extra-apps"
   ]) ++ (map helpers.importHomeModule [
     # packages that has configurations
     "hyprland"
@@ -22,11 +21,8 @@
     (btop.override { cudaSupport = true; })
     ungoogled-chromium  # backup browser
     ani-cli
-    libreoffice-still
     obsidian
-    gimp
     wayshot
-    zathura
     go
     act
     # reaper
