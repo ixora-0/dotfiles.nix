@@ -4,15 +4,12 @@
   imports = (map helpers.importBundle [
     "core-terminal"
     "extra-terminal"
+    "core-apps"
   ]) ++ (map helpers.importHomeModule [
     # packages that has configurations
-    "kitty"
     "hyprland"
-    "discord"
-    "spotify"
     "ags"
     "theme"
-    "firefox"
     "wlsunset"
     "direnv"
     "fonts"
@@ -20,14 +17,7 @@
   modules.helix.languages.lsp.enableAll = true;
   modules.helix.languages.prettier.enable = true;
 
-  modules.discord.vesktop.enable = true;
-
   home.packages = with pkgs; [
-    kitty
-    # firefox-devedition
-
-    cinnamon.nemo  # BUG: open in terminal doesn't work
-    # gnome.nautilus nautilus-open-any-terminal
     networkmanagerapplet
     (btop.override { cudaSupport = true; })
     ungoogled-chromium  # backup browser
