@@ -17,6 +17,7 @@
     "sound"
     "default-fonts"
     "sddm"
+    "sops"
     "open-webui"
   ]);
 
