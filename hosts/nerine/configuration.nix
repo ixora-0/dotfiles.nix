@@ -17,7 +17,7 @@
     "sound"
     "default-fonts"
     "sddm"
-    "ollama" "open-webui" "openedai-speech"
+    "open-webui"
   ]);
 
   services.fstrim.enable = true;

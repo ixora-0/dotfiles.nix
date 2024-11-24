@@ -1,3 +1,4 @@
+# NOTE: not in use right now
 {
   virtualisation.docker.enable = true;
 

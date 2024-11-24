@@ -1,3 +1,4 @@
+# NOTE: not in use right now
 {pkgs-unstable, ...}: {
   services.ollama = {
     enable = true;
