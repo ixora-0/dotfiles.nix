@@ -1,12 +1,13 @@
 # Auto-generated using compose2nix v0.3.2-pre.
-{ pkgs, lib, ... }: {
+{ pkgs, lib, config, ... }: {
   # TODO: Add option to disable certain containers.
 
-  # Runtime
+  # == Runtime ================================================================
   virtualisation.docker.enable = true;
   virtualisation.oci-containers.backend = "docker";
 
-  # Containers
+  # == Containers =============================================================
+  # Ollama
   virtualisation.oci-containers.containers."open-webui-ollama" = {
     image = "ollama/ollama";
     volumes = [
@@ -39,6 +40,8 @@
       "docker-compose-open-webui-root.target"
     ];
   };
+
+  # Openedai-speech
   virtualisation.oci-containers.containers."open-webui-openedai-speech" = {
     image = "ghcr.io/matatonic/openedai-speech";
     environment = {
@@ -76,6 +79,67 @@
       "docker-compose-open-webui-root.target"
     ];
   };
+
+  # Searxng
+
+  # Secret
+  sops.secrets.searxng = { };
+  # Setup sops template
+  # NOTE: ideally would provide path directly via sops.templates..file,
+  # but can't interpolate the placeholder when reading path
+  # https://discourse.nixos.org/t/output-path-interpolation-in-file-sources/11961
+  sops.templates."searxng-settings.yaml" = {
+    owner = "ixora";
+    content = builtins.replaceStrings ["ultrasecretkey"] [config.sops.placeholder.searxng]
+      (builtins.readFile ./searxng/settings.yml);
+  };
+  # # Symlinking config to docker volume
+  # xdg.configFile = {
+  #   # https://www.reddit.com/r/NixOS/comments/1dlk4vg/how_to_make_homemanager_create_symlinks/
+  #   "searxng/settings.yml".source = config.lib.file.mkOutOfStoreSymlink osConfig.;
+  #   "searxng/uwsgi.ini".source = ../../../../modules/nixos/open-webui/searxng/uwsgi.ini;
+  #   "searxng/limiter.toml".source = ../../../../modules/nixos/open-webui/searxng/limiter.toml;
+  # };
+  virtualisation.oci-containers.containers."open-webui-searxng" = {
+    image = "searxng/searxng";
+    volumes = [
+      "${./searxng/limiter.toml}:/etc/searxng/limiter.toml:ro"
+      "${config.sops.templates."searxng-settings.yaml".path}:/etc/searxng/settings.yml:ro"
+      "${./searxng/uwsgi.ini}:/etc/searxng/uwsgi.ini:ro"
+    ];
+    ports = [
+      "3001:8080/tcp"
+    ];
+    user = "1000";  # NOTE: 1000 = ixora
+                    # Waiting for rootless docker for home manager.
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=searxng"
+      "--network=open-webui-network"
+    ];
+  };
+  systemd.services."docker-open-webui-searxng" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+      RestartMaxDelaySec = lib.mkOverride 90 "1m";
+      RestartSec = lib.mkOverride 90 "100ms";
+      RestartSteps = lib.mkOverride 90 9;
+    };
+    after = [
+      "docker-network-open-webui-network.service"
+    ];
+    requires = [
+      "docker-network-open-webui-network.service"
+    ];
+    partOf = [
+      "docker-compose-open-webui-root.target"
+    ];
+    wantedBy = [
+      "docker-compose-open-webui-root.target"
+    ];
+  };
+
+  # Open WebUI
   virtualisation.oci-containers.containers."open-webui" = {
     image = "ghcr.io/open-webui/open-webui:main";
     environment = {
@@ -94,6 +158,7 @@
     dependsOn = [
       "open-webui-ollama"
       "open-webui-openedai-speech"
+      "open-webui-searxng"
     ];
     log-driver = "journald";
     extraOptions = [
@@ -122,7 +187,7 @@
     ];
   };
 
-  # Networks
+  # == Networks ===============================================================
   systemd.services."docker-network-open-webui-network" = {
     path = [ pkgs.docker ];
     serviceConfig = {
@@ -136,6 +201,7 @@
     partOf = [ "docker-compose-open-webui-root.target" ];
     wantedBy = [ "docker-compose-open-webui-root.target" ];
   };
+
 
   # Root service
   # When started, this will automatically create all resources and start
