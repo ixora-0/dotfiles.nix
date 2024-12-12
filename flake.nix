@@ -26,8 +26,8 @@
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
-    sops-nix.url = "github:Mic92/sops-nix";
     lanzaboote.url = "github:nix-community/lanzaboote/v0.4.1";
+    sops-nix.url = "github:Mic92/sops-nix/e9b5eef9b51cdf966c76143e13a9476725b2f760";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     ags.url = "github:Aylur/ags";
     astal.url = "github:Aylur/astal";
