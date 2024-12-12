@@ -19,6 +19,12 @@
           MoveTab = "Right";
         };
       };
+      pane = {
+        "bind \" r\"" = {
+          SwitchToMode = "RenamePane";
+          PaneNameInput = 0;
+        };
+      };
     };
     plugins = {
       "welcome-screen location=\"zellij:session-manager\"" = {
