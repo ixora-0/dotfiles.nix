@@ -17,6 +17,7 @@
   modules.helix.languages.prettier.enable = true;
 
   home.packages = with pkgs; [
+    wl-clipboard
     networkmanagerapplet
     (btop.override { cudaSupport = true; })
     ungoogled-chromium  # backup browser
