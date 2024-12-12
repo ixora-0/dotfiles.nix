@@ -19,6 +19,7 @@
     "sddm"
     "sops"
     "open-webui"
+    "lanzaboote"
   ]);
 
   services.fstrim.enable = true;
