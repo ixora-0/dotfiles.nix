@@ -15,4 +15,5 @@
   "corefonts" "vista-fonts"
   "steam" "steam-unwrapped"
   "vscode"
+  "discord"
 ]

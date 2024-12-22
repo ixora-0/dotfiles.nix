@@ -5,7 +5,6 @@
     "firefox"
     "discord"
   ];
-  modules.discord.vesktop.enable = lib.mkDefault true;
   home.packages = with pkgs; [
     # firefox-devedition
     # gnome.nautilus nautilus-open-any-terminal

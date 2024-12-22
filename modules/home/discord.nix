@@ -1,37 +1,23 @@
-{ pkgs, lib, config, helpers, ... }: let
-  cfg = config.modules.discord;
-  catppuccinThemesSrc = pkgs.fetchgit {
-    url = "https://github.com/catppuccin/discord";
-    sparseCheckout = ["themes"];
-    hash = "sha256-xQNgWMQcNlrNs7mSn9b/Zee9UzAW7cU80G1Ag3vukkc=";
-  } + /themes;
-in
-{
-  # TODO: declarative ~/.config/Vencord/setting/settings.json
-  # maybe see https://github.com/FlafyDev/nixos-config/commit/5cd0781bae16fed8007513c24434890909c1a680
-  options.modules.discord.vesktop.enable = lib.mkEnableOption ''
-    Whether to install vesktop instead of dicord with vencord.
-    Good if want to share screen properly in wayland.
-  '';
+{ inputs, ... }: {
+  imports = [inputs.nixcord.homeManagerModules.nixcord];
+  programs.nixcord.enable = true;
+  programs.nixcord.vesktop.enable = true;
+  programs.nixcord.vesktopConfig = {
+    themeLinks = ["https://catppuccin.github.io/discord/dist/catppuccin-mocha.theme.css"];
+    plugins = {
+      biggerStreamPreview.enable = true;
+      gameActivityToggle.enable = true;
+      volumeBooster.enable = true;
+      fixYoutubeEmbeds.enable = true;
+      youtubeAdblock.enable = true;
+      spotifyControls.enable = true;
+      spotifyCrack.enable = true;
 
-  config.xdg.configFile = (helpers.mkIfElse cfg.vesktop.enable
-    # NOTE: might have to delete the themes folder if one already exist in order to symlink it
-    # alternatively, specify a specific theme instead of the whole folder like
-    # { "vesktop/themes/mocha.theme.css".source = catppuccinThemesSrc + "/mocha.theme.css"; }
+      silentTyping.enable = true;
+      silentTyping.showIcon = true;
 
-    { "vesktop/themes".source = catppuccinThemesSrc; }
-    { "Vencord/themes".source = catppuccinThemesSrc; }
-  );
-  config.home.packages = with pkgs; [
-    (helpers.mkIfElse cfg.vesktop.enable
-      (vesktop.override {
-        withSystemVencord = false;  # letting vesktop manage it's own version
-                                    # which fixes the no vencord section in settings issue
-      })
-      (discord.override {
-        withOpenASAR = true;
-        withVencord = true;
-      })
-    )
-  ];
+      # crashes for some reason
+      # callTimer.enable = true;
+    };
+  };
 }
