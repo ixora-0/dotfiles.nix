@@ -9,6 +9,6 @@
   home.packages = with pkgs; [
     # firefox-devedition
     # gnome.nautilus nautilus-open-any-terminal
-    cinnamon.nemo  # BUG: open in terminal doesn't work
+    nemo  # BUG: open in terminal doesn't work
   ];
 }

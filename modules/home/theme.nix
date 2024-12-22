@@ -60,7 +60,7 @@ in
 
     # some ags icons are taken from here
     # BUG: sadly this overrides some of candy's icons as well
-    gnome.adwaita-icon-theme
+    adwaita-icon-theme
     # papirus-icon-theme
     morewaita-icon-theme
   ];

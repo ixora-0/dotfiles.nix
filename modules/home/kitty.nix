@@ -29,7 +29,7 @@
     font.size = 16;
     font.name = "monospace";
 
-    theme = "Catppuccin-Mocha";
+    themeFile = "Catppuccin-Mocha";
 
     keybindings = {
       "ctrl+equal" = "change_font_size all +2.0";

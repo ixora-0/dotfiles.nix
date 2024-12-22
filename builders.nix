@@ -11,7 +11,7 @@ inputs: rec {
   selectNixpkgs = stability: matchStability stability inputs.nixpkgs-stable inputs.nixpkgs-unstable;
   selectHomeManager = stability: matchStability stability inputs.home-manager-stable inputs.home-manager-unstable;
 
-  overlays = [inputs.nur.overlay];  # common overlays
+  overlays = [inputs.nur.overlays.default];  # common overlays
 
   makePkgs = stability: osArchitecture: hostname: usernames: let
     nixpkgs = selectNixpkgs stability;

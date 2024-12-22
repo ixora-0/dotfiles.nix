@@ -41,7 +41,7 @@ in
     (includeLSP cfg.lsp.svelte.enable            [nodePackages_latest.svelte-language-server])
     (includeLSP cfg.lsp.tailwind.enable          [tailwindcss-language-server])
     (includeLSP cfg.lsp.ruff.enable              [ruff-lsp])
-    (includeLSP cfg.lsp.pyright.enable           [nodePackages.pyright])
+    (includeLSP cfg.lsp.pyright.enable           [pyright])
     (includeLSP cfg.lsp.nil.enable               [nil])
     (includeLSP cfg.lsp.marksman.enable          [marksman])
     (includeLSP cfg.lsp.r.enable                 [(rWrapper.override { packages = [rPackages.languageserver]; })])

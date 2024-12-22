@@ -43,12 +43,8 @@
   # Set your time zone.
   time.timeZone = "America/Kentucky/Louisville";
 
-  # enable OpenGL
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
+  hardware.graphics.enable = true;  # do not need to set manually
+  hardware.graphics.enable32Bit = true;
 
   services.xserver.enable = true;
   services.xserver.excludePackages = [pkgs.xterm];

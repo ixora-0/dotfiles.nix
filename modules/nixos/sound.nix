@@ -1,6 +1,5 @@
 { pkgs, ... }: {
   # enable sound with pipewire
-  sound.enable = false;  # only meant for ALSA-based configurations
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;  # rtkit is optional but recommended
   services.pipewire = {
