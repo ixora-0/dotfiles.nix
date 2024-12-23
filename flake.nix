@@ -30,9 +30,7 @@
     sops-nix.url = "github:Mic92/sops-nix/e9b5eef9b51cdf966c76143e13a9476725b2f760";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     nixcord.url = "github:kaylorben/nixcord";
-    ags.url = "github:Aylur/ags";
-    astal.url = "github:Aylur/astal";
-    matugen.url = "github:InioX/matugen";
+    ags.url = "github:Aylur/ags/v1";
 
     # helix.url = "github:helix-editor/helix";
     # helix.inputs.nixpkgs.follows = "nixpkgs-unstable";

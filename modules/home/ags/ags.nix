@@ -8,9 +8,9 @@
 in
 {
   # BUG: media preview for firefox youtube doesn't work
+  # TODO: move to ags v2
   imports = [
     inputs.ags.homeManagerModules.default
-    inputs.astal.homeManagerModules.default
   ];
 
   home.packages = with pkgs; [
@@ -32,17 +32,8 @@ in
     gtk3
   ];
 
-  programs.astal = {
-    enable = true;
-    extraPackages = with pkgs; [
-      libadwaita
-    ];
-  };
-
-  programs.ags = {
-    enable = true;
-    configDir = aylurAgs;
-  };
+  programs.ags.enable = true;
+  programs.ags.configDir = aylurAgs;
 
   home.file.".cache/ags/options.json" = {
     source = ./options.json;
