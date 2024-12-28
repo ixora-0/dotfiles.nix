@@ -40,8 +40,10 @@
   services.privoxy.enableTor = true;
   services.privoxy.settings.listen-address = "127.0.0.1:8118";
 
-  # Set your time zone.
-  time.timeZone = "America/Kentucky/Louisville";
+  services.automatic-timezoned.enable = true;
+  # NOTE: This might be set by default in the future.
+  # See https://github.com/NixOS/nixpkgs/issues/321121
+  services.geoclue2.geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
 
   hardware.graphics.enable = true;  # do not need to set manually
   hardware.graphics.enable32Bit = true;
