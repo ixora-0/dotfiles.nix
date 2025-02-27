@@ -1,4 +1,5 @@
 { inputs, ... }: {
+  # NOTE: some features broken rn
   imports = [inputs.nixcord.homeManagerModules.nixcord];
   programs.nixcord.enable = true;
   programs.nixcord.vesktop.enable = true;
