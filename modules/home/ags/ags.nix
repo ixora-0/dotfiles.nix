@@ -20,16 +20,6 @@ in
     fd
     brightnessctl
     swww
-    inputs.matugen.packages.${system}.default
-    slurp
-    wf-recorder
-    wl-clipboard
-    wayshot
-    swappy
-    hyprpicker
-    pavucontrol
-    networkmanager
-    gtk3
   ];
 
   programs.ags.enable = true;
