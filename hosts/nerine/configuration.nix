@@ -53,6 +53,8 @@
   services.xserver.excludePackages = [pkgs.xterm];
 
   programs.hyprland.enable = true;
+  # Graphical session to pre-select in the session chooser
+  services.displayManager.defaultSession = "hyprland";
 
   # xdg.portal = {
   #   enable = true;
