@@ -32,10 +32,11 @@
     vscode
     # nwg-look
     mpv
-  ] ++ [
-    pkgs-unstable.osu-lazer-bin
-    pkgs-unstable.anki-bin
-  ];
+  ]) ++ (with pkgs-unstable; [
+    osu-lazer-bin
+    anki-bin
+    ghostty
+  ]);
 
   xdg.mimeApps.enable = true;
   xdg.mimeApps.defaultApplications = {
