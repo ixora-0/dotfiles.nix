@@ -19,6 +19,7 @@
     "sddm"
     "sops"
     "open-webui"
+    "auto-cpufreq"
     "lanzaboote"
   ]);
 
