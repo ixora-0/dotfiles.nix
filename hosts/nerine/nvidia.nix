@@ -4,7 +4,7 @@
 
     # can cause sleep/suspend to fail
     # enable if graphical corruption issues or application after waking
-    powerManagement.enable = false;
+    powerManagement.enable = true;
 
     # (experimental) turn off gpu when not in use
     powerManagement.finegrained = false;
