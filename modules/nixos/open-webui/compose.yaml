@@ -32,7 +32,7 @@ services:
       - /home/ixora/intaa/openedai-speech/config:/app/config
 
   open-webui:
-    image: ghcr.io/open-webui/open-webui:main
+    image: ghcr.io/open-webui/open-webui:latest
     restart: unless-stopped
     depends_on: [ollama, openedai-speech]
     environment:

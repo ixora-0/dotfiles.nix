@@ -141,7 +141,7 @@
 
   # Open WebUI
   virtualisation.oci-containers.containers."open-webui" = {
-    image = "ghcr.io/open-webui/open-webui:main";
+    image = "ghcr.io/open-webui/open-webui:latest";
     environment = {
       "PORT" = "3000";
       "OLLAMA_BASE_URL" = "http://ollama:11434";
