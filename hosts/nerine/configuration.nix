@@ -70,8 +70,6 @@
     gvfs.enable = true;
     udisks2.enable = true;  # info about storage devices
     upower.enable = true;  # power management
-    power-profiles-daemon.enable = true;
-    accounts-daemon.enable = true;  # info about users
   };
 
   # enable bluetooth
