@@ -1,10 +1,42 @@
-{ pkgs, inputs, ... }: {
+{ config, pkgs, inputs, lib, helpers, ... }: {
+  # TODO: make docker + gpu possible
   imports = [
     inputs.nixos-wsl.nixosModules.default
-  ];
+  ] ++ (map helpers.importHomeModule [
+    "direnv"
+  ]);
   system.stateVersion = "24.05";
+  hardware.opengl.enable = true;
+
+  wsl.useWindowsDriver = true;
+  wsl.nativeSystemd = true;
+  environment.variables = {
+    "NIX_LD_LIBRARY_PATH" = lib.mkForce "/usr/lib/wsl/lib";
+  };
+  programs.nix-ld.enable = true;
+  programs.nix-ld.package = pkgs.nix-ld-rs;
+
+  virtualisation.docker = {
+    enable = true;
+    daemon.settings = {
+      features.cdi = true;
+    };
+  };
+  hardware = {
+    nvidia = {
+      nvidiaSettings = false;
+      open = true;
+    };
+  };
+  services.xserver.videoDrivers = ["nvidia"];
+
+  hardware.nvidia-container-toolkit.enable = true;
+  hardware.nvidia-container-toolkit.mount-nvidia-executables= false;
+
   wsl.enable = true;
   wsl.defaultUser = "ixora";
+  wsl.docker-desktop.enable = true;
+
   environment.systemPackages = with pkgs; [
       vim
   ];
