@@ -4,7 +4,7 @@
     "zellij"
   ];
   home.packages = with pkgs; [
-    tlrc
+    tealdeer
     lazydocker
     unrar
     glow
