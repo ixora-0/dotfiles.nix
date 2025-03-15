@@ -1,7 +1,9 @@
 keys:
-  - &primary age1xsdvnvd9l6sscazaxvhey7q77da5m62fm7nqpnyztm28kfvqu98s6a7c6f
+  - &nerine age1xsdvnvd9l6sscazaxvhey7q77da5m62fm7nqpnyztm28kfvqu98s6a7c6f
 creation_rules:
-  - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
-    key_groups:
-    - age:
-      - *primary
+  - path_regex: secrets/common.(yaml|json|env|ini)$
+    age: >-
+      age1xsdvnvd9l6sscazaxvhey7q77da5m62fm7nqpnyztm28kfvqu98s6a7c6f
+
+  - path_regex: secrets/nerine.(yaml|json|env|ini)$
+    age: *nerine

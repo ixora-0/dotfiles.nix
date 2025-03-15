@@ -83,7 +83,9 @@
   # Searxng
 
   # Secret
-  sops.secrets.searxng = { };
+  sops.secrets.searxng = {
+    sopsFile = ../../../secrets/nerine.json;
+  };
   # Setup sops template
   # NOTE: ideally would provide path directly via sops.templates..file,
   # but can't interpolate the placeholder when reading path

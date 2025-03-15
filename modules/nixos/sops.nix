@@ -7,7 +7,7 @@
     age
   ];
 
-  sops.defaultSopsFile = ../../secrets/secrets.json;
   sops.defaultSopsFormat = "json";
+  # TODO: improve design here
   sops.age.keyFile = "/home/ixora/.config/sops/age/keys.txt";
 }
