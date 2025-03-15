@@ -1,9 +1,13 @@
 keys:
   - &nerine age1xsdvnvd9l6sscazaxvhey7q77da5m62fm7nqpnyztm28kfvqu98s6a7c6f
+  - &dierama age1mgzzmpgrxdtu40nha4e63et0zvcjcx9zjc3la7calnkk2xu76e0s6clwvn
 creation_rules:
   - path_regex: secrets/common.(yaml|json|env|ini)$
     age: >-
-      age1xsdvnvd9l6sscazaxvhey7q77da5m62fm7nqpnyztm28kfvqu98s6a7c6f
+      age1xsdvnvd9l6sscazaxvhey7q77da5m62fm7nqpnyztm28kfvqu98s6a7c6f,
+      age1mgzzmpgrxdtu40nha4e63et0zvcjcx9zjc3la7calnkk2xu76e0s6clwvn
 
   - path_regex: secrets/nerine.(yaml|json|env|ini)$
     age: *nerine
+  - path_regex: secrets/dierama.(yaml|json|env|ini)$
+    age: *dierama

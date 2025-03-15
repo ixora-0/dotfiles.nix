@@ -50,6 +50,10 @@
                                  "x86_64-linux"
                                  "wisteria"
                                  ["ixora"];
+      dierama = makeNixOSConfig "stable"
+                                "x86_64-linux"
+                                "dierama"
+                                ["ixora"];
     };
 
     homeConfigurations = {
@@ -61,6 +65,10 @@
                                       "x86_64-linux"
                                       "nerine"
                                       "ixora";
+      "ixora@dierama" = makeHomeConfig "stable"
+                                       "x86_64-linux"
+                                       "dierama"
+                                       "ixora";
     };
   };
 }
