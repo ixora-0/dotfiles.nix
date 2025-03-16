@@ -14,3 +14,10 @@ services:
           - 3000:3000
         volumes:
           - /home/ixora/services/open-webui/data:/app/backend/data
+    vaultwarden:
+        image: vaultwarden/server:latest
+        restart: always
+        environment:
+            - SIGNUPS_ALLOWED=false  # change to true if want signups
+        volumes:
+          - /home/ixora/services/vaultwarden/vw-data:/data

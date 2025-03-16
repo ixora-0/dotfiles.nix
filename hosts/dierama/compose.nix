@@ -76,6 +76,40 @@
       "docker-compose-dierama-root.target"
     ];
   };
+  virtualisation.oci-containers.containers."dierama-vaultwarden" = {
+    image = "vaultwarden/server:latest";
+    environment = {
+      "SIGNUPS_ALLOWED" = "false";
+    };
+    volumes = [
+      "/home/ixora/services/vaultwarden/vw-data:/data:rw"
+    ];
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=vaultwarden"
+      "--network=dierama_default"
+    ];
+  };
+  systemd.services."docker-dierama-vaultwarden" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+      RestartMaxDelaySec = lib.mkOverride 90 "1m";
+      RestartSec = lib.mkOverride 90 "100ms";
+      RestartSteps = lib.mkOverride 90 9;
+    };
+    after = [
+      "docker-network-dierama_default.service"
+    ];
+    requires = [
+      "docker-network-dierama_default.service"
+    ];
+    partOf = [
+      "docker-compose-dierama-root.target"
+    ];
+    wantedBy = [
+      "docker-compose-dierama-root.target"
+    ];
+  };
 
   # Networks
   systemd.services."docker-network-dierama_default" = {
