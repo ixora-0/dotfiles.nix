@@ -47,9 +47,6 @@
     volumes = [
       "/home/ixora/services/open-webui/data:/app/backend/data:rw"
     ];
-    ports = [
-      "3000:3000/tcp"
-    ];
     log-driver = "journald";
     extraOptions = [
       "--network-alias=open-webui"
