@@ -36,6 +36,43 @@
       "docker-compose-dierama-root.target"
     ];
   };
+  virtualisation.oci-containers.containers."dierama-open-webui" = {
+    image = "ghcr.io/open-webui/open-webui:latest";
+    environment = {
+      "PORT" = "3000";
+    };
+    volumes = [
+      "/home/ixora/services/open-webui/data:/app/backend/data:rw"
+    ];
+    ports = [
+      "3000:3000/tcp"
+    ];
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=open-webui"
+      "--network=dierama_default"
+    ];
+  };
+  systemd.services."docker-dierama-open-webui" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+      RestartMaxDelaySec = lib.mkOverride 90 "1m";
+      RestartSec = lib.mkOverride 90 "100ms";
+      RestartSteps = lib.mkOverride 90 9;
+    };
+    after = [
+      "docker-network-dierama_default.service"
+    ];
+    requires = [
+      "docker-network-dierama_default.service"
+    ];
+    partOf = [
+      "docker-compose-dierama-root.target"
+    ];
+    wantedBy = [
+      "docker-compose-dierama-root.target"
+    ];
+  };
 
   # Networks
   systemd.services."docker-network-dierama_default" = {
