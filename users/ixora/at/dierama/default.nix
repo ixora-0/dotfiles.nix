@@ -3,7 +3,10 @@
     "core-terminal"
     "extra-terminal"
   ]);
-  modules.helix.languages.lsp.nil.enable = true;
+  modules.helix.languages.lsp = {
+    nil.enable = true;
+    yaml.enable = true;
+  };
   programs.zellij.enableZshIntegration = true;
 
   home.packages = (with pkgs; [

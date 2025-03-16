@@ -28,6 +28,7 @@ in
     marksman.enable = lib.mkEnableOption "Whether to enable the marksman LSP";
 
     r.enable = lib.mkEnableOption "Whether to enabe the R LSP";
+    yaml.enable = lib.mkEnableOption "Whether to enabe the yaml LSP";
   };
   options.modules.helix.languages.prettier.enable = lib.mkEnableOption ''Whether to enable prettier'';
   config.programs.helix.extraPackages = let
@@ -45,6 +46,7 @@ in
     (includeLSP cfg.lsp.nil.enable               [nil])
     (includeLSP cfg.lsp.marksman.enable          [marksman])
     (includeLSP cfg.lsp.r.enable                 [(rWrapper.override { packages = [rPackages.languageserver]; })])
+    (includeLSP cfg.lsp.yaml.enable                 [yaml-language-server])
   ]);
 
   config.programs.helix.languages.language-server = lib.mkMerge [
