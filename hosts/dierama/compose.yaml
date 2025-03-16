@@ -2,8 +2,9 @@ name: dierama
 services:
     cloudflared:
         image: cloudflare/cloudflared:latest
+        restart: unless-stopped
         command: tunnel --no-autoupdate run
-        # token is set in patch
+        # tunnel token is set in patch
     open-webui:
         image: ghcr.io/open-webui/open-webui:latest
         restart: unless-stopped
