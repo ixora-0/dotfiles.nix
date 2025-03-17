@@ -9,13 +9,13 @@ services:
         image: ghcr.io/open-webui/open-webui:latest
         restart: unless-stopped
         environment:
-          - PORT=3000
+            - PORT=3000
         volumes:
-          - /home/ixora/services/open-webui/data:/app/backend/data
+            - /home/ixora/services/open-webui/data:/app/backend/data
     vaultwarden:
         image: vaultwarden/server:latest
         restart: always
         environment:
             - SIGNUPS_ALLOWED=false  # change to true if want signups
         volumes:
-          - /home/ixora/services/vaultwarden/vw-data:/data
+            - /home/ixora/services/vaultwarden/vw-data:/data
