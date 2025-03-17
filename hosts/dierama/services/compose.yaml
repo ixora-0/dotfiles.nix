@@ -1,0 +1,39 @@
+name: dierama
+services:
+    cloudflared:
+        image: cloudflare/cloudflared:latest
+        restart: unless-stopped
+        command: tunnel --no-autoupdate run
+        labels:
+            glance.name: Cloudflared
+            glance.icon: /assets/cloudflare.svg
+        # tunnel token is set in patch
+    glance:
+        image: glanceapp/glance
+        volumes:
+            # loading configs outside of vcs for now
+            - /home/ixora/services/glance/config:/app/config:ro
+            - /home/ixora/services/glance/assets:/app/assets:ro
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+        labels:
+            glance.name: Glance
+    open-webui:
+        image: ghcr.io/open-webui/open-webui:latest
+        restart: unless-stopped
+        environment:
+            - PORT=3000
+        volumes:
+            - /home/ixora/services/open-webui/data:/app/backend/data:rw
+        labels:
+            glance.name: Open WebUI
+            glance.icon: /assets/open-webui.png
+    vaultwarden:
+        image: vaultwarden/server:latest
+        restart: always
+        environment:
+            - SIGNUPS_ALLOWED=false  # change to true if want signups
+        volumes:
+            - /home/ixora/services/vaultwarden/vw-data:/data:rw
+        labels:
+            glance.name: Vaultwarden
+            glance.icon: /assets/vaultwarden.svg

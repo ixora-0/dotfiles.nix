@@ -1,7 +1,7 @@
 { pkgs, pkgs-unstable, helpers, ... }: {
   imports = [
     ./hardware-configuration.nix
-    ./compose.nix ./compose-patches.nix
+    ./services/compose.nix ./services/compose-patches.nix
   ] ++ (map helpers.importNixosModule [
     "locale"
     "sops"
@@ -49,8 +49,8 @@
   # https://github.com/aksiksi/compose2nix/discussions/83
   systemd.services.watch-compose = let 
     here = "/home/ixora/dotfiles.nix/hosts/dierama";
-    compose_yaml_path = "${here}/compose.yaml";
-    compose_nix_path = "${here}/compose.nix";
+    compose_yaml_path = "${here}/services/compose.yaml";
+    compose_nix_path = "${here}/services/compose.nix";
     compose2nix_cmd = "${pkgs.compose2nix}/bin/compose2nix --runtime docker --inputs=${compose_yaml_path} --output=${compose_nix_path}";
   in {
     wantedBy = [ "multi-user.target" ];

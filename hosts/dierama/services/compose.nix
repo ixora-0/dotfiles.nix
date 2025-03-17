@@ -13,6 +13,10 @@
   virtualisation.oci-containers.containers."dierama-cloudflared" = {
     image = "cloudflare/cloudflared:latest";
     cmd = [ "tunnel" "--no-autoupdate" "run" ];
+    labels = {
+      "glance.icon" = "/assets/cloudflare.svg";
+      "glance.name" = "Cloudflared";
+    };
     log-driver = "journald";
     extraOptions = [
       "--network-alias=cloudflared"
@@ -39,6 +43,39 @@
       "docker-compose-dierama-root.target"
     ];
   };
+  virtualisation.oci-containers.containers."dierama-glance" = {
+    image = "glanceapp/glance";
+    volumes = [
+      "/home/ixora/services/glance/assets:/app/assets:ro"
+      "/home/ixora/services/glance/config:/app/config:ro"
+      "/var/run/docker.sock:/var/run/docker.sock:ro"
+    ];
+    labels = {
+      "glance.name" = "Glance";
+    };
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=glance"
+      "--network=dierama_default"
+    ];
+  };
+  systemd.services."docker-dierama-glance" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "no";
+    };
+    after = [
+      "docker-network-dierama_default.service"
+    ];
+    requires = [
+      "docker-network-dierama_default.service"
+    ];
+    partOf = [
+      "docker-compose-dierama-root.target"
+    ];
+    wantedBy = [
+      "docker-compose-dierama-root.target"
+    ];
+  };
   virtualisation.oci-containers.containers."dierama-open-webui" = {
     image = "ghcr.io/open-webui/open-webui:latest";
     environment = {
@@ -47,6 +84,10 @@
     volumes = [
       "/home/ixora/services/open-webui/data:/app/backend/data:rw"
     ];
+    labels = {
+      "glance.icon" = "/assets/open-webui.png";
+      "glance.name" = "Open WebUI";
+    };
     log-driver = "journald";
     extraOptions = [
       "--network-alias=open-webui"
@@ -81,6 +122,10 @@
     volumes = [
       "/home/ixora/services/vaultwarden/vw-data:/data:rw"
     ];
+    labels = {
+      "glance.icon" = "/assets/vaultwarden.svg";
+      "glance.name" = "Vaultwarden";
+    };
     log-driver = "journald";
     extraOptions = [
       "--network-alias=vaultwarden"
