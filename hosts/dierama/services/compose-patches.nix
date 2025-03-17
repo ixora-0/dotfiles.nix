@@ -13,6 +13,17 @@
   virtualisation.oci-containers.containers."dierama-cloudflared" = {
     environmentFiles = [config.sops.templates.cloudflared_env.path];
   };
+  # speedtest-tracker
+  sops.secrets.speedtest-tracker_app_key.sopsFile = ../../../secrets/dierama.json;
+  sops.secrets.speedtest-tracker_app_url.sopsFile = ../../../secrets/dierama.json;
+  sops.templates.speedtest-tracker_env.content = ''
+    APP_KEY=${config.sops.placeholder.speedtest-tracker_app_key}
+    APP_URL=${config.sops.placeholder.speedtest-tracker_app_url}
+    ASSET_URL=${config.sops.placeholder.speedtest-tracker_app_url}
+  '';
+  virtualisation.oci-containers.containers."dierama-speedtest-tracker" = {
+    environmentFiles = [config.sops.templates.speedtest-tracker_env.path];
+  };
   # vaultwarden
   sops.secrets.vaultwarden_domain.sopsFile = ../../../secrets/dierama.json;
   sops.secrets.vaultwarden_admin_token.sopsFile = ../../../secrets/dierama.json;

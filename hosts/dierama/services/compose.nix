@@ -114,6 +114,48 @@
       "docker-compose-dierama-root.target"
     ];
   };
+  virtualisation.oci-containers.containers."dierama-speedtest-tracker" = {
+    image = "lscr.io/linuxserver/speedtest-tracker:latest";
+    environment = {
+      "DB_CONNECTION" = "sqlite";
+      "DISPLAY_TIMEZONE" = "America/New_York";
+      "PGID" = "1000";
+      "PUID" = "1000";
+      "SPEEDTEST_SCHEDULE" = "\"0 */3 * * *\"";
+    };
+    volumes = [
+      "/home/ixora/services/speedtest-tracker:/config:rw"
+    ];
+    labels = {
+      "glance.icon" = "/assets/speedtest-tracker.png";
+      "glance.name" = "Speedtest Tracker";
+    };
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=speedtest-tracker"
+      "--network=dierama_default"
+    ];
+  };
+  systemd.services."docker-dierama-speedtest-tracker" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+      RestartMaxDelaySec = lib.mkOverride 90 "1m";
+      RestartSec = lib.mkOverride 90 "100ms";
+      RestartSteps = lib.mkOverride 90 9;
+    };
+    after = [
+      "docker-network-dierama_default.service"
+    ];
+    requires = [
+      "docker-network-dierama_default.service"
+    ];
+    partOf = [
+      "docker-compose-dierama-root.target"
+    ];
+    wantedBy = [
+      "docker-compose-dierama-root.target"
+    ];
+  };
   virtualisation.oci-containers.containers."dierama-vaultwarden" = {
     image = "vaultwarden/server:latest";
     environment = {

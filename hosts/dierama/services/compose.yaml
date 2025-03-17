@@ -8,6 +8,22 @@ services:
             glance.name: Cloudflared
             glance.icon: /assets/cloudflare.svg
         # tunnel token is set in patch
+
+    speedtest-tracker:
+        image: lscr.io/linuxserver/speedtest-tracker:latest
+        restart: unless-stopped
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - DB_CONNECTION=sqlite
+            - SPEEDTEST_SCHEDULE="0 */3 * * *"
+            - DISPLAY_TIMEZONE=America/New_York
+        volumes:
+            - /home/ixora/services/speedtest-tracker:/config:rw
+        labels:
+            glance.name: Speedtest Tracker
+            glance.icon: /assets/speedtest-tracker.png
+
     glance:
         image: glanceapp/glance
         volumes:
@@ -17,6 +33,7 @@ services:
             - /var/run/docker.sock:/var/run/docker.sock:ro
         labels:
             glance.name: Glance
+
     open-webui:
         image: ghcr.io/open-webui/open-webui:latest
         restart: unless-stopped
@@ -27,6 +44,7 @@ services:
         labels:
             glance.name: Open WebUI
             glance.icon: /assets/open-webui.png
+
     vaultwarden:
         image: vaultwarden/server:latest
         restart: always
