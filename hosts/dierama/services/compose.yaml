@@ -55,3 +55,13 @@ services:
         labels:
             glance.name: Vaultwarden
             glance.icon: /assets/vaultwarden.svg
+
+    minio-obsidian:
+        image: minio/minio:latest
+        restart: unless-stopped
+        command: server /data --console-address ":9001"
+        volumes:
+            - /home/ixora/services/minio-obsidian/data:/data:rw
+        labels:
+            glance.name: Obsidian DB
+            glance.icon: /assets/minio-obsidian.svg

@@ -76,6 +76,42 @@
       "docker-compose-dierama-root.target"
     ];
   };
+  virtualisation.oci-containers.containers."dierama-minio-obsidian" = {
+    image = "minio/minio:latest";
+    volumes = [
+      "/home/ixora/services/minio-obsidian/data:/data:rw"
+    ];
+    cmd = [ "server" "/data" "--console-address" ":9001" ];
+    labels = {
+      "glance.icon" = "/assets/minio-obsidian.svg";
+      "glance.name" = "Obsidian DB";
+    };
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=minio-obsidian"
+      "--network=dierama_default"
+    ];
+  };
+  systemd.services."docker-dierama-minio-obsidian" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+      RestartMaxDelaySec = lib.mkOverride 90 "1m";
+      RestartSec = lib.mkOverride 90 "100ms";
+      RestartSteps = lib.mkOverride 90 9;
+    };
+    after = [
+      "docker-network-dierama_default.service"
+    ];
+    requires = [
+      "docker-network-dierama_default.service"
+    ];
+    partOf = [
+      "docker-compose-dierama-root.target"
+    ];
+    wantedBy = [
+      "docker-compose-dierama-root.target"
+    ];
+  };
   virtualisation.oci-containers.containers."dierama-open-webui" = {
     image = "ghcr.io/open-webui/open-webui:latest";
     environment = {

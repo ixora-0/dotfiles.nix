@@ -34,4 +34,14 @@
   virtualisation.oci-containers.containers."dierama-vaultwarden" = {
     environmentFiles = [config.sops.templates.vaultwarden_env.path];
   };
+  # minio-obsidian
+  sops.secrets.minio-obsidian_root_user.sopsFile = ../../../secrets/dierama.json;
+  sops.secrets.minio-obsidian_root_password.sopsFile = ../../../secrets/dierama.json;
+  sops.templates.minio-obsidian_env.content = ''
+    MINIO_ROOT_USER=${config.sops.placeholder.minio-obsidian_root_user}
+    MINIO_ROOT_PASSWORD=${config.sops.placeholder.minio-obsidian_root_password}
+  '';
+  virtualisation.oci-containers.containers."dierama-minio-obsidian" = {
+    environmentFiles = [config.sops.templates.minio-obsidian_env.path];
+  };
 }
