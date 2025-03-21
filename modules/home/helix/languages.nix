@@ -46,7 +46,7 @@ in
     (includeLSP cfg.lsp.nil.enable               [nil])
     (includeLSP cfg.lsp.marksman.enable          [marksman])
     (includeLSP cfg.lsp.r.enable                 [(rWrapper.override { packages = [rPackages.languageserver]; })])
-    (includeLSP cfg.lsp.yaml.enable                 [yaml-language-server])
+    (includeLSP cfg.lsp.yaml.enable              [yaml-language-server])
   ]);
 
   config.programs.helix.languages.language-server = lib.mkMerge [
