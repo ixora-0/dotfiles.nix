@@ -44,4 +44,22 @@
   virtualisation.oci-containers.containers."dierama-minio-obsidian" = {
     environmentFiles = [config.sops.templates.minio-obsidian_env.path];
   };
+  # gluetun
+  sops.secrets.gluetun_wireguard_private_key.sopsFile = ../../../secrets/dierama.json;
+  sops.secrets.gluetun_wireguard_addresses.sopsFile = ../../../secrets/dierama.json;
+  sops.templates.gluetun_env.content = ''
+    WIREGUARD_PRIVATE_KEY=${config.sops.placeholder.gluetun_wireguard_private_key}
+    WIREGUARD_ADDRESSES=${config.sops.placeholder.gluetun_wireguard_addresses}
+  '';
+  virtualisation.oci-containers.containers."dierama-gluetun" = {
+    environmentFiles = [config.sops.templates.gluetun_env.path];
+  };
+  # tailscale
+  sops.secrets.tailscale_ts_authkey.sopsFile = ../../../secrets/dierama.json;
+  sops.templates.tailscale_env.content = ''
+    TS_AUTHKEY=${config.sops.placeholder.tailscale_ts_authkey}
+  '';
+  virtualisation.oci-containers.containers."dierama-tailscale" = {
+    environmentFiles = [config.sops.templates.tailscale_env.path];
+  };
 }

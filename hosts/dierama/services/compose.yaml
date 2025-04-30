@@ -66,3 +66,190 @@ services:
         labels:
             glance.name: Obsidian DB
             glance.icon: /assets/minio-obsidian.svg
+
+    gluetun:
+        image: qmcgaw/gluetun:latest
+        restart: unless-stopped
+        cap_add:
+            - NET_ADMIN
+        devices:
+            - /dev/net/tun:/dev/net/tun:rwm
+        environment:
+            - VPN_SERVICE_PROVIDER=mullvad
+            - VPN_TYPE=wireguard
+            - SERVER_COUNTRIES=USA
+        volumes:
+            - /home/ixora/services/gluetun:/gluetun:rw
+        labels:
+            glance.name: Gluetun
+            glance.icon: /assets/gluetun.svg
+
+    tailscale:
+        image: tailscale/tailscale:latest
+        restart: unless-stopped
+        hostname: dierama
+        cap_add:
+            - net_admin
+        devices:
+            - /dev/net/tun:/dev/net/tun
+        environment:
+            - TS_STATE_DIR=/var/lib/tailscale
+            - TS_USERSPACE=false
+        volumes:
+            - /home/ixora/services/tailscale:/var/lib/tailscale:rw
+        ports:
+            - 80:80
+            - 8080:8080  # traefik dashboard
+        labels:
+            glance.name: Tailscale
+            glance.icon: /assets/tailscale.svg
+
+    traefik-tailscale:
+        image: traefik:latest
+        network_mode: service:tailscale
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+        command:
+          - "--log.level=DEBUG"
+          - "--api.insecure=true"
+          - "--providers.docker=true"
+          - "--providers.docker.exposedbydefault=false"
+          - "--entryPoints.web.address=:80"
+        labels:
+            glance.name: Traefik tailscale
+            glance.icon: /assets/traefik.svg
+
+    qbittorrent:
+        image: lscr.io/linuxserver/qbittorrent:latest
+        restart: unless-stopped
+        network_mode: "service:gluetun"  # don't need depends_on
+        environment:
+            - PUID=1000
+            - PGID=100
+            - TZ=America/New_York
+            - WEBUI_PORT=8080
+            - TORRENTING_PORT=6881
+        volumes:
+            - /home/ixora/services/qbittorrent/config:/config:rw
+            - /home/ixora/services/servarr/data/torrents:/data/torrents:rw
+        labels:
+             # NOTE: can't get reverse proxy cloudflare tunnel webui to work,
+             # accessing through tailscale for now
+             # copied from https://github.com/qbittorrent/qBittorrent/wiki/Traefik-Reverse-Proxy-for-Web-UI
+            traefik.enable: true
+            # adding a slash to the end
+            traefik.http.routers.qb.entrypoints: web
+            traefik.http.routers.qb.rule: PathPrefix(`/qb`)
+            traefik.http.middlewares.qb-redirect.redirectregex.regex: ^(.*)/qb$$
+            traefik.http.middlewares.qb-redirect.redirectregex.replacement: $$1/qb/
+            traefik.http.middlewares.qb-strip.stripprefix.prefixes: /qb/
+            # appropriate header changes
+            traefik.http.middlewares.qb-headers.headers.customrequestheaders.X-Frame-Options: SAMEORIGIN
+            traefik.http.middlewares.qb-headers.headers.customrequestheaders.Referer: 
+            traefik.http.middlewares.qb-headers.headers.customrequestheaders.Origin: 
+            traefik.http.routers.qb.middlewares: qb-strip,qb-redirect,qb-headers
+            # loadbalancer to *not* pass the host header
+            traefik.http.services.qb.loadbalancer.server.port: 8080
+            traefik.http.services.qb.loadbalancer.passhostheader: false
+            traefik.docker.network: traefik-qb-net
+
+            glance.name: qBittorrent
+            glance.icon: /assets/qbittorrent.svg
+
+    flaresolverr:
+        image: ghcr.io/flaresolverr/flaresolverr:latest
+        restart: unless-stopped
+        network_mode: "service:gluetun"
+        environment:
+          - TZ=America/New_York
+
+    prowlarr:
+        image: lscr.io/linuxserver/prowlarr:latest
+        restart: unless-stopped
+        network_mode: "service:gluetun"
+        environment:
+            - PUID=1000
+            - PGID=100
+            - UMASK=002
+            - TZ=America/New_York
+        volumes:
+            - /home/ixora/services/prowlarr/config:/config:rw
+        labels:
+            glance.name: Prowlarr
+            glance.icon: /assets/prowlarr
+
+    sonarr:
+        image: lscr.io/linuxserver/sonarr:latest
+        restart: unless-stopped
+        environment:
+            - PUID=1000
+            - PGID=100
+            - UMASK=002
+            - TZ=America/New_York
+        volumes:
+            - /home/ixora/services/sonarr/config:/config:rw
+            - /home/ixora/services/servarr/data:/data:rw
+        labels:
+            glance.name: Sonarr
+            glance.icon: /assets/sonarr.svg
+
+    radarr:
+        image: lscr.io/linuxserver/radarr:latest
+        restart: unless-stopped
+        environment:
+            - PUID=1000
+            - PGID=100
+            - UMASK=002
+            - TZ=America/New_York
+        volumes:
+            - /home/ixora/services/radarr/config/:/config:rw
+            - /home/ixora/services/servarr/data:/data:rw
+        labels:
+            glance.name: Radarr
+            glance.icon: /assets/radarr
+
+    # bazarr:
+    #     image: lscr.io/linuxserver/bazarr:latest
+    #     restart: unless-stopped
+    #     environment:
+    #         - PUID=1000
+    #         - PGID=1000
+    #         - TZ=America/New_York
+    #     volumes:
+    #         - /home/ixora/services/bazarr/config:/config:rw
+    #         - /home/ixora/services/servarr/data:/data:rw
+    #     ports:
+    #         - 6767:6767
+
+    jellyfin:
+        image: jellyfin/jellyfin:latest
+        restart: unless-stopped
+        user: 1000:100
+        volumes:
+            - /home/ixora/services/jellyfin/config:/config:rw
+            - /home/ixora/services/jellyfin/cache:/cache:rw
+            - /home/ixora/services/servarr/data/media:/data/media:ro
+        labels:
+            # NOTE: accessing trhough tailscale
+            # because its against tos to stream videos through cloudflare tunnel
+            traefik.enable: true
+            traefik.http.routers.jellyfin.rule: PathPrefix(`/jellyfin`)
+            traefik.http.services.jellyfin.loadbalancer.server.port: 8096
+
+            glance.name: Jellyfin
+            glance.icon: /assets/jellyfin.svg
+
+    jellyseerr:
+        image: fallenbagel/jellyseerr:latest
+        restart: unless-stopped
+        environment:
+            # - LOG_LEVEL=debug
+            - TZ=America/New_York
+            # - PORT=5055 #optional
+        ports:
+            - 5055:5055
+        volumes:
+            - /home/ixora/services/jellyseer/config:/app/config:rw
+        labels:
+            glance.name: Jellyseerr
+            glance.icon: /assets/jellyseerr.svg
