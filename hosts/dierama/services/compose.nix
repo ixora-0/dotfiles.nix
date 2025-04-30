@@ -115,6 +115,7 @@
   virtualisation.oci-containers.containers."dierama-open-webui" = {
     image = "ghcr.io/open-webui/open-webui:latest";
     environment = {
+      "AIOHTTP_CLIENT_TIMEOUT_OPENAI_MODEL_LIST" = "5";
       "PORT" = "3000";
     };
     volumes = [
