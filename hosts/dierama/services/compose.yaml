@@ -62,7 +62,7 @@ services:
         restart: unless-stopped
         command: server /data --console-address ":9001"
         volumes:
-            - /home/ixora/services/minio-obsidian/data:/data:rw
+            - /home/ixora/hdd/minio/data:/data:rw
         labels:
             glance.name: Obsidian DB
             glance.icon: /assets/minio-obsidian.svg

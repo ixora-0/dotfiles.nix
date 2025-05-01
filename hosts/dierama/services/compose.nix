@@ -230,7 +230,7 @@
   virtualisation.oci-containers.containers."dierama-minio-obsidian" = {
     image = "minio/minio:latest";
     volumes = [
-      "/home/ixora/services/minio-obsidian/data:/data:rw"
+      "/home/ixora/hdd/minio/data:/data:rw"
     ];
     cmd = [ "server" "/data" "--console-address" ":9001" ];
     labels = {

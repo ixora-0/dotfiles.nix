@@ -24,6 +24,11 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
+  fileSystems."/home/ixora/hdd" =
+    { device = "/dev/disk/by-uuid/af821999-367c-4008-934d-4651c9676a12";
+      fsType = "ext4";
+    };
+
   swapDevices =
     [ { device = "/dev/disk/by-uuid/b9b837c9-ca31-42ee-82a2-dd2cc565da53"; }
     ];
