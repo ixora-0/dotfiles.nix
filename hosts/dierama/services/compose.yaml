@@ -57,15 +57,15 @@ services:
             glance.name: Vaultwarden
             glance.icon: /assets/vaultwarden.svg
 
-    minio-obsidian:
+    minio:
         image: minio/minio:latest
         restart: unless-stopped
         command: server /data --console-address ":9001"
         volumes:
             - /home/ixora/hdd/minio/data:/data:rw
         labels:
-            glance.name: Obsidian DB
-            glance.icon: /assets/minio-obsidian.svg
+            glance.name: MinIO
+            glance.icon: /assets/minio.svg
 
     gluetun:
         image: qmcgaw/gluetun:latest
