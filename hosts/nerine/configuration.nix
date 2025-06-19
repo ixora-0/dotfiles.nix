@@ -62,7 +62,6 @@
   #   config.common.default = [ "*" ];
   # };
 
-  # services for ags stuffs
   services = {
     asusd.enable = true;
     asusd.enableUserService = true;
@@ -88,7 +87,6 @@
       "networkmanager" 
       "wheel" 
       "video"  # for brightness control
-      "uinput"  # needed for something in ags
       "docker"
     ];
     # packages = with pkgs; [ungoogled-chromium alsa-utils];

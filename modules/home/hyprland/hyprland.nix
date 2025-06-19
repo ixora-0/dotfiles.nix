@@ -114,7 +114,6 @@ in {
   wayland.windowManager.hyprland.enable = true;  # enable home manager to config hyprland
   wayland.windowManager.hyprland.settings = {
     exec-once = [
-      "ags -b hypr"
       "fcitx5 -d"
       "${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store"
       # "${pkgs.swww}/bin/swww init"

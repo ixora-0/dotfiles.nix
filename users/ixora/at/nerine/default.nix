@@ -7,7 +7,6 @@
   ]) ++ (map helpers.importHomeModule [
     # packages that has configurations
     "hyprland"
-    "ags"
     "theme"
     "wlsunset"
     "direnv"
