@@ -41,7 +41,7 @@ in
     (includeLSP cfg.lsp.typescript.enable        [nodePackages_latest.typescript-language-server])
     (includeLSP cfg.lsp.svelte.enable            [nodePackages_latest.svelte-language-server])
     (includeLSP cfg.lsp.tailwind.enable          [tailwindcss-language-server])
-    (includeLSP cfg.lsp.ruff.enable              [ruff-lsp])
+    # (includeLSP cfg.lsp.ruff.enable              [ruff-lsp])
     (includeLSP cfg.lsp.pyright.enable           [pyright])
     (includeLSP cfg.lsp.nil.enable               [nil])
     (includeLSP cfg.lsp.marksman.enable          [marksman])

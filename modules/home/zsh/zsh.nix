@@ -49,7 +49,7 @@ in
       })
     ];
 
-    initExtra = lib.mkMerge [
+    initContent = lib.mkMerge [
       ''
         if [ -n "''${commands[fzf-share]}" ]; then
           source "$(fzf-share)/key-bindings.zsh"

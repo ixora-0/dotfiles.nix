@@ -21,7 +21,7 @@ in {
     # NOTE: have to configure toolbar manually
     # NOTE: extensions that are not available for installation from here:
     # https://addons.mozilla.org/en-US/firefox/addon/catppuccin-gh-file-explorer/
-    extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+    extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
       ublock-origin             # ad blocker
       bitwarden                 # password manager
       sidebery                  # tree style tab
@@ -41,10 +41,10 @@ in {
     search.force = true;
     search.default = "Startpage";
     search.privateDefault = "Startpage";
-    search.order = ["Startpage" "Google"];
+    search.order = ["Startpage" "google"];
     search.engines."Startpage" = {
       urls = [{ template = "https://www.startpage.com/search?query={searchTerms}"; }];
-      iconsUpdateURL = "https://www.startpage.com/favicon.ico";
+      icon = "https://www.startpage.com/favicon.ico";
     };
     search.engines."Nix Packages" = {
       urls = [{
@@ -59,7 +59,7 @@ in {
     };
     search.engines."NixOS Wiki" = {
       urls = [{ template = "https://nixos.wiki/index.php?search={searchTerms}"; }];
-      iconUpdateURL = "https://nixos.wiki/favicon.png";
+      icon = "https://nixos.wiki/favicon.png";
       definedAliases = [ "@nw" ];
     };
     search.engines."Home Manager - Option Search" = {
@@ -88,9 +88,9 @@ in {
       icon = "https://upload.wikimedia.org/wikipedia/commons/8/83/En.wiktionary_favicon.svg";
     };
     search.engines = {
-        "Bing".metaData.hidden = true;
-        "Google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias 
-        "Wikipedia (en)".metaData.alias = "@w";
+        bing.metaData.hidden = true;
+        google.metaData.alias = "@g"; # builtin engines only support specifying one additional alias 
+        wikipedia.metaData.alias = "@w";
     };
   };
   programs.firefox.profiles."torproxy" = {
@@ -107,7 +107,7 @@ in {
       "network.proxy.type" = 1;
     };
 
-    extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+    extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
       ublock-origin             # ad blocker
     ];
   };

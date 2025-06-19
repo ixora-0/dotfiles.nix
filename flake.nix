@@ -4,8 +4,8 @@
   inputs = {
     # NOTE: adding unused flakes still take up extra space
     # stable flakes
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
-    home-manager-stable.url = "github:nix-community/home-manager/release-24.11";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
+    home-manager-stable.url = "github:nix-community/home-manager/release-25.05";
     home-manager-stable.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     # unstable flakes
@@ -27,7 +27,7 @@
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
-    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.1";
+    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
     sops-nix.url = "github:Mic92/sops-nix/e9b5eef9b51cdf966c76143e13a9476725b2f760";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     nixcord.url = "github:kaylorben/nixcord";

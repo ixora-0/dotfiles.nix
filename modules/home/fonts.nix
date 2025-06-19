@@ -8,7 +8,7 @@
       set = "Iris";
       privateBuildPlan = builtins.readFile ../nixos/default-fonts/private-build-plans.toml;
     })
-    (nerdfonts.override { fonts = ["NerdFontsSymbolsOnly"]; })
+    nerd-fonts.symbols-only
     corefonts vistafonts
 
     # sets

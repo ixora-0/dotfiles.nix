@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   # enable sound with pipewire
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;  # rtkit is optional but recommended
   services.pipewire = {
     enable = true;
