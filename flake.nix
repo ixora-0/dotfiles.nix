@@ -19,6 +19,7 @@
 
     # nur
     nur.url = "github:nix-community/NUR";
+    nur.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     # other flakes
     # hyprland.url = "github:hyprwm/Hyprland";
