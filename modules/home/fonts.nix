@@ -26,5 +26,8 @@
     merriweather-sans
     (iosevka-bin.override { variant = "Aile"; })
     source-sans
+
+    # monos
+    victor-mono
   ];
 }
