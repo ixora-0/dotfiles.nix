@@ -3,7 +3,7 @@
     "kitty"
     "spotify"
     "firefox"
-    "discord"
+    "vesktop"  # "dorion"
     "nemo"
   ];
   # home.packages = with pkgs; [

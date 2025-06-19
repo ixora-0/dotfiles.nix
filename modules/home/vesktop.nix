@@ -1,10 +1,10 @@
-{ inputs, pkgs-unstable, ... }: {
-  # NOTE: some features broken rn
-  imports = [inputs.nixcord.homeManagerModules.nixcord];
-  programs.nixcord.enable = true;
-  programs.nixcord.vesktop.enable = true;
-  programs.nixcord.vesktop.package = pkgs-unstable.vesktop;
-  programs.nixcord.discord.enable = false;
+{ inputs, ... }: {
+  imports = [inputs.nixcord.homeModules.nixcord];
+  programs.nixcord = {
+    enable = true;
+    vesktop.enable = true;
+    discord.enable = false;
+  };
   programs.nixcord.vesktopConfig = {
     themeLinks = ["https://catppuccin.github.io/discord/dist/catppuccin-mocha.theme.css"];
     plugins = {
@@ -18,9 +18,8 @@
 
       silentTyping.enable = true;
       silentTyping.showIcon = true;
-
-      # crashes for some reason
-      # callTimer.enable = true;
+      callTimer.enable = true;
     };
   };
 }
+
