@@ -6,9 +6,10 @@
     "extra-apps"
   ]) ++ (map helpers.importHomeModule [
     # packages that has configurations
+    "quickshell"
     "hyprland"
     "theme"
-    "wlsunset"
+    # "wlsunset"
     "direnv"
     "fonts"
   ]);

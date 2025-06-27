@@ -529,6 +529,26 @@
         "type": "github"
       }
     },
+    "quickshell": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-stable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1750335144,
+        "narHash": "sha256-mEudA3XHHFPjR7XHad5Si6tag5M/tTSJIB6oDLifv60=",
+        "owner": "quickshell-mirror",
+        "repo": "quickshell",
+        "rev": "95d0af8113394b1fdb71c94ac5160c83b8b829cb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "quickshell-mirror",
+        "repo": "quickshell",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -540,6 +560,7 @@
         "nixpkgs-stable": "nixpkgs-stable_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
+        "quickshell": "quickshell",
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix"
       }

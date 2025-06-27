@@ -114,6 +114,8 @@ in {
   wayland.windowManager.hyprland.enable = true;  # enable home manager to config hyprland
   wayland.windowManager.hyprland.settings = {
     exec-once = [
+      "swww-daemon --format xrgb"
+      "illogical-impulse-qs-launcher"
       "fcitx5 -d"
       "${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store"
       # "${pkgs.swww}/bin/swww init"

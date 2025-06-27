@@ -21,6 +21,9 @@
     nur.url = "github:nix-community/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs-stable";
 
+    quickshell.url = "github:quickshell-mirror/quickshell";
+    quickshell.inputs.nixpkgs.follows = "nixpkgs-stable";
+
     # other flakes
     # hyprland.url = "github:hyprwm/Hyprland";
     # hyprland.inputs.nixpkgs.follows = "nixpkgs-unstable";
