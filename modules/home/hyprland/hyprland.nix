@@ -138,6 +138,11 @@ in {
       gaps_in = 4;
     };
 
+    dwindle = {
+      preserve_split = true;
+      smart_split = true;
+    };
+
     decoration = {
       rounding = 12;
       blur.size = 12;
@@ -196,6 +201,7 @@ in {
 
       "SUPER, M, fullscreen, 1"
       "SUPER, F, togglefloating"
+      "SUPER, Y, togglesplit"
 
       "SUPER, J, cyclenext"
       "SUPER, K, cyclenext, prev"
