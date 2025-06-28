@@ -2,6 +2,7 @@
   lib,
   stdenv,
   fetchFromGitHub,
+  callPackage,
   makeWrapper,
 
   bc,
@@ -19,6 +20,7 @@
     pywayland
     setproctitle
   ]));
+  emojis = callPackage ../emojis.nix {};
 in stdenv.mkDerivation {
   pname = "illogical-impulse-qs";
   version = "latest";
@@ -63,6 +65,9 @@ in stdenv.mkDerivation {
 
     # replace python venv
     sed -i '1s|.*|#!${idle_inhib_env.interpreter}|' "$out/scripts/wayland-idle-inhibitor.py"
+
+    # supply emojis
+    sed -i '16s|''${Directories.config}/hypr/hyprland/scripts/fuzzel-emoji.sh|${emojis}|' "$out/services/Emojis.qml"
 
     # wrap all scripts to use the correct environment
     # HACK: should use gappsWrapperArgs/qtWrapperArgs but brain too small

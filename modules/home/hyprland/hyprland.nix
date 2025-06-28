@@ -3,18 +3,10 @@
   hyprlock = "${pkgs.hyprlock}/bin/hyprlock";
   brillo = "${pkgs.brillo}/bin/brillo -q";
 
-  # emoji picker
-  # commands from https://github.com/Zeioth/wofi-emoji
   # NOTE: wtype doesn't work on discord: https://github.com/atx/wtype/issues/31
-  raw-emojis = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/muan/emojilib/v4.0.1/dist/emoji-en-US.json";
-    hash = "sha256-HDeA/0WOaiNMTalC54U5uhTFZErEe3SOaDEstU8I32E=";
-  };
-  emojis = pkgs.runCommand "emojilib-emojis" {} ''
-    ${pkgs.jq}/bin/jq --raw-output '. | to_entries | .[] | .key + " " + (.value | join(" ") | sub("_"; " "; "g"))' ${raw-emojis} > $out
-  '';
+  emojis = pkgs.callPackage ../../../pkgs/emojis.nix {};
   tofi-emoji = pkgs.writeShellScriptBin "tofi-emoji" ''
-    EMOJI=$(${pkgs.coreutils-full}/bin/cat ${emojis} |\
+    EMOJI=$(${pkgs.coreutils-full}/bin/tail -n +2 ${emojis} |\
             ${pkgs.tofi}/bin/tofi |\
             ${pkgs.coreutils-full}/bin/cut -d ' ' -f 1 |\
             ${pkgs.coreutils-full}/bin/tr -d '\n')
