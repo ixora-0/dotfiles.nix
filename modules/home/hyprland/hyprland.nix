@@ -202,6 +202,7 @@ in {
       "ALT, TAB, focuscurrentorlast"
       "SUPER, TAB, exec, ags -b hypr -t overview"
       "SUPER, PRINT, exec, ${pkgs.grimblast}/bin/grimblast copy area"
+      "SUPER, G, hyprexpo:expo, toggle"
     ] ++ (
       # Switch workspaces with SUPER + [1-9]
       let
@@ -266,4 +267,21 @@ in {
       "opacity 0.8 0.7, class:nemo.*"
     ];
   };
+  wayland.windowManager.hyprland.plugins = [
+    pkgs.hyprlandPlugins.hyprexpo
+  ];
+  wayland.windowManager.hyprland.extraConfig = ''
+    plugin {
+      hyprexpo {
+        columns = 3
+        gap_size = 5
+        bg_col = rgb(000000)
+        workspace_method = first 1 # [center/first] [workspace] e.g. first 1 or center m+1
+
+        enable_gesture = true # laptop touchpad, 4 fingers
+        gesture_distance = 300 # how far is the "max"
+        gesture_positive = false
+      }
+    }
+  '';
 }
