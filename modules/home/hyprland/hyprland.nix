@@ -166,7 +166,13 @@ in {
     };
 
     misc = {
-      disable_hyprland_logo = true;  # disables displaying default wallpapers on startup
+      vfr = 1;
+      vrr = 1;
+
+      disable_hyprland_logo = true;
+      force_default_wallpaper = 0;
+      new_window_takes_over_fullscreen = 2;
+      allow_session_lock_restore = true;
     };
 
     bind = [
