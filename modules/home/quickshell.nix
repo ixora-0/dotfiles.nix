@@ -49,4 +49,7 @@ in {
     configPackages = [ pkgs.xdg-desktop-portal-gtk ];
     config.common.default = ["*"];
   };
+
+  # daemon for handling secrets (api keys)
+  services.gnome-keyring.enable = true;
 }

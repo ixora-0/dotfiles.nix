@@ -8,6 +8,7 @@
   gammastep,
   kdePackages,
   libqalculate,
+  libsecret,
   quickshell,
   translate-shell,
 }:
@@ -34,6 +35,7 @@ stdenv.mkDerivation {
         cava
         gammastep  # NOTE: might change to hypr[shade|sunset]
         libqalculate
+        libsecret
         translate-shell
       ]} \
       --prefix QML2_IMPORT_PATH : ${lib.makeSearchPath ":" [
