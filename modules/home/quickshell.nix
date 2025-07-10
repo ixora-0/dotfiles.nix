@@ -4,6 +4,10 @@
     inherit pkgs quickshell;
   };
 in {
+  # NOTE: config for illogical impulse is not declared here, modify in runtime
+  # BUG: weather GPS not working, set city + disable gps in settings
+  # BUG: some app icons not working
+  # TODO: multimonitor, ddcutil
   home.packages = [
     selfPkgs.illogical-impulse-qs-launcher
     selfPkgs.illogical-impulse-oneui4-icons  # TODO: move to theme.nix
