@@ -6,6 +6,7 @@
   brightnessctl,
   cava,
   gammastep,
+  jq,
   kdePackages,
   libqalculate,
   libsecret,
@@ -34,12 +35,14 @@ stdenv.mkDerivation {
         brightnessctl
         cava
         gammastep  # NOTE: might change to hypr[shade|sunset]
+        jq
         libqalculate
         libsecret
         translate-shell
       ]} \
       --prefix QML2_IMPORT_PATH : ${lib.makeSearchPath ":" [
         "${kdePackages.qt5compat}/lib/qt-6/qml"
+        "${kdePackages.qtpositioning}/lib/qt-6/qml"
         "${kdePackages.syntax-highlighting}/lib/qt-6/qml"
       ]}
   '';

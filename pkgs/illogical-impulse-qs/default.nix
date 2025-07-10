@@ -28,8 +28,8 @@ in stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "end-4";
     repo = "dots-hyprland";
-    rev = "4f7ed4da53cbe5c3dcc7a4872701147da2250a0f";
-    sha256 = "sha256-G+3fX8u31OcdILsY+3oERg8GZql+FOE+6gpdWvEM844=";
+    rev = "5ee46cfc30f6b4a690bfada77d40b09cd1517c96";
+    sha256 = "sha256-PrCsUvgDJqmfflcSVOMZviGTYocejvYHw45JEbixCm4=";
   };
 
   nativeBuildInputs = [ makeWrapper ];
