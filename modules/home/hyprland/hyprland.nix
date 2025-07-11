@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }: let
+{ pkgs, lib, ... }: let
   hyprctl = "${pkgs.hyprland}/bin/hyprctl";
   hyprlock = "${pkgs.hyprlock}/bin/hyprlock";
   brillo = "${pkgs.brillo}/bin/brillo -q";
@@ -13,11 +13,59 @@
     ${pkgs.wtype}/bin/wtype "$EMOJI"
     ${pkgs.wl-clipboard}/bin/wl-copy "$EMOJI"
   '';
-  pick-cliphist = pkgs.writeShellScriptBin "pick-cliphist" ''
-    ${pkgs.cliphist}/bin/cliphist list |\
-    ${pkgs.tofi}/bin/tofi |\
-    ${pkgs.cliphist}/bin/cliphist decode |\
-    ${pkgs.wl-clipboard}/bin/wl-copy
+  hyprzoom = pkgs.writeShellScriptBin "hyprzoom" ''
+    # Controls Hyprland's cursor zoom_factor, clamped between 1.0 and 3.0
+
+    # Get current zoom level
+    get_zoom() {
+        ${pkgs.hyprland}/bin/hyprctl getoption -j cursor:zoom_factor | ${pkgs.jq}/bin/jq '.float'
+    }
+
+    # Clamp a value between 1.0 and 3.0
+    clamp() {
+        local val="$1"
+        awk "BEGIN {
+            v = $val;
+            if (v < 1.0) v = 1.0;
+            if (v > 3.0) v = 3.0;
+            print v;
+        }"
+    }
+
+    # Set zoom level
+    set_zoom() {
+        local value="$1"
+        clamped=$(clamp "$value")
+        ${pkgs.hyprland}/bin/hyprctl keyword cursor:zoom_factor "$clamped"
+    }
+
+    case "$1" in
+        reset)
+            set_zoom 1.0
+            ;;
+        increase)
+            if [[ -z "$2" ]]; then
+                echo "Usage: $0 increase STEP"
+                exit 1
+            fi
+            current=$(get_zoom)
+            new=$(awk "BEGIN { print $current + $2 }")
+            set_zoom "$new"
+            ;;
+        decrease)
+            if [[ -z "$2" ]]; then
+                echo "Usage: $0 decrease STEP"
+                exit 1
+            fi
+            current=$(get_zoom)
+            new=$(awk "BEGIN { print $current - $2 }")
+            set_zoom "$new"
+            ;;
+        *)
+            echo "Usage: $0 {reset|increase STEP|decrease STEP}"
+            exit 1
+            ;;
+    esac
   '';
 
 
@@ -172,22 +220,18 @@ in {
       allow_session_lock_restore = true;
     };
 
-    bind = [
-      "SUPER_SHIFT, R, exec, ags -b hypr quit; ags -b hypr"
-      "SUPER_SHIFT, L, exec, ${pkgs.hyprlock}/bin/hyprlock"
-      "SUPER_SHIFT, S, exec, systemctl suspend"
-      "SUPER, Z, exec, ags -b hypr -t launcher"
-      # "SUPER, Z, exec, pkill rofi || rofi -show drun"
-      "SUPER, X, exec, ${pkgs.firefox}/bin/firefox"
-      "SUPER, P, exec, ${lib.getExe config.programs.spicetify.spicedSpotify}"
-      # "SUPER, P, exec, spotify"
-      "SUPER, D, exec, /nix/store/46c7bms1405z3i29hljwsfqasjzm9yy7-vesktop-1.5.3/bin/vesktop"
-      "SUPER, E, exec, nemo"
-      # "SUPER, E, exec, ${pkgs.gnome.nautilus}/bin/nautilus"
-      "SUPER, RETURN, exec, ghostty"
+    binds = {
+      scroll_event_delay = 0;
+    };
 
-      "SUPER, PERIOD, exec, ${tofi-emoji}/bin/tofi-emoji"
-      "SUPER, V, exec, ${pick-cliphist}/bin/pick-cliphist"
+    bind = [
+      "SUPER_SHIFT, L, exec, hyprlock"
+      "SUPER_SHIFT, S, exec, systemctl suspend"
+      "SUPER, X, exec, firefox"
+      "SUPER, P, exec, spotify"
+      "SUPER, D, exec, vesktop"
+      "SUPER, E, exec, nemo"
+      "SUPER, RETURN, exec, ghostty"
 
       "SUPER, W, killactive"
 
@@ -198,26 +242,38 @@ in {
       "SUPER, J, cyclenext"
       "SUPER, K, cyclenext, prev"
       "ALT, TAB, focuscurrentorlast"
-      "SUPER, TAB, exec, ags -b hypr -t overview"
       "SUPER, PRINT, exec, ${pkgs.grimblast}/bin/grimblast copy area"
-      "SUPER, G, hyprexpo:expo, toggle"
+      "SUPER, TAB, hyprexpo:expo, toggle"
     ] ++ (
       # Switch workspaces with SUPER + [1-9]
       let
         bind_workspace_num = i: "SUPER, ${i}, workspace, ${i}";
-      in (map
-          bind_workspace_num
-          (map builtins.toString (lib.range 1 9))
-      )
+      in
+        map bind_workspace_num (map builtins.toString (lib.range 1 9))
     ) ++ (
       # Move active window to a workspace with SUPER + SHIFT + [1-9]
       let
         bind_workspace_num = i: "SUPER SHIFT, ${i}, movetoworkspace, ${i}";
-      in (map
-          bind_workspace_num
-          (map builtins.toString (lib.range 1 9))
-      )
+      in
+        map bind_workspace_num (map builtins.toString (lib.range 1 9))
     );
+    bindd = [
+      "SUPER, R, Toggle overview, global, quickshell:overviewToggleRelease"  # x
+      "SUPER, SLASH, Toggle cheatsheet, global, quickshell:cheatsheetToggle"  # x
+
+      "SUPER, V, Clipboard history >> clipboard, global, quickshell:overviewClipboardToggle"
+      "SUPER, PERIOD, Emoji picker, exec, ${tofi-emoji}/bin/tofi-emoji"
+      "SUPER+SHIFT, PERIOD, Emoji >> clipboard, global, quickshell:overviewEmojiToggle"
+
+      "SUPER, H, Toggle left sidebar, global, quickshell:sidebarLeftToggle"
+      "SUPER+ALT, H, Toggle detached for left sidebar , global, quickshell:sidebarLeftToggleDetach"
+      "SUPER, L, Toggle right sidebar, global, quickshell:sidebarRightToggle"
+
+      "SUPER, A, Toggle media controls, global, quickshell:mediaControlsToggle"
+      "CTRL+ALT, DELETE, Toggle session menu, global, quickshell:sessionToggle"
+      "SUPER+CTRL, mouse_up, Zoom out, exec, ${hyprzoom}/bin/hyprzoom decrease 0.1"
+      "SUPER+CTRL, mouse_down, Zoom in, exec, ${hyprzoom}/bin/hyprzoom increase 0.1"
+    ];
 
     bindle = let
       wpctl = "${pkgs.wireplumber}/bin/wpctl";
