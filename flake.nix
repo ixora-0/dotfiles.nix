@@ -44,33 +44,45 @@
     inherit (import ./builders.nix inputs) makeNixOSConfig makeHomeConfig;
   in {
     nixosConfigurations = {
-      nerine = makeNixOSConfig "stable" 
-                               "x86_64-linux"
-                               "nerine"
-                               ["ixora"];
-      wisteria = makeNixOSConfig "stable"
-                                 "x86_64-linux"
-                                 "wisteria"
-                                 ["ixora"];
-      dierama = makeNixOSConfig "stable"
-                                "x86_64-linux"
-                                "dierama"
-                                ["ixora"];
+      nerine = makeNixOSConfig {
+        stability = "stable";
+        osArchitecture = "x86_64-linux";
+        hostname = "nerine";
+        usernames = ["ixora"];
+      };
+      wisteria = makeNixOSConfig {
+        stability = "stable";
+        osArchitecture = "x86_64-linux";
+        hostname = "wisteria";
+        usernames = ["ixora"];
+      };
+      dierama = makeNixOSConfig {
+        stability = "stable";
+        osArchitecture = "x86_64-linux";
+        hostname = "dierama";
+        usernames = ["ixora"];
+      };
     };
 
     homeConfigurations = {
-      "ixora@azalea" = makeHomeConfig "unstable"
-                                      "x86_64-linux"
-                                      "azalea"
-                                      "ixora";
-      "ixora@nerine" = makeHomeConfig "stable"
-                                      "x86_64-linux"
-                                      "nerine"
-                                      "ixora";
-      "ixora@dierama" = makeHomeConfig "stable"
-                                       "x86_64-linux"
-                                       "dierama"
-                                       "ixora";
+      "ixora@azalea" = makeHomeConfig {
+        stability = "unstable";
+        osArchitecture = "x86_64-linux";
+        hostname = "azalea";
+        username = "ixora";
+      };
+      "ixora@nerine" = makeHomeConfig {
+        stability = "stable";
+        osArchitecture = "x86_64-linux";
+        hostname = "nerine";
+        username = "ixora";
+      };
+      "ixora@dierama" = makeHomeConfig {
+        stability = "stable";
+        osArchitecture = "x86_64-linux";
+        hostname = "dierama";
+        username = "ixora";
+      };
     };
   };
 }

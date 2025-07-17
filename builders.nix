@@ -13,7 +13,7 @@ inputs: rec {
 
   overlays = [inputs.nur.overlays.default];  # common overlays
 
-  makePkgs = stability: osArchitecture: hostname: usernames: let
+  makePkgs = { stability, osArchitecture, hostname, usernames }: let
     nixpkgs = selectNixpkgs stability;
     mergedUnfrees = builtins.foldl' 
       (
@@ -65,9 +65,17 @@ inputs: rec {
     programs.home-manager.enable = true;
   };
 
-  makeHomeConfig = stability: osArchitecture: hostname: username: let
-    pkgs-stable = makePkgs "stable" osArchitecture hostname [username];
-    pkgs-unstable = makePkgs "unstable" osArchitecture hostname [username];
+  makeHomeConfig = { stability, osArchitecture, hostname, username }: let
+    pkgs-stable = makePkgs {
+      stability = "stable";
+      usernames = [username];
+      inherit osArchitecture hostname;
+    };
+    pkgs-unstable = makePkgs {
+      stability = "unstable";
+      usernames = [username];
+      inherit osArchitecture hostname;
+    };
     pkgs = matchStability stability pkgs-stable pkgs-unstable;
     helpers = import ./helpers { lib = pkgs.lib; };
     home-manager = selectHomeManager stability;
@@ -81,10 +89,16 @@ inputs: rec {
       extraSpecialArgs = { inherit inputs pkgs-stable pkgs-unstable helpers; };
     };
 
-  makeNixOSConfig = stability: osArchitecture: hostname: usernames: let
+  makeNixOSConfig = { stability, osArchitecture, hostname, usernames }: let
     nixpkgs = selectNixpkgs stability;
-    pkgs-stable = makePkgs "stable" osArchitecture hostname usernames;
-    pkgs-unstable = makePkgs "unstable" osArchitecture hostname usernames;
+    pkgs-stable = makePkgs {
+      stability = "stable";
+      inherit osArchitecture hostname usernames;
+    };
+    pkgs-unstable = makePkgs {
+      stability = "unstable";
+      inherit osArchitecture hostname usernames;
+    };
     pkgs = matchStability stability pkgs-stable pkgs-unstable;
     helpers = import ./helpers { lib = pkgs.lib; };
     home-manager = selectHomeManager stability;
