@@ -66,6 +66,8 @@ services:
         labels:
             glance.name: MinIO
             glance.icon: /assets/minio.svg
+        ports:
+            - 9000:9000
 
     gluetun:
         image: qmcgaw/gluetun:latest

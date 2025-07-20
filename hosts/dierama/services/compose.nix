@@ -232,6 +232,9 @@
     volumes = [
       "/home/ixora/hdd/minio/data:/data:rw"
     ];
+    ports = [
+      "9000:9000/tcp"
+    ];
     cmd = [ "server" "/data" "--console-address" ":9001" ];
     labels = {
       "glance.icon" = "/assets/minio.svg";
