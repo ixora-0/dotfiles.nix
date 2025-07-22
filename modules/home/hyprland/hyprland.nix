@@ -282,9 +282,9 @@ in {
       ",XF86MonBrightnessDown, exec, ${brillo} -U 5"
       ",XF86KbdBrightnessUp,   exec, ${brillo} -k -s asus::kbd_backlight -A 5"
       ",XF86KbdBrightnessDown, exec, ${brillo} -k -s asus::kbd_backlight -U 5"
-      # -l 1.5 means limit at 150%
-      ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
-      ", XF86AudioLowerVolume, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-"
+      # -l 2.0 means limit at 200%
+      ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume -l 2.0 @DEFAULT_AUDIO_SINK@ 2%+"
+      ", XF86AudioLowerVolume, exec, ${wpctl} set-volume -l 2.0 @DEFAULT_AUDIO_SINK@ 2%-"
       ", XF86AudioMute,        exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ", XF86AudioMicMute,     exec, ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
     ];
