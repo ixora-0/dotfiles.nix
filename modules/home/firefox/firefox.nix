@@ -105,6 +105,7 @@ in {
       "network.proxy.socks" = "127.0.0.1";
       "network.proxy.socks_port" = 8118;
       "network.proxy.type" = 1;
+      "network.proxy.socks5_remote_dns" = true;
     };
 
     extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
