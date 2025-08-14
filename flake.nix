@@ -30,6 +30,9 @@
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs-stable";
+
     lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
     sops-nix.url = "github:Mic92/sops-nix/e9b5eef9b51cdf966c76143e13a9476725b2f760";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
@@ -40,8 +43,8 @@
     # helix.inputs.flake-utils.follows = "flake-utils";
   };
 
-  outputs = inputs: let
-    inherit (import ./builders.nix inputs) makeNixOSConfig makeHomeConfig;
+  outputs = { self, ... }@inputs : let
+    inherit (import ./builders.nix inputs) makeNixOSConfig makeHomeConfig makeZero2W;
   in {
     nixosConfigurations = {
       nerine = makeNixOSConfig {
@@ -62,7 +65,14 @@
         hostname = "dierama";
         usernames = ["ixora"];
       };
+      ren = makeZero2W {
+        stability = "stable";
+        hostname = "ren";
+        usernames = ["ixora"];
+      };
     };
+    # build using nix build .#images.ren
+    images.ren = self.nixosConfigurations.ren.config.system.build.sdImage;
 
     homeConfigurations = {
       "ixora@azalea" = makeHomeConfig {
@@ -83,6 +93,28 @@
         hostname = "dierama";
         username = "ixora";
       };
+      "ixora@ren" = makeHomeConfig {
+        stability = "stable";
+        osArchitecture = "aarch64-linux";
+        hostname = "ren";
+        username = "ixora";
+      };
     };
+
+    deploy = {
+      user = "root";
+      nodes = {
+        ren = {
+          sshUser = "root";
+          hostname = "ren";
+          profiles.system.user = "root";
+          profiles.system.path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos
+                                   self.nixosConfigurations.ren;
+        };
+      };
+    };
+    checks = builtins.mapAttrs
+              (system: deployLib: deployLib.deployChecks self.deploy)
+              inputs.deploy-rs.lib;
   };
 }

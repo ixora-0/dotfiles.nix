@@ -65,7 +65,7 @@ inputs: rec {
     programs.home-manager.enable = true;
   };
 
-  makeHomeConfig = { stability, osArchitecture, hostname, username }: let
+  makeHomeConfig = {stability, osArchitecture, hostname, username}: let
     pkgs-stable = makePkgs {
       stability = "stable";
       usernames = [username];
@@ -127,5 +127,41 @@ inputs: rec {
         }
       ] ++ (map makeUserNixOSModule usernames);
       specialArgs = { inherit inputs pkgs-stable pkgs-unstable helpers; };
+    };
+
+  makeZero2W = { stability, hostname, usernames }: let
+    osArchitecture = "aarch64-linux";
+    nixpkgs = selectNixpkgs stability;
+    pkgs-stable = makePkgs {
+      stability = "stable";
+      inherit osArchitecture hostname usernames;
+    };
+    pkgs-unstable = makePkgs {
+      stability = "unstable";
+      inherit osArchitecture hostname usernames;
+    };
+    pkgs = matchStability stability pkgs-stable pkgs-unstable;
+    helpers = import ./helpers { lib = pkgs.lib; };
+    home-manager = selectHomeManager stability;
+    makeUserNixOSModule = username: {
+      users.users."${username}".packages = [home-manager];
+      home-manager.users."${username}".imports = [
+        (makeCommonHomeModule username)
+        ./users/${username}/at/${hostname}
+      ];
+    };
+  in
+    nixpkgs.legacyPackages.x86_64-linux.pkgsCross.aarch64-multiplatform.nixos {
+      imports = [
+        "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel-no-zfs-installer.nix"
+        ./modules/nixos/arm/sd-image.nix
+        ./hosts/${hostname}/configuration.nix
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.extraSpecialArgs = { inherit inputs pkgs-stable pkgs-unstable helpers; };
+          networking.hostName = hostname;
+          home-manager.useGlobalPkgs = true;
+        }
+      ] ++ (map makeUserNixOSModule usernames);
     };
 }
