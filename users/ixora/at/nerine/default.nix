@@ -12,6 +12,7 @@
     # "wlsunset"
     "direnv"
     "fonts"
+    "thunderbird"
   ]) ++ [
     ./games.nix
   ];
