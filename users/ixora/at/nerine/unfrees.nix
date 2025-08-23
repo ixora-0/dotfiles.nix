@@ -14,6 +14,7 @@
   "nvidia-persistenced"
   "corefonts" "vista-fonts"
   "steam" "steam-unwrapped"
+  "gdlauncher-carbon" "badlion-client"
   "vscode"
   "discord"
 ]

@@ -21,6 +21,7 @@
     "open-webui"
     "auto-cpufreq"
     "lanzaboote"
+    "gaming"
   ]);
 
   services.fstrim.enable = true;

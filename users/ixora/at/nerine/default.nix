@@ -12,7 +12,9 @@
     # "wlsunset"
     "direnv"
     "fonts"
-  ]);
+  ]) ++ [
+    ./games.nix
+  ];
   modules.helix.languages.lsp.enableAll = true;
   modules.helix.languages.prettier.enable = true;
 
@@ -28,12 +30,10 @@
     act
     # reaper
     # vital
-    steam
     vscode
     # nwg-look
     mpv
   ]) ++ (with pkgs-unstable; [
-    osu-lazer-bin
     anki-bin
     ghostty
   ]);
