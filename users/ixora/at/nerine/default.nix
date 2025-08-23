@@ -33,6 +33,7 @@
     vscode
     # nwg-look
     mpv
+    qpwgraph
   ]) ++ (with pkgs-unstable; [
     anki-bin
     ghostty
