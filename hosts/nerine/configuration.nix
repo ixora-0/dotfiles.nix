@@ -57,6 +57,10 @@
   # Graphical session to pre-select in the session chooser
   services.displayManager.defaultSession = "hyprland";
 
+  # gnome keyring (for llm api keys in quickshell)
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
+
   # xdg.portal = {
   #   enable = true;
   #   extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

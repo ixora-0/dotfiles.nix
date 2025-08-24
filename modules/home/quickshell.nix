@@ -55,5 +55,6 @@ in {
   };
 
   # daemon for handling secrets (api keys)
-  services.gnome-keyring.enable = true;
+  # (moved out of home manager module)
+  # services.gnome-keyring.enable = true;
 }
