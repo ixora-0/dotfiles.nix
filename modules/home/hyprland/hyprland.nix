@@ -220,6 +220,10 @@ in {
       allow_session_lock_restore = true;
     };
 
+    cursor = {
+      no_hardware_cursors = 1;
+    };
+
     binds = {
       scroll_event_delay = 0;
     };
