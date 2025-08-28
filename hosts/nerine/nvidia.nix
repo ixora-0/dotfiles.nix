@@ -26,7 +26,7 @@
     # accessible via `nvidia-settings`
     nvidiaSettings = true;
 
-    package = config.boot.kernelPackages.nvidiaPackages.stable;  # 550
+    package = config.boot.kernelPackages.nvidiaPackages.production;
   };
 
   # load nvidia driver for xorg and wayland
