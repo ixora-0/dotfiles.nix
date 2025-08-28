@@ -248,6 +248,10 @@ in {
       "ALT, TAB, focuscurrentorlast"
       "SUPER, PRINT, exec, ${pkgs.grimblast}/bin/grimblast copy area"
       "SUPER, TAB, hyprexpo:expo, toggle"
+      # Workspaces
+      # Special workspace
+      "SUPER, GRAVE, togglespecialworkspace"
+      "SUPER SHIFT, GRAVE, movetoworkspace, special"
     ] ++ (
       # Switch workspaces with SUPER + [1-9]
       let
