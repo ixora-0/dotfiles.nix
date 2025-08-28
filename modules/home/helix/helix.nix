@@ -29,6 +29,9 @@
 
       keys.normal = {
         C-s = ":w";
+        g.h = "goto_first_nonwhitespace";
+        g.s = "goto_line_start";
+        X = ["goto_first_nonwhitespace" "extend_to_line_end"];
         "{" = ["goto_prev_paragraph" "collapse_selection"];
         "}" = ["goto_next_paragraph" "collapse_selection"];
         ret = ["open_below" "normal_mode"];
