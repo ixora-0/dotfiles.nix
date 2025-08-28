@@ -6,6 +6,7 @@
     "extra-apps"
   ]) ++ (map helpers.importHomeModule [
     # packages that has configurations
+    "gnome-keyring"
     "quickshell"
     "hyprland"
     "theme"
