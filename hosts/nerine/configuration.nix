@@ -61,6 +61,15 @@
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true;
 
+  # ssh
+  programs.ssh.startAgent = false;  # using gnome keyring as ssh agent
+  services.openssh.enable = true;
+  fileSystems."/home/ixora/.ssh" = {
+    depends = ["/home/ixora/intaa"];
+    device = "/home/ixora/intaa/.ssh";
+    options = ["bind"];
+  };
+
   # xdg.portal = {
   #   enable = true;
   #   extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
@@ -127,11 +136,6 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
