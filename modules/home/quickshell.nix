@@ -1,4 +1,4 @@
-{ inputs, pkgs, pkgs-unstable, ... }: let
+{ inputs, pkgs, pkgs-unstable, lib, ... }: let
   quickshell = inputs.quickshell.packages.${pkgs.system}.default;
   selfPkgs = import ../../pkgs {
     inherit pkgs quickshell;
@@ -48,7 +48,7 @@ in {
   # portal-gtk to make gsettings work
   xdg.enable = true;
   xdg.portal = {
-    enable = true;
+    enable = lib.mkForce true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     configPackages = [ pkgs.xdg-desktop-portal-gtk ];
     config.common.default = ["*"];

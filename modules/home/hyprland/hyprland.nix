@@ -1,6 +1,4 @@
-{ pkgs, lib, ... }: let
-  hyprctl = "${pkgs.hyprland}/bin/hyprctl";
-  hyprlock = "${pkgs.hyprlock}/bin/hyprlock";
+{ pkgs, inputs, lib, ... }: let
   brillo = "${pkgs.brillo}/bin/brillo -q";
 
   # NOTE: wtype doesn't work on discord: https://github.com/atx/wtype/issues/31
@@ -73,9 +71,9 @@ in {
   services.hypridle.enable = true;
   services.hypridle.settings = {
     general = {
-      lock_cmd = "pidof hyprlock || ${hyprlock}";
+      lock_cmd = "pidof hyprlock || hyprlock";
       before_sleep_cmd = "loginctl lock-session";
-      after_sleep_cmd = "${hyprctl} dispatch dpms on";
+      after_sleep_cmd = "hyprctl dispatch dpms on";
     };
     listener = [
       {
@@ -89,8 +87,8 @@ in {
       }
       {
         timeout = 330;
-        on-timeout = "${hyprctl} dispatch dpms off";
-        on-resume = "${hyprctl} dispatch dpms on";
+        on-timeout = "hyprctl dispatch dpms off";
+        on-resume = "hyprctl dispatch dpms on";
       }
       {
         timeout = 86400;
@@ -152,6 +150,11 @@ in {
   };
 
   wayland.windowManager.hyprland.enable = true;  # enable home manager to config hyprland
+  wayland.windowManager.hyprland = {
+    # set the Hyprland and XDPH packages to null to use the ones from the NixOS module
+    package = null;
+    portalPackage = null;
+  };
   wayland.windowManager.hyprland.settings = {
     exec-once = [
       "swww-daemon --format xrgb"
@@ -206,9 +209,9 @@ in {
       touchpad.drag_lock = true;
     };
 
-    gestures = {
-      workspace_swipe = true;
-    };
+    gesture = [
+       "3, horizontal, workspace"
+    ];
 
     misc = {
       vfr = 1;
@@ -359,7 +362,7 @@ in {
     };
   };
   wayland.windowManager.hyprland.plugins = [
-    pkgs.hyprlandPlugins.hyprexpo
+    inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprexpo
   ];
   wayland.windowManager.hyprland.extraConfig = ''
     plugin {

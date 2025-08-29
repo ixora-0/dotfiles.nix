@@ -437,6 +437,36 @@
         "type": "github"
       }
     },
+    "hyprland-plugins": {
+      "inputs": {
+        "hyprland": [
+          "hyprland"
+        ],
+        "nixpkgs": [
+          "hyprland-plugins",
+          "hyprland",
+          "nixpkgs"
+        ],
+        "systems": [
+          "hyprland-plugins",
+          "hyprland",
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1756461489,
+        "narHash": "sha256-MeRYPD6GTbBEcoEqwl8kqCSKtM8CJcYayvPfKGoQkzc=",
+        "owner": "hyprwm",
+        "repo": "hyprland-plugins",
+        "rev": "376d08bbbd861f2125f5ef86e0003e3636ce110f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprland-plugins",
+        "type": "github"
+      }
+    },
     "hyprland-protocols": {
       "inputs": {
         "nixpkgs": [
@@ -963,6 +993,7 @@
         "home-manager-stable": "home-manager-stable",
         "home-manager-unstable": "home-manager-unstable",
         "hyprland": "hyprland",
+        "hyprland-plugins": "hyprland-plugins",
         "lanzaboote": "lanzaboote",
         "nixcord": "nixcord",
         "nixos-wsl": "nixos-wsl",

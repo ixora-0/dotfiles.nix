@@ -7,8 +7,8 @@
 
   imports = [
     ./hardware-configuration.nix
-    ./nvidia.nix
     ./battery.nix
+    ./graphics.nix
     ./amd-pstate.nix
   ] ++ (map helpers.importNixosModule [
     "boot"
@@ -16,7 +16,6 @@
     "input"
     "sound"
     "default-fonts"
-    "sddm"
     "sops"
     "open-webui"
     "auto-cpufreq"
@@ -47,16 +46,6 @@
   # See https://github.com/NixOS/nixpkgs/issues/321121
   services.geoclue2.geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
 
-  hardware.graphics.enable = true;  # do not need to set manually
-  hardware.graphics.enable32Bit = true;
-
-  services.xserver.enable = true;
-  services.xserver.excludePackages = [pkgs.xterm];
-
-  programs.hyprland.enable = true;
-  # Graphical session to pre-select in the session chooser
-  services.displayManager.defaultSession = "hyprland";
-
   # gnome keyring (for llm api keys in quickshell)
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.sddm.enableGnomeKeyring = true;
@@ -69,12 +58,6 @@
     device = "/home/ixora/intaa/.ssh";
     options = ["bind"];
   };
-
-  # xdg.portal = {
-  #   enable = true;
-  #   extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  #   config.common.default = [ "*" ];
-  # };
 
   services = {
     asusd.enable = true;
@@ -89,9 +72,6 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.settings.General.Experimental = true;  # for gnome-bluetooth percentage
   # services.blueman.enable = true;
-
-  # brightness control
-  hardware.brillo.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ixora = {
@@ -152,4 +132,10 @@
   system.stateVersion = "23.11"; # Did you read the comment?
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
+  # hyprland cachix
+  nix.settings = {
+    substituters = ["https://hyprland.cachix.org"];
+    trusted-substituters = ["https://hyprland.cachix.org"];
+    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+  };
 }
