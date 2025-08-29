@@ -25,7 +25,7 @@
     quickshell.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     # other flakes
-    # hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.url = "github:hyprwm/Hyprland";
     # hyprland.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
