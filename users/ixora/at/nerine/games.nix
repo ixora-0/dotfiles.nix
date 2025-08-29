@@ -1,6 +1,5 @@
 { pkgs, pkgs-unstable, ... }: {
   home.packages = (with pkgs; [
-    steam
     protonup-qt
 
     badlion-client
