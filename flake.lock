@@ -939,15 +939,15 @@
     "quickshell": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-stable"
+          "nixpkgs-unstable"
         ]
       },
       "locked": {
-        "lastModified": 1750335144,
-        "narHash": "sha256-mEudA3XHHFPjR7XHad5Si6tag5M/tTSJIB6oDLifv60=",
+        "lastModified": 1756352679,
+        "narHash": "sha256-UkKaPXTPzT7HAcBOV4NlWx2GAEJaTf0eb5OX6Q6jPqg=",
         "owner": "quickshell-mirror",
         "repo": "quickshell",
-        "rev": "95d0af8113394b1fdb71c94ac5160c83b8b829cb",
+        "rev": "f7597cdae2d537c5b12843599955856090dc49d5",
         "type": "github"
       },
       "original": {
