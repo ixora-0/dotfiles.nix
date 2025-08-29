@@ -15,18 +15,16 @@
       amdgpuBusId = "PCI:1:0:0";
     };
 
-    # only from driver 515.43.04+
-    # currently alpha-quality/buggy, false is currently the recommened setting
-    open = false;
+    open = true;
 
     # enable the nvidia settings menu,
     # accessible via `nvidia-settings`
     nvidiaSettings = true;
 
-    package = config.boot.kernelPackages.nvidiaPackages.production;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
   # load nvidia driver for xorg and wayland
-  services.xserver.videoDrivers = ["nvidia"]; 
+  services.xserver.videoDrivers = ["nvidia"];
 
 }
