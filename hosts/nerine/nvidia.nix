@@ -10,12 +10,9 @@
     powerManagement.finegrained = false;
 
     prime = {
+      sync.enable = true;
       nvidiaBusId = "PCI:6:0:0";
       amdgpuBusId = "PCI:1:0:0";
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
     };
 
     # only from driver 515.43.04+
