@@ -41,7 +41,7 @@ in
     (includeLSP cfg.lsp.typescript.enable        [nodePackages_latest.typescript-language-server])
     (includeLSP cfg.lsp.svelte.enable            [nodePackages_latest.svelte-language-server])
     (includeLSP cfg.lsp.tailwind.enable          [tailwindcss-language-server])
-    # (includeLSP cfg.lsp.ruff.enable              [ruff-lsp])
+    (includeLSP cfg.lsp.ruff.enable              [ruff])
     (includeLSP cfg.lsp.pyright.enable           [pyright])
     (includeLSP cfg.lsp.nil.enable               [nil])
     (includeLSP cfg.lsp.marksman.enable          [marksman])
@@ -77,7 +77,12 @@ in
 
     # ruff
     (lib.mkIf (cfg.lsp.enableAll || cfg.lsp.ruff.enable) {
-      ruff.command = "ruff-lsp";
+      ruff.command = "ruff";
+      ruff.args = ["server"];
+      ruff.config.settings.lint = {
+        select = ["E" "F" "I" "B" "UP"];
+        preview = true;
+      };
       # ruff.config.line-length = 88;
     })
   ];
@@ -188,6 +193,10 @@ in
       name = "python";
       rulers = [88];
       auto-format = true;
+      formatter = lib.mkIf (cfg.lsp.enableAll || cfg.lsp.ruff.enable) {
+        command = "sh";
+        args = ["-c" "ruff check --fix --unfixable=F401,F841 - | ruff format -"];
+      };
       language-servers = let
         bothEnabled = cfg.lsp.enableAll || (cfg.lsp.ruff.enable && cfg.lsp.pyright.enable);
       in [
