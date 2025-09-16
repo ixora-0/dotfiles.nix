@@ -14,6 +14,7 @@
     "direnv"
     "fonts"
     "thunderbird"
+    "sioyek"
   ]) ++ [
     ./games.nix
   ];
