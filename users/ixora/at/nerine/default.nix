@@ -37,6 +37,7 @@
     # nwg-look
     mpv
     qpwgraph
+    xournalpp
   ]) ++ (with pkgs-unstable; [
     anki-bin
     ghostty
