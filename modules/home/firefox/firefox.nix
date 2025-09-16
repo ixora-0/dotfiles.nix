@@ -34,6 +34,7 @@ in {
       videospeed                # yt speed controller
       stylus                    # custom site styles
                                 # NOTE: have to import https://github.com/catppuccin/userstyles/releases/download/all-userstyles-export/import.json manually
+      darkreader
       # refined-github
     ];
 
