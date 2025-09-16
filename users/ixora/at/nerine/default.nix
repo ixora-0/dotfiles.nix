@@ -42,11 +42,6 @@
   ]);
 
   xdg.mimeApps.enable = true;
-  xdg.mimeApps.defaultApplications = {
-    "x-scheme-handler/http" = "firefox.desktop";
-    "x-scheme-handler/https" = "firefox.desktop";
-  };
-
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {

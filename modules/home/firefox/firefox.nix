@@ -113,4 +113,10 @@ in {
       ublock-origin             # ad blocker
     ];
   };
+
+  xdg.mimeApps.defaultApplications = {
+    "x-scheme-handler/http" = "firefox.desktop";
+    "x-scheme-handler/https" = "firefox.desktop";
+    "x-scheme-handler/ftp" = "firefox.desktop";
+  };
 }
