@@ -1,4 +1,18 @@
-{ pkgs, ... }: {
+{ pkgs, ... }: let
+  yazi-picker = pkgs.writeShellScriptBin "hx-yazi-picker" ''
+    paths=$(yazi "$1" --chooser-file=/dev/stdout | while read -r; do printf "%q " "$REPLY"; done)
+
+    if [[ -n "$paths" ]]; then
+      zellij action toggle-floating-panes
+      zellij action write 27 # send <Escape> key
+      zellij action write-chars ":$1 $paths"
+      zellij action write 13 # send <Enter> key
+    else
+      zellij action toggle-floating-panes
+    fi
+  '';
+
+in {
   imports = [./languages.nix];
 
   # TODO: if wayland then wl-clipboard
@@ -61,6 +75,9 @@
           "move_line_down"
           "replace_with_yanked"
         ];
+        # use yazi as file picker in helix instance running in a Zellij session
+        # https://yazi-rs.github.io/docs/tips/#helix-with-zellij
+        C-y = ":sh zellij run -n Yazi -c -f -x 10% -y 10% --width 80% --height 80% -- ${yazi-picker}/bin/hx-yazi-picker open";
       };
       keys.insert = {
         C-s = ":w";
