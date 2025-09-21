@@ -9,10 +9,12 @@ in {
     enabledExtensions = with spicePkgs.extensions; [
       adblock
       fullAppDisplay
+
+      # broken
       shuffle  # shuffle+
-      # genre  # broken
-      skipStats
-      copyToClipboard
+      # genre
+      # skipStats
+      # copyToClipboard
     ];
   };
 }
