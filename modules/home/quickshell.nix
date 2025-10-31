@@ -1,7 +1,7 @@
 { inputs, pkgs, pkgs-unstable, lib, ... }: let
-  quickshell = inputs.quickshell.packages.${pkgs.system}.default;
   selfPkgs = import ../../pkgs {
-    inherit pkgs quickshell;
+    inherit pkgs;
+    quickshell = pkgs-unstable.quickshell;
   };
 in {
   # NOTE: config for illogical impulse is not declared here, modify in runtime
@@ -11,7 +11,7 @@ in {
   home.packages = [
     selfPkgs.illogical-impulse-qs-launcher
     selfPkgs.illogical-impulse-oneui4-icons  # TODO: move to theme.nix
-    quickshell
+    pkgs-unstable.quickshell
 
     pkgs.swww
 
@@ -48,7 +48,6 @@ in {
   # portal-gtk to make gsettings work
   xdg.enable = true;
   xdg.portal = {
-    enable = lib.mkForce true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     configPackages = [ pkgs.xdg-desktop-portal-gtk ];
     config.common.default = ["*"];
