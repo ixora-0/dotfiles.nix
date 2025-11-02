@@ -36,6 +36,7 @@
     sops-nix.url = "github:Mic92/sops-nix/e9b5eef9b51cdf966c76143e13a9476725b2f760";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     nixcord.url = "github:kaylorben/nixcord";
+    iosevka-iris.url = "github:ixora-0/iosevka-iris";
 
     # helix.url = "github:helix-editor/helix";
     # helix.inputs.nixpkgs.follows = "nixpkgs-unstable";

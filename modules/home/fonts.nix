@@ -1,13 +1,11 @@
-{ pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
     # core
     font-manager
     noto-fonts noto-fonts-cjk-sans noto-fonts-emoji
-    (iosevka.override {
-      set = "Iris";
-      privateBuildPlan = builtins.readFile ../nixos/default-fonts/private-build-plans.toml;
-    })
+    inputs.iosevka-iris.packages.${pkgs.system}.default
+
     nerd-fonts.symbols-only
     corefonts vistafonts
 

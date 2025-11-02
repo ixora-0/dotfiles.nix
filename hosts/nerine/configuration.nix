@@ -132,10 +132,20 @@
   system.stateVersion = "23.11"; # Did you read the comment?
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
-  # hyprland cachix
+  sops.secrets.netrc.sopsFile = ../../secrets/common.json;
   nix.settings = {
-    substituters = ["https://hyprland.cachix.org"];
-    trusted-substituters = ["https://hyprland.cachix.org"];
-    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+    substituters = [
+      "https://hyprland.cachix.org"
+      "https://attic.ixora-0.dev/fonts"
+    ];
+    trusted-substituters = [
+      "https://hyprland.cachix.org"
+      "https://attic.ixora-0.dev/fonts"
+    ];
+    trusted-public-keys = [
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      "fonts:NSQhVo8Wc9qzPdKiXrufZ9qW+MKv6j1JMfSNES0VY0o="
+    ];
+    netrc-file = config.sops.secrets.netrc.path;
   };
 }
