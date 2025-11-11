@@ -188,7 +188,9 @@ in {
 
     decoration = {
       rounding = 12;
-      blur.size = 12;
+      blur.size = 4;
+      blur.passes = 2;
+      blur.contrast = 1.8;
 
       shadow.enabled = true;
       shadow.range = 8;
@@ -329,7 +331,7 @@ in {
 
       # opacity nemo and kitty
       "opacity 1 0.85, class:kitty.*"
-      "opacity 0.8 0.7, class:nemo.*"
+      "opacity 0.7 0.6, class:nemo.*"
     ];
     animations = {
       enabled = true;
