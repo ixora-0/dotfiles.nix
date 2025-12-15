@@ -11,7 +11,7 @@
     fcitx5.waylandFrontend = true;
     fcitx5.addons = with pkgs; [ 
       fcitx5-anthy
-      fcitx5-unikey
+      kdePackages.fcitx5-unikey
     ];
   };
   # supposedly needed to autostart i18n.inputMethod

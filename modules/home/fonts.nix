@@ -3,11 +3,11 @@
   home.packages = with pkgs; [
     # core
     font-manager
-    noto-fonts noto-fonts-cjk-sans noto-fonts-emoji
-    inputs.iosevka-iris.packages.${pkgs.system}.default
+    noto-fonts noto-fonts-cjk-sans noto-fonts-color-emoji
+    inputs.iosevka-iris.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     nerd-fonts.symbols-only
-    corefonts vistafonts
+    corefonts vista-fonts
 
     # sets
     ibm-plex

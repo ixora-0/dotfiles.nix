@@ -4,8 +4,8 @@
   inputs = {
     # NOTE: adding unused flakes still take up extra space
     # stable flakes
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
-    home-manager-stable.url = "github:nix-community/home-manager/release-25.05";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+    home-manager-stable.url = "github:nix-community/home-manager/release-25.11";
     home-manager-stable.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     # unstable flakes

@@ -10,7 +10,7 @@
   gsettings-desktop-schemas,
   gtk4,
   jq,
-  libsForQt5,
+  kdePackages,
   matugen,
   python3,
   python313Packages,

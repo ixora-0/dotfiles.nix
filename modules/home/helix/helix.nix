@@ -22,7 +22,7 @@ in {
 
   # set default editors
   # home.sessionVariables.EDITOR = "${pkgs.helix}/bin/hx";
-  programs.git.extraConfig.core.editor = "${pkgs.helix}/bin/hx";
+  programs.git.settings.core.editor = "${pkgs.helix}/bin/hx";
 
   programs.helix = {
     enable = true;
