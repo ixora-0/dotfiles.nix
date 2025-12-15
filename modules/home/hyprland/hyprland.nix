@@ -68,6 +68,7 @@
 
 
 in {
+  imports = [./hyprlock.nix];
   services.hypridle.enable = true;
   services.hypridle.settings = {
     general = {
@@ -93,58 +94,6 @@ in {
       {
         timeout = 86400;
         on-timeout = "systemctl suspend";
-      }
-    ];
-  };
-  programs.hyprlock.enable = true;
-  programs.hyprlock.settings = {
-    general = {
-      disable_loading_bar = true;
-      no_fade_in = false;
-      no_fade_out = false;
-      grace = 4;
-      # hide_cursor = true;
-    };
-
-    background = [
-      {
-        path = "screenshot";
-        blur_passes = 2;
-        contrast = 1;
-        brightness = 0.5;
-        vibrancy = 0.2;
-        vibrancy_darkness = 0.2;
-      }
-    ];
-
-    input-field = [
-      {
-        size = "600, 50";
-        dots_size = 0.75;
-        dots_spacing = 0.1;
-        font_color = "rgb(255, 255, 255)";
-        # position = "0, 0";
-        dots_center = true;
-        # font_color = "rgb(202, 211, 245)";
-        inner_color = "rgba(0, 0, 0, 0.2)";
-        outer_color = "rgba(0, 0, 0, 0)";
-        # outline_thickness = 2;
-        placeholder_text = "";
-        shadow_passes = 2;
-        rounding = 0;
-        fade_on_empty = false;
-      }
-    ];
-
-    label = [
-      {
-        text = "cmd[update:1000] echo \"$(date +\"%-I:%M\")\"";
-        color = "rgba(242, 243, 244, 0.75)";
-        font_size = "95";
-        font_family = "monospace bold";
-        position = "0, 200";
-        halign = "center";
-        valign = "center";
       }
     ];
   };
