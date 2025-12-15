@@ -7,18 +7,21 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "end-4";
     repo = "dots-hyprland";
-    rev = "5ee46cfc30f6b4a690bfada77d40b09cd1517c96";
-    sha256 = "sha256-PrCsUvgDJqmfflcSVOMZviGTYocejvYHw45JEbixCm4=";
+    rev = "36ff18bfe350b7565497c297cdfa1727e89e52dc";
+    sha256 = "sha256-FkIgTaOUFNx8/M+IY1CuI5l51STh0oH39wxPex8t1qE=";
   };
 
   installPhase = ''
     mkdir -p $out
-    cp -r .config/Kvantum/* $out/
+    cp -r $src/dots/.config/Kvantum/* $out/
 
     runHook postInstall
   '';
 
   postInstall = ''
+    chmod u+w $out/MaterialAdw
+    chmod u+w $out/MaterialAdw/MaterialAdw.svg
+    chmod u+w $out/MaterialAdw/MaterialAdw.kvconfig
     mv $out/MaterialAdw/MaterialAdw.svg $out/MaterialAdw/MaterialAdw.svg.sample
     mv $out/MaterialAdw/MaterialAdw.kvconfig $out/MaterialAdw/MaterialAdw.kvconfig.sample
   '';

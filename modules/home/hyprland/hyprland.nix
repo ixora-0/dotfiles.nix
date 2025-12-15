@@ -157,8 +157,7 @@ in {
   };
   wayland.windowManager.hyprland.settings = {
     exec-once = [
-      "swww-daemon --format xrgb"
-      "illogical-impulse-qs-launcher"
+      "qs -c ii"
       "fcitx5 -d"
       "${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store"
       # "${pkgs.swww}/bin/swww init"
@@ -271,7 +270,7 @@ in {
         map bind_workspace_num (map builtins.toString (lib.range 1 9))
     );
     bindd = [
-      "SUPER, R, Toggle overview, global, quickshell:overviewToggleRelease"  # x
+      "SUPER, R, Toggle overview, global, quickshell:overviewWorkspacesToggle"
       "SUPER, SLASH, Toggle cheatsheet, global, quickshell:cheatsheetToggle"  # x
 
       "SUPER, V, Clipboard history >> clipboard, global, quickshell:overviewClipboardToggle"

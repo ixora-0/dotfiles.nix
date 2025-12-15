@@ -26,6 +26,8 @@
     # hyprland.inputs.nixpkgs.follows = "nixpkgs-unstable";
     hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
     hyprland-plugins.inputs.hyprland.follows = "hyprland";
+    quickshell.url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+    quickshell.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
