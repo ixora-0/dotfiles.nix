@@ -4,7 +4,13 @@
   else
     ./userChrome-Linux.css
   );
-  userJS = builtins.readFile ./user.js;  # betterfox
+  betterfox = pkgs.fetchFromGitHub {
+    owner = "yokoffing";
+    repo = "Betterfox";
+    rev = "eee6e58b2b0ee10a59efb6586a5db07ae181d8c7";
+    sha256 = "sha256-zGpfQk2gY6ifxIk1fvCk5g5SIFo+o8RItmw3Yt3AeCg=";
+  };
+  userJS = (builtins.readFile "${betterfox}/user.js") + (builtins.readFile ./betterfox_extra.js);
 in {
   programs.firefox.enable = true;
   programs.firefox.profiles."nixOS-profile" = {

@@ -1,4 +1,4 @@
-/* fonts (must have Iosevka installed) */
+/* fonts (must have installed) */
 #root.root {--tabs-font: 1rem monospace;}
 .Tab .title {font-stretch: extra-condensed;}
 #root.root {--ctx-menu-font: 1rem monospace;}

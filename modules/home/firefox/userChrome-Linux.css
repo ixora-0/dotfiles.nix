@@ -25,18 +25,17 @@
 #sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"] {
   --sidebar-width: 36px;
   --sidebar-hover-width: 512px;
-  min-width: var(--sidebar-width) !important;
-  /* NOTE: initial width is not set to min-width */
+  min-width: var(--sidebar-width) !important;  /* NOTE: initial width is not set to min-width */
   z-index: 3;
 }
-#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"]
-  > #sidebar {
-  transition: width 300ms ease-in-out !important;
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"] #sidebar{
+  transition: width 300ms;
   will-change: width;
+  position: absolute;
   width: 100%;
+  height: 100%;
 }
-#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"]:hover
-  > #sidebar {
+#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"]:hover #sidebar {
   width: var(--sidebar-hover-width) !important;
 }
 
@@ -44,10 +43,6 @@
 #sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"]
   + #sidebar-splitter {
   opacity: 0;
-}
-#sidebar-box[sidebarcommand="_3c078156-979c-498b-8990-85f7987dd929_-sidebar-action"]:hover
-  + #sidebar-splitter {
-  display: none;
 }
 
 /* navbar *****************************************************/
@@ -94,6 +89,7 @@
 #context-pocket,
 #context-sendpagetodevice,
 #context-sendlinktodevice,
+#context-askChat,
 #context-sendimage,
 #context-take-screenshot,
 #context-sep-screenshots,
