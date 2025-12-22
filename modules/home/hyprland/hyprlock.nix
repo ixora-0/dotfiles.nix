@@ -1,4 +1,4 @@
-{ pkgs, ...}: let
+{ lib, pkgs, ...}: let
   check-capslock = pkgs.writeShellScriptBin "hyprlock-check-capslock" ''
     MAIN_KB_CAPS=$(hyprctl devices | grep -B 6 "main: yes" | grep "capsLock" | head -1 | awk '{print $2}')
 
@@ -40,7 +40,7 @@
 
 
 in {
-  programs.hyprlock.enable = true;
+  programs.hyprlock.enable = lib.mkDefault false;  # prefer using quickshell lock
   programs.hyprlock.settings = {
     source="~/.config/hypr/hyprlock/colors.conf";
     general = {
