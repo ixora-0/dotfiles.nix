@@ -1,6 +1,0 @@
-[
-  "discord"
-  "spotify"
-  "obsidian"
-  "gitkraken"
-]

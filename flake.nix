@@ -80,10 +80,10 @@
     images.ren = self.nixosConfigurations.ren.config.system.build.sdImage;
 
     homeConfigurations = {
-      "ixora@azalea" = makeHomeConfig {
+      "ixora@chrysanth" = makeHomeConfig {
         stability = "unstable";
         osArchitecture = "x86_64-linux";
-        hostname = "azalea";
+        hostname = "chrysanth";
         username = "ixora";
       };
       "ixora@nerine" = makeHomeConfig {
