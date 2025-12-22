@@ -15,7 +15,6 @@
     "locale"
     "input"
     "sound"
-    "default-fonts"
     "sops"
     "open-webui"
     "auto-cpufreq"

@@ -1,5 +1,14 @@
 { inputs, pkgs, ... }: {
-  fonts.fontconfig.enable = true;
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      serif =     ["Noto Serif" "Symbols Nerd Font"];
+      sansSerif = ["Noto Sans" "Symbols Nerd Font"];
+      emoji =     ["Noto Color Emoji"];
+      monospace = ["Iosevka Iris" "Symbols Nerd Font Mono"];
+    };
+  };
+
   home.packages = with pkgs; [
     # core
     font-manager
