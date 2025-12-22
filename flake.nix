@@ -34,6 +34,9 @@
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs-stable";
 
+    silentSDDM.url = "github:uiriansan/SilentSDDM";
+    silentSDDM.inputs.nixpkgs.follows = "nixpkgs-stable";
+
     lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
     sops-nix.url = "github:Mic92/sops-nix/e9b5eef9b51cdf966c76143e13a9476725b2f760";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";

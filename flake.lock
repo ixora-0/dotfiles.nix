@@ -355,11 +355,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1734862405,
-        "narHash": "sha256-bXZJvUMJ2A6sIpYcCUAGjYCD5UDzmpmQCdmJSkPhleU=",
+        "lastModified": 1765823531,
+        "narHash": "sha256-tyNJjd48hfgsyEfsq1Ueufg4oJv6b8xBA6NYRJrLPyg=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "cb27edb5221d2f2920a03155f8becc502cf60e35",
+        "rev": "8315c1544f383b791a3115c9959d1f27920e8320",
         "type": "github"
       },
       "original": {
@@ -1054,6 +1054,7 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "quickshell": "quickshell",
+        "silentSDDM": "silentSDDM",
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix"
       }
@@ -1077,6 +1078,26 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "silentSDDM": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-stable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1766331405,
+        "narHash": "sha256-wQS3amjsmZz+8khaF1ricXBFqcUtbA4lWQPgkpHyO68=",
+        "owner": "uiriansan",
+        "repo": "SilentSDDM",
+        "rev": "e73e1a22bf755703f14668bdecfe5481886aef0c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "uiriansan",
+        "repo": "SilentSDDM",
         "type": "github"
       }
     },

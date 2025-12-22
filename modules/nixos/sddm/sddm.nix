@@ -1,23 +1,29 @@
-{ pkgs, ... }: let
-  theme = pkgs.stdenv.mkDerivation {
-    name = "sddm-theme";
-    src = pkgs.fetchFromGitHub {
-      owner = "stepanzubkov";
-      repo = "where-is-my-sddm-theme";
-      rev = "350555f40aa4e451b47a672d07085fc6ce7f4e0d";
-      sha256 = "0clk3b743qh7m52my0jdzrdk3d97b2qxjdqci2dy3rq40zhy4ggw";
+{ lib, inputs, pkgs, ... }: {
+  imports = [inputs.silentSDDM.nixosModules.default];
+  programs.silentSDDM = {
+    enable = true;
+    theme = "default";
+    backgrounds.default = pkgs.fetchurl {
+      name = "bg.png";
+      url = "https://i.postimg.cc/zG7jmntm/bg.png";
+      hash = "sha256-inAljgsDPWxySsSmEETL0rRVlK18l53EC+dAXZquIKA=";
     };
-    installPhase = ''
-      mkdir -p $out
-      cp -R ./where_is_my_sddm_theme_qt5/* $out/
-    '';
-
+    profileIcons.ixora = pkgs.fetchurl {
+      name = "ixora.png";
+      url = "https://i.postimg.cc/BvN2y4vF/pfp.png";
+      hash = "sha256-+4SwH01Yy6BIiU4oTIA/kxNRxfjK4jy3uMAKETo3FLk=";
+    };
+    settings = {
+      "LoginScreen" = {
+        background = "bg.png";
+      };
+      "LockScreen" = {
+        background = "bg.png";
+      };
+    };
   };
-in
-{
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = true;
-    theme = "${theme}";
+    wayland.enable = lib.mkForce true;
   };
 }
