@@ -1,6 +1,7 @@
 {
   imports = [
     # ./tor.nix
+    ./wireguard.nix
   ];
 
   networking.networkmanager.enable = true;
