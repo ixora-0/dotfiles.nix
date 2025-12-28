@@ -20,25 +20,10 @@
     "auto-cpufreq"
     "lanzaboote"
     "gaming"
+    "networking"
   ]);
 
   services.fstrim.enable = true;
-  hardware.asus.battery.chargeUpTo = 60;
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-
-  # Tor
-  services.tor.enable = true;
-  services.tor.client.enable = true;
-  services.privoxy.enable = true;
-  services.privoxy.enableTor = true;
-  services.privoxy.settings.listen-address = "127.0.0.1:8118";
 
   services.automatic-timezoned.enable = true;
   # NOTE: This might be set by default in the future.
