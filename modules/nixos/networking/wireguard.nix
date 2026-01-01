@@ -2,19 +2,19 @@
   port = 8443;
   ns = "vpn";
 in {
+  # NOTE: please check ip is correct and no dns leak when rebuild if using this module
+  # probably very dependent on each system
+
   networking.firewall.allowedUDPPorts = [port];
   networking.networkmanager.unmanaged = ["type:wireguard"];
 
-  systemd.services.wg-netns = {
+  systemd.services.wg-ns = {
     description = "Wireguard Network Namespace";
 
     wantedBy = [ "multi-user.target" ];
     after = [ "network-pre.target" ];
-    wants = [ "network-pre.target"  ];
-
+    wants = [ "network-pre.target" ];
     before = [ "wireguard-usbos001.service" ];
-    requiredBy = [ "wireguard-usbos001.service" ];
-
 
     serviceConfig = let
       resolvconf = pkgs.writeText "resolv.conf" ''
@@ -35,32 +35,44 @@ in {
         protocols: files
         rpc:       files
       '';
-
-      startScript = pkgs.writeShellScriptBin "wg-netns-start" ''
+      # read https://unix.stackexchange.com/a/581618
+      # couldn't get nsenter to work in systemd service
+      startScript = pkgs.writeShellScriptBin "wg-ns-start" ''
         set -euo pipefail
 
+        # set up netns
         ${pkgs.coreutils}/bin/mkdir -p /etc/netns/${ns}
-        ${pkgs.coreutils}/bin/ln -sfn ${resolvconf} /etc/netns/${ns}/resolv.conf
-        ${pkgs.coreutils}/bin/ln -sfn ${nsswitchconf} /etc/netns/${ns}/nsswitch.conf
         ${pkgs.iproute2}/bin/ip netns add ${ns} 2>/dev/null || true
 
-        # if using nsenter
-        # ${pkgs.iproute2}/bin/ip netns exec vpn ${pkgs.bash}/bin/bash -c '
-        #   ${pkgs.mount}/bin/mount --bind /var/empty /var/run/nscd && exec sleep infinity
-        # '
+        # set up mountns
+        ${pkgs.coreutils}/bin/mkdir -p /run/mntns/
+        ${pkgs.mount}/bin/mount --bind --make-private /run/mntns /run/mntns
+        ${pkgs.coreutils}/bin/touch /run/mntns/${ns}
+
+        ${pkgs.util-linux}/bin/unshare --net=/run/netns/${ns} --mount=/run/mntns/${ns} true
+
+        ${pkgs.util-linux}/bin/unshare --mount=/run/mntns/${ns} ${pkgs.bash}/bin/bash -c "
+          # disable nscd to avoid dns leak
+          ${pkgs.mount}/bin/mount --bind /var/empty /var/run/nscd
+          # need to disable resolved to mount resolv.conf
+          ${pkgs.mount}/bin/mount -t tmpfs tmpfs /run/systemd/resolve
+          ${pkgs.mount}/bin/mount --bind ${resolvconf} /etc/resolv.conf
+          ${pkgs.mount}/bin/mount --bind ${nsswitchconf} /etc/nsswitch.conf
+        "
       '';
 
-      stopScript = pkgs.writeShellScriptBin "wg-netns-stop" ''
-        ${pkgs.iproute2}/binip netns pids ${ns} | xargs -r kill
-        ${pkgs.iproute2}/binip netns del ${ns}
+      stopScript = pkgs.writeShellScriptBin "wg-ns-stop" ''
+        ${pkgs.iproute2}/bin/ip netns del ${ns} || true
+        ${pkgs.umount}/bin/umount /run/mntns/${ns} || true
+        ${pkgs.coreutils}/bin/rm /run/mntns/${ns} || true
       '';
     in {
-      Type = "simple";
+      Type = "oneshot";
       RemainAfterExit = true;
 
-      ExecStart = "${startScript}/bin/wg-netns-start";
+      ExecStart = "${startScript}/bin/wg-ns-start";
 
-      ExecStop = "${stopScript}/bin/wg-netns-stop";
+      ExecStop = "${stopScript}/bin/wg-ns-stop";
 
       CapabilityBoundingSet = [
         "CAP_NET_ADMIN"
@@ -77,6 +89,7 @@ in {
 
   sops.secrets.mullvad_private_key = {
     sopsFile = ../../../secrets/nerine.json;
+    restartUnits = [ "wireguard-usbos001.service" ];
   };
 
   networking.wireguard.enable = true;
@@ -113,18 +126,13 @@ in {
       ];
     };
   };
-  environment.systemPackages = [(pkgs.writeShellScriptBin "execnetns" ''
+  environment.systemPackages = [(pkgs.writeShellScriptBin "nsexec" ''
     NAMESPACE=$1
     shift
-
-    # can't run gui apps in hyprland with nsenter
-    # VPN_PID=$(sudo ip netns pids "$NAMESPACE" | head -1)
-    # sudo nsenter -t "$VPN_PID" -n -m sudo -u "$USER" "$@"
-
-    # diaable nscd to avoid dns leak
-    sudo ip netns exec "$NAMESPACE" bash -c "
-        mount --bind /var/empty /var/run/nscd 2>/dev/null || true
-        exec sudo -u $USER \"\$@\"
-    " __ "$@"
+    sudo nsenter --net=/run/netns/$NAMESPACE --mount=/run/mntns/$NAMESPACE sudo -u "$USER" \
+      env XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR" \
+          WAYLAND_DISPLAY="$WAYLAND_DISPLAY" \
+          DISPLAY="$DISPLAY" \
+     "$@"
   '')];
 }
