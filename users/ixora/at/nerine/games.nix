@@ -1,10 +1,10 @@
 { pkgs, pkgs-unstable, ... }: {
   home.packages = (with pkgs; [
     protonup-qt
-
     badlion-client
+    bolt-launcher
   ]) ++ (with pkgs-unstable; [
-    # osu-lazer-bin
+    osu-lazer-bin
     gdlauncher-carbon
   ]);
 

@@ -6,7 +6,7 @@
   "osu-lazer-bin"
   "betterttv"
   # reaper
-  # vital
+  "vital"
   # linuxKernel.packages.linux_zen.nvidia_x11
   "nvidia-x11"
   "nvidia-settings"

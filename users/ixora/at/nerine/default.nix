@@ -32,12 +32,14 @@
     go
     act
     # reaper
-    # vital
+    vital musescore audacity
+    obs-studio
     vscode
     # nwg-look
     mpv
     qpwgraph
     xournalpp
+    bruno
   ]) ++ (with pkgs-unstable; [
     anki-bin
     ghostty
