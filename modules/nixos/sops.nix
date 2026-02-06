@@ -8,6 +8,6 @@
   ];
 
   sops.defaultSopsFormat = "json";
-  # TODO: improve design here
-  sops.age.keyFile = "/home/ixora/.config/sops/age/keys.txt";
+  # NOTE: path should be available at boot (not mounted probably)
+  sops.age.keyFile = "/var/lib/sops-nix/key.txt";
 }
