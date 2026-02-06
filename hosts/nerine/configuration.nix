@@ -16,7 +16,6 @@
     "input"
     "sound"
     "sops"
-    "open-webui"
     "auto-cpufreq"
     "lanzaboote"
     "gaming"
