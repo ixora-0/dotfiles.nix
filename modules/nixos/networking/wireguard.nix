@@ -8,80 +8,33 @@ in {
   networking.firewall.allowedUDPPorts = [port];
   networking.networkmanager.unmanaged = ["type:wireguard"];
 
-  systemd.services.wg-ns = {
+  systemd.services.wg-netns = {
     description = "Wireguard Network Namespace";
 
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = [ "multi-user.target" "wireguard-usbos001.service" ];
     after = [ "network-pre.target" ];
     wants = [ "network-pre.target" ];
+    requiredBy = [ "wireguard-usbos001.service" ];
     before = [ "wireguard-usbos001.service" ];
 
-    serviceConfig = let
-      resolvconf = pkgs.writeText "resolv.conf" ''
-        nameserver 10.64.0.1
-      '';
-
-      nsswitchconf = pkgs.writeText "nsswitch.conf" ''
-        passwd:    files systemd
-        group:     files [success=merge] systemd
-        shadow:    files systemd
-        sudoers:   files
-
-        hosts:     mymachines files myhostname dns
-        networks:  files
-
-        ethers:    files
-        services:  files
-        protocols: files
-        rpc:       files
-      '';
-      # read https://unix.stackexchange.com/a/581618
-      # couldn't get nsenter to work in systemd service
-      startScript = pkgs.writeShellScriptBin "wg-ns-start" ''
-        set -euo pipefail
-
-        # set up netns
-        ${pkgs.coreutils}/bin/mkdir -p /etc/netns/${ns}
-        ${pkgs.iproute2}/bin/ip netns add ${ns} 2>/dev/null || true
-
-        # set up mountns
-        ${pkgs.coreutils}/bin/mkdir -p /run/mntns/
-        ${pkgs.mount}/bin/mount --bind --make-private /run/mntns /run/mntns
-        ${pkgs.coreutils}/bin/touch /run/mntns/${ns}
-
-        ${pkgs.util-linux}/bin/unshare --net=/run/netns/${ns} --mount=/run/mntns/${ns} true
-
-        ${pkgs.util-linux}/bin/unshare --mount=/run/mntns/${ns} ${pkgs.bash}/bin/bash -c "
-          # disable nscd to avoid dns leak
-          ${pkgs.mount}/bin/mount --bind /var/empty /var/run/nscd
-          # need to disable resolved to mount resolv.conf
-          ${pkgs.mount}/bin/mount -t tmpfs tmpfs /run/systemd/resolve
-          ${pkgs.mount}/bin/mount --bind ${resolvconf} /etc/resolv.conf
-          ${pkgs.mount}/bin/mount --bind ${nsswitchconf} /etc/nsswitch.conf
-        "
-      '';
-
-      stopScript = pkgs.writeShellScriptBin "wg-ns-stop" ''
-        ${pkgs.iproute2}/bin/ip netns del ${ns} || true
-        ${pkgs.umount}/bin/umount /run/mntns/${ns} || true
-        ${pkgs.coreutils}/bin/rm /run/mntns/${ns} || true
-      '';
-    in {
+    serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
 
-      ExecStart = "${startScript}/bin/wg-ns-start";
-
-      ExecStop = "${stopScript}/bin/wg-ns-stop";
-
-      CapabilityBoundingSet = [
-        "CAP_NET_ADMIN"
-        "CAP_SYS_ADMIN"
+      ExecStartPre = [
+        "-${pkgs.iproute2}/bin/ip netns delete ${ns}"
       ];
-      AmbientCapabilities = [
-        "CAP_NET_ADMIN"
-        "CAP_SYS_ADMIN"
+      ExecStart = [
+        "${pkgs.iproute2}/bin/ip netns add ${ns}"
       ];
+      ExecStop = [
+        "${pkgs.iproute2}/bin/ip netns del ${ns}"
+        "-${pkgs.util-linux}/bin/umount /run/mntns/${ns}"
+        "-${pkgs.coreutils}/bin/rm /run/mntns/${ns}"
+      ];
+
+      CapabilityBoundingSet = [ "CAP_NET_ADMIN" "CAP_SYS_ADMIN" ];
+      AmbientCapabilities = [ "CAP_NET_ADMIN" "CAP_SYS_ADMIN" ];
 
       KillMode = "mixed";
     };
@@ -126,13 +79,50 @@ in {
       ];
     };
   };
+
   environment.systemPackages = [(pkgs.writeShellScriptBin "nsexec" ''
+    set -euo pipefail
+
     NAMESPACE=$1
     shift
-    sudo nsenter --net=/run/netns/$NAMESPACE --mount=/run/mntns/$NAMESPACE sudo -u "$USER" \
+
+    RESOLVCONF=${pkgs.writeText "resolv.conf" ''
+      nameserver 10.64.0.1
+    ''}
+
+    NSSWITCHCONF=${pkgs.writeText "nsswitch.conf" ''
+      passwd:    files systemd
+      group:     files [success=merge] systemd
+      shadow:    files systemd
+      sudoers:   files
+
+      hosts:     mymachines files myhostname dns
+      networks:  files
+
+      ethers:    files
+      services:  files
+      protocols: files
+      rpc:       files
+    ''}
+
+    # create persistent mount namespace if doesn't exist
+    if [ ! -f "/run/mntns/$NAMESPACE" ]; then
+      sudo ${pkgs.coreutils}/bin/mkdir -p /run/mntns/
+      sudo ${pkgs.mount}/bin/mount --bind --make-private /run/mntns /run/mntns
+      sudo ${pkgs.coreutils}/bin/touch /run/mntns/$NAMESPACE
+
+      sudo ${pkgs.util-linux}/bin/nsenter --net=/run/netns/$NAMESPACE \
+        ${pkgs.util-linux}/bin/unshare --mount=/run/mntns/$NAMESPACE ${pkgs.bash}/bin/bash -c "
+          # disable nscd to avoid dns leak
+          ${pkgs.mount}/bin/mount --bind /var/empty /var/run/nscd
+          ${pkgs.mount}/bin/mount --bind $RESOLVCONF /etc/resolv.conf
+          ${pkgs.mount}/bin/mount --bind $NSSWITCHCONF /etc/nsswitch.conf
+        "
+    fi
+
+    sudo ${pkgs.util-linux}/bin/nsenter --net=/run/netns/$NAMESPACE --mount=/run/mntns/$NAMESPACE sudo -u "$USER" \
       env XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR" \
           WAYLAND_DISPLAY="$WAYLAND_DISPLAY" \
           DISPLAY="$DISPLAY" \
      "$@"
-  '')];
-}
+  '')];}
