@@ -104,6 +104,7 @@ in
     # web langs
     {
       name = "typescript";
+      rulers = [88];
       auto-format = true;
       formatter = lib.mkIf cfg.prettier.enable {
         command = "${pkgs.nodePackages.prettier}/bin/prettier"; 
@@ -120,6 +121,7 @@ in
     }
     {
       name = "javascript";
+      rulers = [88];
       auto-format = true;
       formatter = lib.mkIf cfg.prettier.enable {
         command = "${pkgs.nodePackages.prettier}/bin/prettier"; 
@@ -136,6 +138,7 @@ in
     }
     {
       name = "svelte";
+      rulers = [88];
       auto-format = true;
       formatter = lib.mkIf cfg.prettier.enable {
         command = "${pkgs.nodePackages.prettier}/bin/prettier"; 
@@ -153,12 +156,14 @@ in
     }
     {
       name = "css";
+      rulers = [88];
       auto-format = true;
       language-servers = [
         {
           name = "vscode-css-language-server";
           except-features = lib.mkIf cfg.prettier.enable ["format"];
         }
+        "tailwindcss-ls"
       ];
       formatter = lib.mkIf cfg.prettier.enable {
         command = "${pkgs.nodePackages.prettier}/bin/prettier";
@@ -167,6 +172,7 @@ in
     }
     {
       name = "html";
+      rulers = [88];
       auto-format = true;
       language-servers = [
         {
