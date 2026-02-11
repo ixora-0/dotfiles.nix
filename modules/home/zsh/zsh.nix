@@ -40,7 +40,7 @@ in
       (lib.mkIf cfg.plugins.fastSyntaxHighlighting.enable {
         name = "fast-syntax-highlighting";
         src = pkgs.zsh-fast-syntax-highlighting;
-        file = "share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh";  # has to be a string not path
+        file = "share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh";
       })
       (lib.mkIf cfg.plugins.powerlevel10k.enable {
         name = "powerlevel10k";
