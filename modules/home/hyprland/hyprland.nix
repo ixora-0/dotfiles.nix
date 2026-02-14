@@ -71,6 +71,11 @@
 in {
   imports = [./hyprlock.nix];
   options.modules.hyprland.plugins.enable = lib.mkEnableOption "Whether to install hyprland plugins" // { default=true; };
+  options.modules.hyprland.extraConfig = lib.mkOption {
+    type = lib.types.lines;
+    default = "";
+    description = "Extra configuration lines to add to ~/.config/hypr/hyprland.conf.";
+  };
   config = {
     services.hypridle.enable = true;
     services.hypridle.settings = {
@@ -203,8 +208,8 @@ in {
         "SUPER, PRINT, exec, ${pkgs.grimblast}/bin/grimblast copy area"
         # Workspaces
         # Special workspace
-        "SUPER, GRAVE, togglespecialworkspace"
-        "SUPER SHIFT, GRAVE, movetoworkspace, special"
+        "SUPER, GRAVE, togglespecialworkspace, special"
+        "SUPER SHIFT, GRAVE, movetoworkspace, special:special"
       ] ++ (
         # Switch workspaces with SUPER + [1-9]
         let
@@ -273,15 +278,24 @@ in {
         "float, class:^firefox.*$, title:^Extension:.*$"
         # "suppressevent maximize fullscreen, class:.*"
 
-        # float nemo and nautilus
-        "float, class:nemo.*"
+        # float
+        "float, class:nemo"
         "float, class:com.mitchellh.ghostty"
-        "float, class:kitty.*"
-        "float, class:org.gnome.Nautilus.*"
+        "float, class:kitty"
+        "float, class:org.gnome.Nautilus"
 
-        # opacity nemo and kitty
+        # opacity
         "opacity 1 0.85, class:kitty.*"
         "opacity 0.7 0.6, class:nemo.*"
+
+        # workspace
+        "workspace 1, class: firefox"
+        "workspace 4, class: spotify"
+        "workspace 4, class: vesktop"
+        "workspace 4, class: discord"
+        "workspace 5, class: steam"
+        "workspace 5, class: net.lutris.Lutris"
+        "workspace special:special, class: obsidian"
       ];
       animations = {
         enabled = true;
@@ -316,7 +330,7 @@ in {
     wayland.windowManager.hyprland.plugins = lib.mkIf cfg.plugins.enable [
       inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprexpo
     ];
-    wayland.windowManager.hyprland.extraConfig = lib.mkIf cfg.plugins.enable ''
+    wayland.windowManager.hyprland.extraConfig = lib.mkIf cfg.plugins.enable (cfg.extraConfig + ''
       plugin {
         hyprexpo {
           columns = 3
@@ -329,6 +343,6 @@ in {
           gesture_positive = false
         }
       }
-    '';
+    '');
   };
 }

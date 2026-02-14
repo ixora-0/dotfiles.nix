@@ -10,12 +10,15 @@
   end4repo = pkgs.fetchFromGitHub {
     owner = "end-4";
     repo = "dots-hyprland";
-    rev = "36ff18bfe350b7565497c297cdfa1727e89e52dc";
-    sha256 = "sha256-kNcYjiD0Oa8wF3KtFO1DIRqNEYYzduuShGQrefbyVQg=";
+    # NOTE: rev before change in hyprland window rule format (>=0.53)
+    rev = "8ae14725e6ace1694868fa6c76f3072add19305d";
+    sha256 = "sha256-v289oS0cqo95urjsnle4JU14qwMzNHwB69lNMF2mjuk=";
     fetchSubmodules = true;
   };
   qs-dots = "${end4repo}/dots/.config/quickshell";
+  hypr-dots = "${end4repo}/dots/.config/hypr";
 in {
+  # imports = map helpers.importHomeModule ["hyprland"];
   home.file.".config/quickshell" = {
     source = qs-dots;
     recursive = true;
@@ -28,6 +31,10 @@ in {
     source = "${selfPkgs.illogical-impulse-kvantum}";
     recursive = true;
   };
+  # extra window rules
+  modules.hyprland.extraConfig = builtins.replaceStrings
+    ["windowrulev2 = noblur, class:.*"] [""]
+    (builtins.readFile "${hypr-dots}/hyprland/rules.conf");
 
   # copied from https://github.com/end-4/dots-hyprland/tree/main/sdata/dist-nix
   # Necessary for non-NixOS to handle GPU (since home-manager version 25.11)
