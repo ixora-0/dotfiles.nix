@@ -9,5 +9,5 @@
   ]);
 
   programs.mangohud.enable = true;
-  # programs.lutris.enable = true;
+  programs.lutris.enable = true;
 }
