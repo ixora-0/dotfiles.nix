@@ -43,6 +43,7 @@
   ]) ++ (with pkgs-unstable; [
     anki-bin
     ghostty
+    opencode opencode-desktop
   ]);
 
   xdg.mimeApps.enable = true;

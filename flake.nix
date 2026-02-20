@@ -23,7 +23,7 @@
 
     # other flakes
     hyprland.url = "github:hyprwm/Hyprland";
-    # hyprland.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # hyprland.inputs.nixpkgs.follows = "nixpkgs-stable";
     hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
     hyprland-plugins.inputs.hyprland.follows = "hyprland";
     quickshell.url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
