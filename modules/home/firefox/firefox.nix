@@ -89,6 +89,11 @@
       definedAliases = [ "@wt" ];
       icon = "https://upload.wikimedia.org/wikipedia/commons/8/83/En.wiktionary_favicon.svg";
     };
+    "GitHub" = {
+      urls = [{ template = "https://github.com/search?q={searchTerms}"; }];
+      definedAliases = [ "@gh" ];
+      icon = "https://github.com/favicon.ico";
+    };
     bing.metaData.hidden = true;
     google.metaData.alias = "@g"; # builtin engines only support specifying one additional alias
     wikipedia.metaData.alias = "@w";
@@ -116,6 +121,9 @@ in {
     extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
       ublock-origin
     ];
+    search.force = true;
+    search.default = "Startpage";
+    search.order = ["Startpage" "google"];
   };
 
   programs.firefox.profiles."nosuggest" = default-config // {
@@ -142,6 +150,13 @@ in {
     search.privateDefault = "Startpage";
     search.order = ["Startpage" "google"];
     search.engines = search-engines;
+  };
+  programs.firefox.profiles."another-profile" = {
+    id = 3;
+    extraConfig = userJS;
+    extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
+      ublock-origin
+    ];
   };
 
   xdg.mimeApps.defaultApplications = {
